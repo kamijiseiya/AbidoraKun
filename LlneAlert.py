@@ -14,7 +14,7 @@ while True:
     print (bitbank.id, 'market price',{'bitbank':bitbank_bid, 'ask':bitbank_ask, 'spread':bitbank_spread})
 
     url = "https://notify-api.line.me/api/notify"
-    token = 'P0pE1muSVOPghHYIHKGzpFRVo52VZCAhuK8r0gXuyr9' #アクセストークン
+    token = 'Lineのトークン' #アクセストークン
     headers = {"Authorization" : "Bearer "+ token}
 
     #bid 売り時の値段　ask　買う時の値段
