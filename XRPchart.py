@@ -46,7 +46,7 @@ for exchange_id in exchange_list:
         #ここからﾁｬｰﾄ作成です
         plt.figure(1)
         plt.plot(x,coincheck, label = 'bitbank(xrp/jpy)')
-        #plt.plot(x,zaif, label = 'xrp/jpyの現在の買い最高値')
+        
         plt.legend()
         plt.pause(.001)
         plt.clf()
