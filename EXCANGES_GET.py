@@ -7,16 +7,18 @@ BITBANK = ccxt.bitbank()  # 取引所の指定
 
 
 def bitbank_id() -> " 取引所ID":
+    """取引所IDを返します"""
     return bitbank_id == BITBANK.id
 
 
 def bitbank_bid() -> " 購入価格":
+    """購入価格を返します"""
     bitbank_orderbook = BITBANK.fetch_order_book('XRP/JPY')
     return bitbank_orderbook['bids'][0][0] if (bitbank_orderbook['bids']) > 0 else None
 
 
 def bitbank_ask() -> "売却価格":
-    """売却情報を返します"""
+    """売却価格を返します"""
     bitbank_orderbook = BITBANK.fetch_order_book('XRP/JPY')
     return bitbank_orderbook['asks'][0][0] if (bitbank_orderbook['asks']) > 0 else None
 
