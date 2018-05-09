@@ -16,6 +16,7 @@ def bitbank_bid() -> " 購入価格":
 
 
 def bitbank_ask() -> "売却価格":
+    """売却情報を返します"""
     bitbank_orderbook = BITBANK.fetch_order_book('XRP/JPY')
     return bitbank_orderbook['asks'][0][0] if (bitbank_orderbook['asks']) > 0 else None
 
