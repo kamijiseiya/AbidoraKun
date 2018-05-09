@@ -24,3 +24,7 @@ class BitbankExchange:
         
         #XRP/BTCのスプレッドを計算する
         xrp_btc_spread = (xrp_btc_ask - xrp_btc_bid) if (xrp_btc_ask and xrp_brc_bid) else None
+
+        #ASK, BID, スプレッドを返す
+        xrp_btc = {'bids':xrp_btc_bid, 'asks':xrp_btc_ask, 'spread':xrp_btc_spread} #ASK, BID, スプレッドを連想配列に入れる
+        return xrp_btc
