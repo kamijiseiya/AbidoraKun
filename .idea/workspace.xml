@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39e3b39f-5891-4283-933c-525ca95b8a59" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/EXCANGESGET.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXCANGES_GET.py" beforeDir="false" afterPath="$PROJECT_DIR$/EXCANGES_GET.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXCANGES_GET.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EXCANGES_GET.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/EXCANGES_GET.py">
+      <file leaf-file-name="exchanges_get.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/exchanges_get.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+            <state relative-caret-position="264">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
             </state>
           </provider>
         </entry>
@@ -40,6 +40,7 @@
       <list>
         <option value="$PROJECT_DIR$/EXCANGESGET.py" />
         <option value="$PROJECT_DIR$/EXCANGES_GET.py" />
+        <option value="$PROJECT_DIR$/exchanges_get.py" />
       </list>
     </option>
   </component>
@@ -122,8 +123,8 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32869565" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24958949" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32869565" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24958949" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="right" id="Database" />
       <window_info anchor="right" id="SciView" />
@@ -165,8 +166,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EXCANGES_GET.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        <state relative-caret-position="249">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exchanges_get.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
