@@ -28,7 +28,4 @@ def bitbank_spread() -> "スプレッド":
     return (bitbank_ask() - bitbank_bid()) if (bitbank_bid() and bitbank_ask()) else None
 
 
-if __name__ == '__main__':  # データが正しく返って来るかどうかテスト
-    print(bitbank_bid())
-    print(bitbank_ask())
-    print(bitbank_spread())
+
