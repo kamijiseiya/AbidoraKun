@@ -49,7 +49,8 @@ for exchange_id in EXCHANGE_LIST:
         #ここからﾁｬｰﾄ作成です
         plt.figure(1)
         plt.plot(x, bitbankxrp, label='bitbank(xrp/jpy)')
-        plt.legend()
-        plt.pause(.001)
+        plt.legend()#チャート名表示
+        plt.ylim([10, -10])#チャートのY軸の範囲(始めに取得した値に±10の値が今回のチャートの範囲 )
+        plt.pause(.001)# チャート画面を表示
         plt.clf()
         time.sleep(FREQUENCY)
