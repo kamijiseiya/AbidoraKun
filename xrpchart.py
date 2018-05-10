@@ -43,13 +43,12 @@ for exchange_id in EXCHANGE_LIST:
             PRICELIST.pop(0)
             PRICELIST.append(ask)
         #ﾁｬｰﾄ用ﾃﾞｰﾀの作成をします。
-        coincheck = np.array(PRICELIST)
+        bitbankxrp = np.array(PRICELIST)
         LISTLENGTH = len(PRICELIST)
         x = np.linspace(0, LISTLENGTH, LISTLENGTH)
         #ここからﾁｬｰﾄ作成です
         plt.figure(1)
-        plt.plot(x, coincheck, label='bitbank(xrp/jpy)')
-        #plt.plot(x,zaif, label = 'xrp/jpyの現在の買い最高値')
+        plt.plot(x, bitbankxrp, label='bitbank(xrp/jpy)')
         plt.legend()
         plt.pause(.001)
         plt.clf()
