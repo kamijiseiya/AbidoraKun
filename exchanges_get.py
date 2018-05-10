@@ -3,12 +3,13 @@
 import ccxt  # 取引所ライブラリをインポート
 
 BITBANK = ccxt.bitbank()  # 取引所の指定
+BINANCE = ccxt.bunance()
 
+class bitbank:
 
-
-def bitbank_id() -> " 取引所ID":
-    """取引所IDを返します"""
-    return bitbank_id == BITBANK.id
+        def bitbank_id(self) -> " 取引所ID":
+            """取引所IDを返します"""
+            return BITBANK.id
 
 
 def bitbank_bid() -> " 購入価格":
@@ -26,3 +27,5 @@ def bitbank_ask() -> "売却価格":
 def bitbank_spread() -> "スプレッド":
     """スプレッド情報を返します"""
     return (bitbank_ask() - bitbank_bid()) if (bitbank_bid() and bitbank_ask()) else None
+
+
