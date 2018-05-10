@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="39e3b39f-5891-4283-933c-525ca95b8a59" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXCANGES_GET.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/binance_exchanges.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchanges_get.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,17 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="exchanges_get.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/exchanges_get.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -41,6 +32,7 @@
         <option value="$PROJECT_DIR$/EXCANGESGET.py" />
         <option value="$PROJECT_DIR$/EXCANGES_GET.py" />
         <option value="$PROJECT_DIR$/exchanges_get.py" />
+        <option value="$PROJECT_DIR$/binance_exchanges.py" />
       </list>
     </option>
   </component>
@@ -54,8 +46,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="127" />
-    <option name="y" value="23" />
+    <option name="x" value="116" />
+    <option name="y" value="395" />
     <option name="width" value="1260" />
     <option name="height" value="672" />
   </component>
@@ -114,8 +106,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="127" y="23" width="1260" height="672" extended-state="0" />
-    <editor active="true" />
+    <frame x="116" y="395" width="1260" height="672" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -173,8 +164,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/exchanges_get.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/binance_exchanges.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
         </state>
       </provider>
     </entry>
