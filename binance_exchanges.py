@@ -2,7 +2,7 @@
 # coding: UTF-8 文字コード指定
 import ccxt  # 取引所ライブラリをインポート
 
-BINANCE = ccxt.bunance()# 取引所の指定
+BINANCE = ccxt.binance()# 取引所の指定
 
 
 
