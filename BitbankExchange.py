@@ -1,30 +1,40 @@
-#ƒCƒ“ƒ|[ƒg
+'''
+Bitbankã‹ã‚‰å–å¾—ã—ãŸXRPã‚’BTCã«å¯¾å¿œã•ã›ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§ã™
+'''
+#ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 import ccxt
-'''
-Bitbank‚©‚çæ“¾‚µ‚½XRP‚ğBTC‚É‘Î‰‚³‚¹‚éˆ—‚ğ‚·‚éƒNƒ‰ƒX‚Å‚·
-'''
 class BitbankExchange:
     '''
-    XRP/BTC‚ÌASK, BID, ƒXƒvƒŒƒbƒh‚ğŒvZ‚µ‚Ä•Ô‚·ƒƒ\ƒbƒh‚Å‚·
+    XRPã‚’BTCã«å¯¾å¿œã•ã›ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
     '''
-    def exchangeXRP_BTC:
-        #ƒI[ƒ_[ƒuƒbƒNæ“¾
-        xrp_jpy_orderbook = bitbank.fetch_order_book('XRP/JPY') #XRP/JPY‚ÌƒI[ƒ_[ƒuƒbƒNæ“¾
-        jpy_btc_orderbook = bitbank.fetch_order_book('JPY/BTC') #JPY/BTC‚ÌƒI[ƒ_[ƒuƒbƒNæ“¾
+    def exchangeXRP_BTC(self):
+        '''
+        Bitbankã‹ã‚‰XRP/JPY, JPY/BTCã®ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ–ãƒƒã‚¯ã‚’å–å¾—ã—ã¦XRP/BTCã®ASK, BID, ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚’è¨ˆç®—ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
+        '''
+        #ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ–ãƒƒã‚¯å–å¾—
+        bitbank = ccxt.bitbank() #bitbankã®æƒ…å ±ã‚’å‘¼ã³å‡ºã™
+        xrp_jpy_orderbook = bitbank.fetch_order_book('XRP/JPY') #XRP/JPYã®ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ–ãƒƒã‚¯å–å¾—
+        btc_jpy_orderbook = bitbank.fetch_order_book('BTC/JPY') #BTC/JPYã®ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ–ãƒƒã‚¯å–å¾—
 
-        #ASK‚ÆBID‚ğæ“¾
-        xrp_jpy_ask = xrp_jpy_orderbook['asks'][0][0] if len (xrp_jpy_orderbook['asks']) > 0 else None #XRP/JPY‚ÌASK
-        xrp_jpy_bid = xrp_jpy_orderbook['bids'][0][0] if len (xrp_jpy_orderbook['bids']) > 0 else None #XRP/JPY‚ÌBID
-        jpy_btc_ask = jpy_btc_orderbook['asks'][0][0] if len (jpy_btc_orderbook['asks']) > 0 else None #JPY/BTC‚ÌASK
-        jpy_btc_bid = jpy_btc_orderbook['bids'][0][0] if len (jpy_btc_orderbook['bids']) > 0 else None #JPY/BTC‚ÌBID
+        #ASKã¨BIDã‚’å–å¾—
+        xrp_jpy_ask = xrp_jpy_orderbook['asks'][0][0] if (xrp_jpy_orderbook['asks']) else None #XRP/JPYã®ASK
+        xrp_jpy_bid = xrp_jpy_orderbook['bids'][0][0] if (xrp_jpy_orderbook['bids']) else None #XRP/JPYã®BID
+        btc_jpy_ask = btc_jpy_orderbook['asks'][0][0] if (btc_jpy_orderbook['asks']) else None #BTC/JPYã®ASK
+        btc_jpy_bid = btc_jpy_orderbook['bids'][0][0] if (btc_jpy_orderbook['bids']) else None #BTC/JPYã®BID
 
-        #XRP/BTC‚ÌASK, BID‚ğŒvZ‚·‚é
-        xrp_btc_ask = (xrp_jpy_ask * jpy_btc_ask) if (xrp_jpy_ask and jpy_btc_ask) else None #XRP/BTC‚ÌASK
-        xrp_btc_bid = (xrp_jpy_bid * jpy_btc_bid) if (xrp_jpy_bid and jpy_btc_bid) else None #XRP/BTC‚ÌBID
-        
-        #XRP/BTC‚ÌƒXƒvƒŒƒbƒh‚ğŒvZ‚·‚é
-        xrp_btc_spread = (xrp_btc_ask - xrp_btc_bid) if (xrp_btc_ask and xrp_brc_bid) else None
+        #XRP/BTCã®ASK, BIDã‚’è¨ˆç®—ã™ã‚‹
+        xrp_btc_ask = (xrp_jpy_ask * btc_jpy_bid) if (xrp_jpy_ask and btc_jpy_bid) else None #XRP/BTCã®ASK
+        xrp_btc_bid = (xrp_jpy_bid * btc_jpy_ask) if (xrp_jpy_bid and btc_jpy_ask) else None #XRP/BTCã®BID
 
-        #ASK, BID, ƒXƒvƒŒƒbƒh‚ğ•Ô‚·
-        xrp_btc = {'bids':xrp_btc_bid, 'asks':xrp_btc_ask, 'spread':xrp_btc_spread} #ASK, BID, ƒXƒvƒŒƒbƒh‚ğ˜A‘z”z—ñ‚É“ü‚ê‚é
+        #XRP/BTCã®ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚’è¨ˆç®—ã™ã‚‹
+        xrp_btc_spread = (xrp_btc_ask - xrp_btc_bid) if (xrp_btc_ask and xrp_btc_bid) else None
+
+        #ASK, BID, ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚’è¿”ã™
+        xrp_btc = {'bids':xrp_btc_bid, 'asks':xrp_btc_ask, 'spread':xrp_btc_spread} #ASK, BID, ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚’é€£æƒ³é…åˆ—ã«å…¥ã‚Œã‚‹
         return xrp_btc
+
+
+if __name__ == "__main__": #ãƒ†ã‚¹ãƒˆç”¨
+    exchange = BitbankExchange()
+    print(exchange.exchangeXRP_BTC()) #xrp_btcã®ä¸­èº«ã‚’è¡¨ç¤ºã™ã‚‹
+
