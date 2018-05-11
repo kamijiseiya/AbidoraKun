@@ -4,7 +4,7 @@ Bitbankから取得したXRPをBTCに対応させるモジュールです
 #インポート
 import ccxt
 
-def exchangeXRP_BTC(self):
+def exchangeXRP_BTC():
     '''
     BitbankからXRP/JPY, JPY/BTCのオーダーブックを取得してXRP/BTCのASK, BID, スプレッドを計算するクラスです
     '''
@@ -32,5 +32,5 @@ def exchangeXRP_BTC(self):
 
 
 if __name__ == "__main__": #テスト用
-    print(exchange.exchangeXRP_BTC()) #xrp_btcの中身を表示する
+    print(exchangeXRP_BTC()) #xrp_btcの中身を表示する
 
