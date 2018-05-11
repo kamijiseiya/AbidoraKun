@@ -23,8 +23,8 @@ class BitbankExchange:
         btc_jpy_bid = btc_jpy_orderbook['bids'][0][0] if (btc_jpy_orderbook['bids']) else None #BTC/JPYのBID
 
         #XRP/BTCのASK, BIDを計算する
-        xrp_btc_ask = (xrp_jpy_ask * btc_jpy_bid) if (xrp_jpy_ask and btc_jpy_bid) else None #XRP/BTCのASK
-        xrp_btc_bid = (xrp_jpy_bid * btc_jpy_ask) if (xrp_jpy_bid and btc_jpy_ask) else None #XRP/BTCのBID
+        xrp_btc_ask = xrp_jpy_ask / btc_jpy_bid if (xrp_jpy_ask and btc_jpy_bid) else None #XRP/BTCのASK
+        xrp_btc_bid = xrp_jpy_bid / btc_jpy_ask if (xrp_jpy_bid and btc_jpy_ask) else None #XRP/BTCのBID
 
         #XRP/BTCのスプレッドを計算する
         xrp_btc_spread = (xrp_btc_ask - xrp_btc_bid) if (xrp_btc_ask and xrp_btc_bid) else None
