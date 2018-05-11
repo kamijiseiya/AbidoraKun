@@ -32,6 +32,5 @@ def exchangeXRP_BTC(self):
 
 
 if __name__ == "__main__": #テスト用
-    exchange = BitbankExchange()
     print(exchange.exchangeXRP_BTC()) #xrp_btcの中身を表示する
 
