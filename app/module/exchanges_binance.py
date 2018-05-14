@@ -6,22 +6,25 @@ BINANCE = ccxt.binance()# 取引所の指定
 
 
 
-def bitbank_id() -> " 取引所ID":
+def binace_id() -> " 取引所ID":
     """取引所IDを返します"""
     return BINANCE.id
 
-def bitbank_bid() -> " 購入価格":
+def binace_bid() -> " 購入価格":
     """購入価格を返します"""
-    bitbank_orderbook = BINANCE.fetch_order_book('XRP/JPY')
-    return bitbank_orderbook['bids'][0][0] if (bitbank_orderbook['bids']) > 0 else None
+    binace_orderbook = BINANCE.fetch_order_book('XRP/BTC')
+    return binace_orderbook['bids'][0][0] if (binace_orderbook['bids'])  else None
 
 
-def bitbank_ask() -> "売却価格":
+def binace_ask() -> "売却価格":
     """売却価格を返します"""
-    bitbank_orderbook = BINANCE.fetch_order_book('XRP/JPY')
-    return bitbank_orderbook['asks'][0][0] if (bitbank_orderbook['asks']) > 0 else None
+    binace_orderbook = BINANCE.fetch_order_book('XRP/BTC')
+    return binace_orderbook['asks'][0][0] if (binace_orderbook['asks'])   else None
 
 
-def bitbank_spread() -> "スプレッド":
+def binace_spread() -> "スプレッド":
     """スプレッド情報を返します"""
-    return (bitbank_ask() - bitbank_bid()) if (bitbank_bid() and bitbank_ask()) else None
+    return (binace_ask() - binace_bid()) if (binace_bid() and binace_ask()) else None
+
+if __name__ == "__main__": #　テスト用に追加
+    print(binace_bid())
