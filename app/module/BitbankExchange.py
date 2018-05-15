@@ -2,7 +2,6 @@
 Bitbankから取得したXRPをBTCに対応させるモジュールです
 '''
 #インポート
-import ccxt
 import exchanges_bitbank
 
 def exchange_xrp_btc_bid(xrp_jpy_bid):
