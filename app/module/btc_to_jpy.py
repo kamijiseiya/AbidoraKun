@@ -12,7 +12,10 @@ def btc_to_jpy(btc):
     bitbank = ccxt.bitbank() #bitbankの情報を呼び出す
     orderbook = bitbank.fetch_order_book('BTC/JPY') #BTC/JPYのオーダーブック取得
     #BTC/JPYのBIDを取得する
-    bid = orderbook['bids'][0][0] if (btc_jpy_orderbook['bids']) else None
+    bid = orderbook['bids'][0][0] if (orderbook['bids']) else None
 
-    jpy = btc / bid #BTCを日本円の額に変換する
+    jpy = btc * bid #BTCを日本円の額に変換する
     return jpy
+
+if __name__ == "__main__": #テスト用
+    print(btc_to_jpy(1))
