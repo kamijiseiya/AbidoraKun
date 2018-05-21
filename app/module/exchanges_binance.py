@@ -30,11 +30,13 @@ def binace_spread() -> "スプレッド":
     """スプレッド情報を返します"""
     return (binace_ask() - binace_bid()) if (binace_bid() and binace_ask()) else None
 
-
 if __name__ == "__main__":  #テスト用に追加
     try:
         print(binace_bid())
     except:
         import traceback
         traceback.print_exc()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 626f1081e4a940f8cab9e12608cfa33764270bcd

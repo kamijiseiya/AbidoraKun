@@ -34,5 +34,5 @@ def exchange_xrp_btc_ask(xrp_jpy_ask):
 
 if __name__ == "__main__": #テスト用
     #結果の表示
-    print(exchange_xrp_btc_bid(79))
-    print(exchange_xrp_btc_ask(79))
+    print(exchange_xrp_btc_bid(80))
+    print(exchange_xrp_btc_ask(80))
