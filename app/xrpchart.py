@@ -5,7 +5,7 @@ import datetime
 import numpy as np#インストールが必要
 import matplotlib.pyplot as plt#インストールが必要
 from app import module
-from app import sample
+from app import exchanges
 #http://okuribitoni.hatenablog.com/entry/2018/01/11/211204を参考にした。
 
 BITBANKPRICELIST = []
@@ -19,7 +19,7 @@ FREQUENCY = 15 #ﾃﾞｰﾀ取得周期です。
 
 while True:
 
-    BITBANKORDERBOOK = sample.Sample.bitbank(0)
+    BITBANKORDERBOOK = exchanges.Sample.bitbank(0)
 
     BITBANKASK = BITBANKORDERBOOK['high_price'].get('bitbank')
     BINANCEASK = module.btc_to_jpy.btc_to_jpy(module.exchanges_binance.binace_ask())
