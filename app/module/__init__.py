@@ -1,5 +1,4 @@
 # 　複数のモジュールのパスを指定
-from . import BitbankExchange
 from . import exchanges_binance
-from . import BitbankExchange
 from . import btc_to_jpy
+from . import exchanges_bitbank
