@@ -5,6 +5,7 @@ import datetime
 import numpy as np#インストールが必要
 import matplotlib.pyplot as plt#インストールが必要
 from app import module
+from app import sample
 #http://okuribitoni.hatenablog.com/entry/2018/01/11/211204を参考にした。
 
 BITBANKPRICELIST = []
@@ -12,22 +13,21 @@ BITBANKLISTLENGTH = 0
 BINANCEPRICELIST = []
 BINANCELISTLENGTH = 0
 MAXLENGTH = 100 #ﾁｬｰﾄx方向最大値です。
-FREQUENCY = 10 #ﾃﾞｰﾀ取得周期です。
+FREQUENCY = 15 #ﾃﾞｰﾀ取得周期です。
 
 #print(ccxt.exchanges)
 
 while True:
-    # BITBANKでのXRP売値=BITBANKASK
-    BITBANKASK = module.exchanges_bitbank.bitbank_ask()\
-        if module.exchanges_bitbank.bitbank_ask() is not None else None
 
+    BITBANKORDERBOOK = sample.Sample.bitbank(0)
+
+    BITBANKASK = BITBANKORDERBOOK['high_price'].get('bitbank')
     BINANCEASK = module.btc_to_jpy.btc_to_jpy(module.exchanges_binance.binace_ask())
     print(BITBANKASK)
     print(BINANCEASK)
 
     # 現在の時刻を取得
     print(datetime.datetime.today())
-    time.sleep(FREQUENCY)
 
     if BITBANKLISTLENGTH < MAXLENGTH and BINANCELISTLENGTH < MAXLENGTH:
         BITBANKPRICELIST.append(BITBANKASK)
