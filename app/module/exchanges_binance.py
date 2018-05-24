@@ -35,4 +35,5 @@ if __name__ == "__main__":  #テスト用に追加
         print(binace_bid())
     except:
         import traceback
+
         traceback.print_exc()
