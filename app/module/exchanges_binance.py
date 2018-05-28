@@ -36,7 +36,4 @@ if __name__ == "__main__":  #テスト用に追加
     except:
         import traceback
         traceback.print_exc()
-<<<<<<< HEAD
 
-=======
->>>>>>> 626f1081e4a940f8cab9e12608cfa33764270bcd
