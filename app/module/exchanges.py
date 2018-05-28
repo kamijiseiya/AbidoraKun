@@ -34,6 +34,7 @@ class bitbank:
                 time.sleep(10)
 
 
+
 class BINANCEDATA:
     """binanceからの取引データを処理するクラス"""
 
@@ -51,6 +52,7 @@ class BINANCEDATA:
                 # bitbank_orderbookからasksの値を取得
                 binance_ask = binance_orderbook['asks'][0][0] \
                     if (binance_orderbook['asks']) else None
+
                 # bitbank_orderbook_btcからbidsの値を取得
                 binance_bit_btc = module.btc_to_jpy.btc_to_jpy(binance_orderbook['bids'][0][0])
                 binance_ask_btc = module.btc_to_jpy.btc_to_jpy(binance_orderbook['asks'][0][0])
