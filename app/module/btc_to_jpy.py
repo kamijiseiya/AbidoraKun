@@ -3,7 +3,7 @@ BTCを現金化するときに何円になるか計算するモジュールで�
 '''
 #インポート
 import ccxt
-
+from app import module
 def btc_to_jpy(btc):
     '''
     BTCの枚数を引数として受け取り、日本円の金額に変換するメソッドです
