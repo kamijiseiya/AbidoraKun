@@ -61,5 +61,8 @@ class binance:
                 time.sleep(10)
 
 
+CALLSAMPLEDATA = bitbank()
+print(CALLSAMPLEDATA.bitbank())
+
 CALLSAMPLEDATA = binance()
 print(CALLSAMPLEDATA.binance())
