@@ -3,12 +3,11 @@
 import time
 import requests
 import config.TokenSave
-from module import exchanges_bitbank
-
+from app import module 
 # タイムの繰り返すため
 while True:
-    BID = exchanges_bitbank.bitbank_bid()  # moduleから呼び出して現在の買い価格取得
-    ASK = exchanges_bitbank.bitbank_ask()  # moduleから呼び出して現在の売り価格取得
+    BID = module.bitbank_bid()  # moduleから呼び出して現在の買い価格取得
+    ASK = module.bitbank_ask()  # moduleから呼び出して現在の売り価格取得
 
     URL = "https://notify-api.line.me/api/notify"
     TOKEN = config.TokenSave.Get_Token()  # 別ファイルからアクセストークン取得
