@@ -5,10 +5,6 @@ import ccxt  # 取引所ライブラリをインポート
 BINANCE = ccxt.binance()  # 取引所の指定
 
 
-
-
-
-
 def binace_id() -> " 取引所ID":
         """取引所IDを返します"""
         return BINANCE.id
@@ -35,5 +31,3 @@ if __name__ == "__main__":  #テスト用に追加
         print(binace_bid())
     except:
         import traceback
-        traceback.print_exc()
-
