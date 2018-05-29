@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39e3b39f-5891-4283-933c-525ca95b8a59" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/module/exchanges.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/module/exchanges.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/module/xrp_to_btc.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/module/xrp_to_btc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/xrpchart.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/xrpchart.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,11 +107,8 @@
       <file leaf-file-name="xrpchart.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/xrpchart.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="e#42#53#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -158,6 +152,7 @@
         <option value="$PROJECT_DIR$/app/module/xrp_to_btc.py" />
         <option value="$PROJECT_DIR$/app/module/exchanges.py" />
         <option value="$PROJECT_DIR$/app/module/btc_to_jpy.py" />
+        <option value="$PROJECT_DIR$/app/xrpchart.py" />
       </list>
     </option>
   </component>
@@ -368,7 +363,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.3174114" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5390335" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5390335" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.42007434" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27422002" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -475,9 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#42#53#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -543,9 +535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#42#53#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -620,11 +609,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/xrpchart.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#42#53#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
