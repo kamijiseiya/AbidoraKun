@@ -62,10 +62,10 @@ class bitbank:
                 time.sleep(10)
 
 
-class BINANCEDATA:
+class BINANCE:
     """binanceからの取引データを処理するクラス"""
 
-    def returnbinancedata(self):
+    def xrp(self):
         """binanceの取引データを返す"""
         while True:
             try:
