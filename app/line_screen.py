@@ -30,7 +30,7 @@ ROOT.geometry("450x300")
 
 HEAD = Label(text=u'API KEYS')
 HEAD.grid(row=0, column=1)
-CONTENT = Label(text=u'各取引所からAPIキーを取得してください。')
+CONTENT = Label(text=u'各SNSからAPIキーを取得してください。')
 CONTENT.grid(row=1, column=1)
 
 EXCHANGES = Label(text=u'SNS')
