@@ -10,28 +10,26 @@ BINANCE = ccxt.binance()
 
 class bitbank:
     """bitbankからの取引データを処理するクラス"""
-
-    @property
     def btc(self):
         while True:
             try:
                 # bitbankのIDを取得
                 bitbnka_id = BITBANK.id
-
                 # biybankのXRP/JPYのオーダーブックの取得
-                bitbank_BTC = BITBANK.fetch_order_book('BTC/JPY')
+                bitbank_orderbook = BITBANK.fetch_order_book('BTC/JPY')
+                # bitbank_orderbookからbidsの値を取得
+                bitbank_bid = bitbank_orderbook['bids'][0][0] \
+                    if (bitbank_orderbook['bids']) else None
+                # bitbank_orderbookからasksの値を取得
+                bitbank_ask = bitbank_orderbook['asks'][0][0] \
+                    if (bitbank_orderbook['asks']) else None
 
-                # bitbank_orderbookからBTC/JPYのbidsの値を取得
-                BTC_bids = bitbank_BTC['asks'][0][0] \
-                    if (bitbank_BTC['asks']) else None
-
-                # bitbank_orderbookからBTC/JPYのasksの値を取得
-                BTC_ask = bitbank_BTC['asks'][0][0] \
-                    if (bitbank_BTC['asks']) else None
-
-                orderbook = {'bitbank': {'bitbank_id': bitbnka_id}, 'bid': {bitbnka_id: BTC_bids},
-                             'ask': {bitbnka_id: BTC_ask}}
+                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
+                orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
+                orderbook['bid'] = {bitbnka_id:  bitbank_bid}
+                orderbook['ask'] = {bitbnka_id:  bitbank_ask}
                 return orderbook
+
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
@@ -43,18 +41,19 @@ class bitbank:
             try:
                 # bitbankのIDを取得
                 bitbnka_id = BITBANK.id
-                # bitbank_orderbookからXRP/JPYのbidsの値を取得
+                # biybankのXRP/JPYのオーダーブックの取得
                 bitbank_orderbook = BITBANK.fetch_order_book('XRP/JPY')
-                # bitbank_orderbookからBTC/JPYのbidsの値を取得
-                XRP_bid = bitbank_orderbook['asks'][0][0] \
+                # bitbank_orderbookからbidsの値を取得
+                bitbank_bid = bitbank_orderbook['bids'][0][0] \
+                    if (bitbank_orderbook['bids']) else None
+                # bitbank_orderbookからasksの値を取得
+                bitbank_ask = bitbank_orderbook['asks'][0][0] \
                     if (bitbank_orderbook['asks']) else None
 
-                # bitbank_orderbookからBTC/JPYのasksの値を取得
-                XRP_ask = bitbank_orderbook['asks'][0][0] \
-                    if (bitbank_orderbook['asks']) else None
-
-                orderbook = {'bitbank': {'bitbank_id': XRP_ask}, 'bid': {bitbnka_id: XRP_bid},
-                             'ask': {bitbnka_id: XRP_ask}}
+                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
+                orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
+                orderbook['bid'] = {bitbnka_id: bitbank_bid}
+                orderbook['ask'] = {bitbnka_id: bitbank_ask}
                 return orderbook
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
@@ -96,8 +95,7 @@ class BINANCE:
 
 CALLSAMPLEDATA = bitbank()
 
-print(CALLSAMPLEDATA.xrp)
-print(CALLSAMPLEDATA.btc)
+print(CALLSAMPLEDATA.btc())
 
 
 
