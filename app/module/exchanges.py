@@ -93,20 +93,16 @@ class BINANCE:
                 time.sleep(10)
 
 
-<<<<<<< HEAD
 CALLSAMPLEDATA = bitbank()
 
 print(CALLSAMPLEDATA.btc())
 
 
 
-=======
 
-CALLSAMPLEDATA = bitbank()
-print(CALLSAMPLEDATA.bitbank())
-CALLSAMPLEDATA = binance()
-print(CALLSAMPLEDATA.binance())
 
-CALLSAMPLEDATA = BINANCEDATA()
-print(CALLSAMPLEDATA.returnbinancedata())
->>>>>>> 19cc3d83e04b7d9fc7828cb3964c0e88485ee2b1
+
+
+
+
+
