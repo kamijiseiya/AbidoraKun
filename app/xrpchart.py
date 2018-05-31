@@ -18,7 +18,7 @@ FREQUENCY = 15 #ﾃﾞｰﾀ取得周期です。
 
 while True:
 
-    BITBANKORDERBOOK = module.exchanges.Sample.bitbank
+    BITBANKORDERBOOK = module.exchanges.Sample.bitbank(0);
 
     BITBANKASK = BITBANKORDERBOOK['high_price'].get('bitbank')
     BINANCEASK = module.btc_to_jpy.btc_to_jpy(module.exchanges_binance.binace_ask())
