@@ -2,7 +2,7 @@
 Bitbankから取得したXRPをBTCに対応させるモジュールです
 '''
 #インポート
-import exchanges_bitbank
+from app import module
 
 def exchange_xrp_btc_bid(xrp_jpy_bid):
     '''
