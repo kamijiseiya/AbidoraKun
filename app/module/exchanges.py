@@ -95,4 +95,9 @@ class BINANCE:
 
 
 CALLSAMPLEDATA = bitbank()
+
 print(CALLSAMPLEDATA.xrp)
+print(CALLSAMPLEDATA.btc)
+
+
+
