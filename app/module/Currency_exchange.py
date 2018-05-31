@@ -1,8 +1,29 @@
-'''
-Bitbankから取得したXRPをBTCに対応させるモジュールです
-'''
-#インポート
+"""BTCからJPYへJPYからBTCに変換するモジュールです"""
+
+# インポート
+import ccxt
+# インポート
 from app import module
+
+
+def btc_to_jpy(btc):
+    '''
+    BTCの枚数を引数として受け取り、日本円の金額に変換するメソッドです
+    '''
+
+    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    bid = BITBANKORDERBOOK['bid'].get('bitbank')
+    jpy = btc * bid  # BTCを日本円の額に変換する bitbank btc/jpy bidを呼び出す。
+    return jpy
+
+
+if __name__ == "__main__":  # テスト用
+    print(btc_to_jpy(1))
+
+'''
+Bitbankから取得したXRP/JPYをBTCに対応させるモジュールです
+'''
+
 
 def exchange_xrp_btc_bid(xrp_jpy_bid):
     '''
@@ -37,7 +58,8 @@ def exchange_xrp_btc_ask(xrp_jpy_ask):
     return xrp_btc_ask
 
 
+
 if __name__ == "__main__": #テスト用
     #結果の表示
-    print(exchange_xrp_btc_bid(80))
+    print(exchange_xrp_btc_bid(800))
     print(exchange_xrp_btc_ask(80))
