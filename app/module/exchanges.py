@@ -8,7 +8,7 @@ BITBANK = ccxt.bitbank()  # 取引所の指定
 BINANCE = ccxt.binance()
 
 
-class bitbank:
+class Bitbank:
     """bitbankからの取引データを処理するクラス"""
     def btc(self):
         while True:
@@ -25,6 +25,7 @@ class bitbank:
                     if (bitbank_orderbook['asks']) else None
 
                 orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
+
                 orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
                 orderbook['bid'] = {bitbnka_id:  bitbank_bid}
                 orderbook['ask'] = {bitbnka_id:  bitbank_ask}
@@ -33,9 +34,10 @@ class bitbank:
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
-                time.sleep(10)
+                time.sleep(5)
 
-    @property
+
+
     def xrp(self):
         while True:
             try:
@@ -50,7 +52,7 @@ class bitbank:
                 bitbank_ask = bitbank_orderbook['asks'][0][0] \
                     if (bitbank_orderbook['asks']) else None
 
-                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
+                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {},}
                 orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
                 orderbook['bid'] = {bitbnka_id: bitbank_bid}
                 orderbook['ask'] = {bitbnka_id: bitbank_ask}
@@ -58,10 +60,10 @@ class bitbank:
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
-                time.sleep(10)
+                time.sleep(5)
 
 
-class BINANCE:
+class Binance:
     """binanceからの取引データを処理するクラス"""
 
     def xrp(self):
@@ -80,9 +82,8 @@ class BINANCE:
                     if (binance_orderbook['asks']) else None
 
                 # bitbank_orderbook_btcからbidsの値を取得
-                binance_bit_btc = module.btc_to_jpy.btc_to_jpy(binance_orderbook['bids'][0][0])
-                binance_ask_btc = module.btc_to_jpy.btc_to_jpy(binance_orderbook['asks'][0][0])
-
+                binance_bit_btc = 0
+                binance_ask_btc = 0
                 orderbook = {'binance': {'binance_id': binance_id}, 'bid': {binance_id: binance_bid},
                              'ask': {binance_id: binance_ask}, 'bit_btc/jpy': {binance_id: binance_bit_btc},
                              'ask_btc/jpy': {binance_id: binance_ask_btc}}
@@ -93,16 +94,8 @@ class BINANCE:
                 time.sleep(10)
 
 
-CALLSAMPLEDATA = bitbank()
+sampleo = Binance()
+print(sampleo.xrp())
 
+CALLSAMPLEDATA = Bitbank()
 print(CALLSAMPLEDATA.btc())
-
-
-
-
-
-
-
-
-
-
