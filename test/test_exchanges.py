@@ -1,11 +1,12 @@
-
+"""exchanges.pyのテスト"""
 import unittest
 from app import module
 
 
 class TestBitbank(unittest.TestCase):
-    # 値がとってこれるかどうか　エラーが発生するかどうか
-    def test_returnbinancedata_id_binance(self):
+    """exchanges.pyのテストクラス"""
+
+    def test_returnbinancedata_id(self):
         """bainasuから値がとってこれているかどうか"""
         testdata = module.exchanges.Binance.xrp(0)
         print(testdata)
@@ -16,7 +17,7 @@ class TestBitbank(unittest.TestCase):
         """bitbankから値がとってこれているかどうか"""
         bitbankdata = module.exchanges.Bitbank.xrp(0)
         print(bitbankdata['bitbank'].get('bitbank_id'))
-        self.assertEquals('bitbank' , bitbankdata['bitbank'].get('bitbank_id'))
+        self.assertEquals('bitbank', bitbankdata['bitbank'].get('bitbank_id'))
 
 
 if __name__ == "__main__":
