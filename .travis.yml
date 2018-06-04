@@ -8,4 +8,5 @@
  - pip install coveralls
 
  script
+ - python --version
  - pytest test_exchanges.py
