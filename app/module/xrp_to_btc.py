@@ -10,7 +10,7 @@ def exchange_xrp_btc_bid(xrp_jpy_bid):
     '''
     #BTC/JPYのASKを取得する
 
-    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    BITBANKORDERBOOK = module.exchanges.Bitbank.btc(0)
 
     btc_jpy_ask = BITBANKORDERBOOK['ask'].get('bitbank')
 
@@ -26,7 +26,7 @@ def exchange_xrp_btc_ask(xrp_jpy_ask):
     XRP/JPYのaskを引数で受け取り、XRP/BTCのaskに変換して返すメソッドです
     '''
     #BTC/JPYのBIDを取得する
-    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    BITBANKORDERBOOK = module.exchanges.Bitbank.btc(0)
 
     btc_jpy_bid = BITBANKORDERBOOK['bid'].get('bitbank')
 
