@@ -11,7 +11,7 @@ def btc_to_jpy(btc):
     BTCの枚数を引数として受け取り、日本円の金額に変換するメソッドです
     '''
 
-    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    BITBANKORDERBOOK = module.exchanges.Bitbank.btc(0)
     bid = BITBANKORDERBOOK['bid'].get('bitbank')
     jpy = btc * bid  # BTCを日本円の額に変換する bitbank btc/jpy bidを呼び出す。
     return jpy
@@ -31,7 +31,7 @@ def exchange_xrp_btc_bid(xrp_jpy_bid):
     '''
     #BTC/JPYのASKを取得する
 
-    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    BITBANKORDERBOOK = module.exchanges.Bitbank.btc(0)
 
     btc_jpy_ask = BITBANKORDERBOOK['ask'].get('bitbank')
 
@@ -47,7 +47,7 @@ def exchange_xrp_btc_ask(xrp_jpy_ask):
     XRP/JPYのaskを引数で受け取り、XRP/BTCのaskに変換して返すメソッドです
     '''
     #BTC/JPYのBIDを取得する
-    BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
+    BITBANKORDERBOOK = module.exchanges.Bitbank.btc(0)
 
     btc_jpy_bid = BITBANKORDERBOOK['bid'].get('bitbank')
 
