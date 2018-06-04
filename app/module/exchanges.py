@@ -2,7 +2,6 @@
 # coding: UTF-8 文字コード指定
 import time
 import ccxt  # 取引所ライブラリをインポート
-from app import module
 
 BITBANK = ccxt.bitbank()  # 取引所の指定
 BINANCE = ccxt.binance()
