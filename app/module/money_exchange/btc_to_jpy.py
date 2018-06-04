@@ -1,16 +1,13 @@
-'''
-BTCを現金化するときに何円になるか計算するモジュールです
-'''
+"""BTCを日本円に変換するモジュール"""
+
+
 # インポート
 import ccxt
 from app import module
 
 
 def btc_to_jpy(btc):
-    '''
-    BTCの枚数を引数として受け取り、日本円の金額に変換するメソッドです
-    '''
-
+    """BTCの枚数を引数として受け取り、日本円の金額に変換するメソッドです"""
     BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
     bid = BITBANKORDERBOOK['bid'].get('bitbank')
     jpy = btc * bid  # BTCを日本円の額に変換する bitbank btc/jpy bidを呼び出す。
