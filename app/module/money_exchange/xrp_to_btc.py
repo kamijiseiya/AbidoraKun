@@ -1,13 +1,12 @@
-'''
-Bitbankから取得したXRPをBTCに対応させるモジュールです
-'''
+"""Bitbankから取得したXRPをBTCに対応させるモジュールです"""
+
 #インポート
 from app import module
 
 def exchange_xrp_btc_bid(xrp_jpy_bid):
-    '''
-    XRP/JPYのbidを引数で受け取り、XRP/BTCのbidに変換して返すメソッドです
-    '''
+
+    """XRP/JPYのbidを引数で受け取り、XRP/BTCのbidに変換して返すメソッドです"""
+
     #BTC/JPYのASKを取得する
 
     BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
@@ -22,9 +21,8 @@ def exchange_xrp_btc_bid(xrp_jpy_bid):
 
 
 def exchange_xrp_btc_ask(xrp_jpy_ask):
-    '''
-    XRP/JPYのaskを引数で受け取り、XRP/BTCのaskに変換して返すメソッドです
-    '''
+    """XRP/JPYのaskを引数で受け取り、XRP/BTCのaskに変換して返すメソッドです"""
+
     #BTC/JPYのBIDを取得する
     BITBANKORDERBOOK = module.exchanges.bitbank.btc(0)
 
