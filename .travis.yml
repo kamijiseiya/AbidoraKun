@@ -9,4 +9,4 @@
 
  script
  - python --version
- - pytest test_exchanges.py
+ - python -m unittest discover test/
