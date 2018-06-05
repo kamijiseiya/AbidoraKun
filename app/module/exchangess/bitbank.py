@@ -7,8 +7,7 @@ import ccxt  # 取引所ライブラリをインポート
 class BITBANK:
     """bitbankからの取引データを処理するクラス"""
 
-    @staticmethod
-    def btc():
+    def btc(self):
         while True:
             try:
                 bitbank = ccxt.bitbank()  # 取引所の指定
@@ -32,7 +31,6 @@ class BITBANK:
                 print("10秒待機してやり直します")
                 time.sleep(10)
 
-    @property
     def xrp(self):
         while True:
             try:
