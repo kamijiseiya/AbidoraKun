@@ -8,4 +8,5 @@
  - pip install coveralls
 
  script
- - pytest test_exchanges.py
+ - python --version
+ - python -m unittest discover test/
