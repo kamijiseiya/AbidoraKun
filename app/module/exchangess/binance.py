@@ -3,6 +3,7 @@
 import time
 import ccxt  # 取引所ライブラリをインポート
 
+
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
 
@@ -11,8 +12,6 @@ class BINANCE:
         while True:
             try:
                 binance = ccxt.binance()
-                # bitbankのIDを取得
-                binance_id = binance.id
                 # biybankのXRP/JPYのオーダーブックの取得
                 binance_orderbook = binance.fetch_order_book('XRP/BTC')
                 # bitbank_orderbookからbidsの値を取得
@@ -23,15 +22,20 @@ class BINANCE:
                     if (binance_orderbook['asks']) else None
 
                 # bitbank_orderbook_btcからbidsの値を取得
+                orderbook = {'binance': {
+                    'binance_id': binance.id
+                }, 'bid': {
+                    binance.id: binance_bid
+                }, 'ask': {
+                    binance.id: binance_ask
+                }}
 
-                orderbook = {'binance': {'bianca_id': binance_id},
-                             'bid': {binance_id: binance_bid},
-                             'ask': {binance_id: binance_ask}, }
                 return orderbook
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
                 time.sleep(10)
 
-if __name__ == "__main__": #テスト用に追加
+
+if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.xrp(0))
