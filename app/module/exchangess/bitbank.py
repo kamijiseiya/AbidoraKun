@@ -11,7 +11,6 @@ class BITBANK:
         while True:
             try:
                 bitbank = ccxt.bitbank()  # 取引所の指定
-                bitbnka_id = bitbank.id  # bitbankのIDを取得
                 # biybankのXRP/JPYのオーダーブックの取得
                 bitbank_orderbook = bitbank.fetch_order_book('BTC/JPY')
                 # bitbank_orderbookからbidsの値を取得
@@ -20,10 +19,13 @@ class BITBANK:
                 # bitbank_orderbookからasksの値を取得
                 bitbank_ask = bitbank_orderbook['asks'][0][0] \
                     if (bitbank_orderbook['asks']) else None
-                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
-                orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
-                orderbook['bid'] = {bitbnka_id: bitbank_bid}
-                orderbook['ask'] = {bitbnka_id: bitbank_ask}
+                orderbook = {'bitbank': {
+                    'bitbank_id': bitbank.id
+                }, 'bid': {
+                    bitbank.id: bitbank_bid
+                }, 'ask': {
+                    bitbank.id: bitbank_ask
+                }}
                 return orderbook
 
             except ccxt.BaseError:
@@ -35,8 +37,6 @@ class BITBANK:
         while True:
             try:
                 bitbank = ccxt.bitbank()  # 取引所の指定
-                # bitbankのIDを取得
-                bitbnka_id = bitbank.id
                 # biybankのXRP/JPYのオーダーブックの取得
                 bitbank_orderbook = bitbank.fetch_order_book('XRP/JPY')
                 # bitbank_orderbookからbidsの値を取得
@@ -46,10 +46,13 @@ class BITBANK:
                 bitbank_ask = bitbank_orderbook['asks'][0][0] \
                     if (bitbank_orderbook['asks']) else None
 
-                orderbook = {'bitbank': {}, 'bid': {}, 'ask': {}}
-                orderbook['bitbank'] = {'bitbank_id': bitbnka_id}
-                orderbook['bid'] = {bitbnka_id: bitbank_bid}
-                orderbook['ask'] = {bitbnka_id: bitbank_ask}
+                orderbook = {'bitbank': {
+                    'bitbank_id': bitbank.id
+                }, 'bid': {
+                    bitbank.id: bitbank_bid
+                }, 'ask': {
+                    bitbank.id: bitbank_ask
+                }}
                 return orderbook
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
