@@ -44,8 +44,3 @@ class BITBANK:
         return orderbook[self][0][0] \
             if (orderbook[self]) else None
 
-
-Bitbank = BITBANK
-
-print(Bitbank.currencyinformation('BTC'))
-print(Bitbank.currencyinformation('XRP'))
