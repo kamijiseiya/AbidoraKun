@@ -9,9 +9,9 @@ def exchange_xrp_btc_bid(xrp_jpy_bid):
 
     # BTC/JPYのASKを取得する
 
-    BITBANKORDERBOOK = bitbank.BITBANK.btc(0)
+    bitbankorderbook = bitbank.BITBANK.currencyinformation('BTC')
 
-    btc_jpy_ask = BITBANKORDERBOOK['ask'].get('bitbank')
+    btc_jpy_ask = bitbankorderbook['ask'].get('bitbank')
 
     # XRP/BTCのBIDを計算する
     xrp_btc_bid = xrp_jpy_bid / btc_jpy_ask if (xrp_jpy_bid and btc_jpy_ask) else None
@@ -24,9 +24,9 @@ def exchange_xrp_btc_ask(xrp_jpy_ask):
     """XRP/JPYのaskを引数で受け取り、XRP/BTCのaskに変換して返すメソッドです"""
 
     # BTC/JPYのBIDを取得する
-    BITBANKORDERBOOK = bitbank.BITBANK.btc(0)
+    bitbankorderbook = bitbank.BITBANK.currencyinformation('BTC')
 
-    btc_jpy_bid = BITBANKORDERBOOK['bid'].get('bitbank')
+    btc_jpy_bid = bitbankorderbook['bid'].get('bitbank')
 
     # XRP/BTCのASKを計算する
     xrp_btc_ask = xrp_jpy_ask / btc_jpy_bid if (xrp_jpy_ask and btc_jpy_bid) else None
