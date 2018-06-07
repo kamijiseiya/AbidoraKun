@@ -12,16 +12,14 @@ class BITBANK:
         while True:
             try:
                 bitbank = ccxt.bitbank()
-                # 通貨ペアself/JPYをcurrencypairで作成する
-                currencypair = self + '/JPY'
+                # 通貨ペアself/JPYをcurrencypairに返却する。
+                currencypair = BITBANK.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
                 bitbank_orderbook = bitbank.fetch_order_book(currencypair)
-                # bitbank_orderbookからbidsの値を取得
-                bitbank_bid = bitbank_orderbook['bids'][0][0] \
-                    if (bitbank_orderbook['bids']) else None
-                # bitbank_orderbookからasksの値を取得
-                bitbank_ask = bitbank_orderbook['asks'][0][0] \
-                    if (bitbank_orderbook['asks']) else None
+                # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
+                bitbank_bid = BITBANK.price_acquisition('bids', bitbank_orderbook)
+                # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
+                bitbank_ask = BITBANK.price_acquisition('asks', bitbank_orderbook)
                 orderbook = {'bitbank': {
                     'bitbank_id': bitbank.id
                 }, 'bid': {
@@ -37,7 +35,14 @@ class BITBANK:
                 time.sleep(10)
 
 
+    def currency_pair_creation(self):
+        """ 通貨ペアを返却する"""
+        return self + '/JPY'
 
+    def price_acquisition(self, orderbook):
+        """selfで選択した価格をorderbookから取得しその値を返却する。"""
+        return orderbook[self][0][0] \
+            if (orderbook[self]) else None
 
 
 Bitbank = BITBANK
