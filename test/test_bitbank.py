@@ -11,9 +11,9 @@ class TestBitbank(unittest.TestCase):
 
     def test_bitbank_id_bitbank(self):
         """bitbankから値がとってこれているかどうか"""
-        bitbankdata = bitbank.BITBANK.xrp(0);
+        bitbankdata = bitbank.BITBANK.currencyinformation('BTC')
         print(bitbankdata['bitbank'].get('bitbank_id'))
-        self.assertEquals('bitbank', bitbankdata['bitbank'].get('bitbank_id'))
+        self.assertEqual('bitbank', bitbankdata['bitbank'].get('bitbank_id'))
 
 
 if __name__ == "__main__":
