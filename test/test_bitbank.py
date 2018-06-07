@@ -15,6 +15,13 @@ class TestBitbank(unittest.TestCase):
         print(bitbankdata['bitbank'].get('bitbank_id'))
         self.assertEqual('bitbank', bitbankdata['bitbank'].get('bitbank_id'))
 
+    def test_currency_pair_xrp_jpy(self):
+        print(bitbank.BITBANK.currency_pair_creation('XRP'))
+        self.assertEqual('XRP/JPY', bitbank.BITBANK.currency_pair_creation('XRP'))
+
+    def test_currency_pair_btc_jpy(self):
+        print(bitbank.BITBANK.currency_pair_creation('BTC'))
+        self.assertEqual('BTC/JPY', bitbank.BITBANK.currency_pair_creation('BTC'))
 
 if __name__ == "__main__":
     unittest.main()
