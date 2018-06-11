@@ -5,13 +5,19 @@ sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールの
 import unittest
 from app.module.exchangess import bitbank
 
-exhanges,ask,bid = bitbank.BITBANK.xrp('BTC');
+
 class TestBitbank(unittest.TestCase):
     """bitbank.pyのテストクラス"""
-    def test_bitbank_id_bitbank(self):
-        """bitbankから値がとってこれているかどうか"""
+    """bitbankから値がとってこれているかどうか"""
+    def test_currency_pair_xrp_jpy(self):
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
+        print(exhanges)
+        self.assertEqual('XRP/JPY', bitbank.BITBANK.currency_pair_creation('XRP'))
+
+    def test_currency_pair_btc_jpy(self):
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('BTC')
         print(exhanges,ask,bid)
-        self.assertEquals('bitbank', exhanges)
+        self.assertEqual('BTC/JPY', bitbank.BITBANK.currency_pair_creation('BTC'))
 
 
 if __name__ == "__main__":
