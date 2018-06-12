@@ -2,6 +2,10 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/49c8e3aa5577463a29a9/maintainability)](https://codeclimate.com/github/kamijiseiya/cash-cow/maintainability)
 [![Build Status](https://travis-ci.org/kamijiseiya/cash-cow.svg?branch=master)](https://travis-ci.org/kamijiseiya/cash-cow)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+![JitPack](https://img.shields.io/badge/python-v3.6.5-blue.svg)
+
+
+
 ## Description
 
 ## Demo
