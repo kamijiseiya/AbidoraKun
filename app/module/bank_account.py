@@ -83,41 +83,16 @@ class ACCOUNTINFORMATION:
                 print("10秒待機してやり直します")
                 time.sleep(10)
 
-
-    def get_jpy(key):
-        """JPY(日本円)の口座情報を返す"""
+    def get_cryptocurrency_balance(self, cryptocurrency):
+        """cryptocurrencyで指定された口座情報を返す"""
         while True:
             try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                return balance['JPY']
+                balance = self.fetch_balance()  # selfから残高を取得
+                return balance[cryptocurrency]
             except ccxt.BaseError:
                 print("口座情報を取得できません。")
                 print("10秒待機してやり直します")
                 time.sleep(10)
-
-    def get_btc(key):
-        """BTC(ビットコイン)の口座情報を返す"""
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                return balance['BTC']
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
-
-    def get_xrp(key):
-        """XRP(リップル)の口座情報を返す"""
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                return balance['XRP']
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
 
 if __name__ == "__main__":  # テスト用
     print(ACCOUNTINFORMATION.get_info(ACCOUNTINFORMATION.get_private_api(0)))
@@ -125,6 +100,6 @@ if __name__ == "__main__":  # テスト用
     print(ACCOUNTINFORMATION.get_data_asserts_jpy(ACCOUNTINFORMATION.get_private_api(0)))
     print(ACCOUNTINFORMATION.get_data_asserts_btc(ACCOUNTINFORMATION.get_private_api(0)))
     print(ACCOUNTINFORMATION.get_data_asserts_xrp(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_jpy(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_btc(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_xrp(ACCOUNTINFORMATION.get_private_api(0)))
+    print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'JPY'))
+    print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'XRP'))
+    print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'BTC'))
