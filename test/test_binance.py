@@ -5,16 +5,16 @@ sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールの
 import unittest
 from app.module.exchangess import binance
 
-
+exhanges, ask, bid = binance.BINANCE.xrp(0)
 class TestBitbank(unittest.TestCase):
     """bainasu.pyのテストクラス"""
 
     def test_returnbinancedata_id(self):
         """bainasuから値がとってこれているかどうか"""
-        testdata = binance.BINANCE.xrp(0)
-        print(testdata)
-        print(testdata['binance'].get('binance_id'))
-        self.assertEqual('binance', testdata['binance'].get('binance_id'))
+
+        print(exhanges,ask,bid)
+        print(exhanges)
+        self.assertEqual('binance', exhanges)
 
 
 if __name__ == "__main__":
