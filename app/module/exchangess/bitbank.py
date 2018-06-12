@@ -32,7 +32,6 @@ class BITBANK:
     def currency_pair_creation(self):
         """ 通貨ペアを返却する"""
         return self + '/JPY'
-
     def price_acquisition(self, orderbook):
         """selfで選択した価格をorderbookから取得しその値を返却する。"""
         return orderbook[self][0][0] \
