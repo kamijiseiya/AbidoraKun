@@ -8,7 +8,7 @@ bitbank, bitbank_ask, bitbank_bid = bitbank.BITBANK.currencyinformation('XRP')
 binance, binance_ask, binance_bid = binance.BINANCE.xrp(0)
 
 
-def ask(self):
+def ask():
     if bitbank_ask > binance_ask:
         ask_price = binance_ask
         ask_exhange = 'binance'
@@ -19,7 +19,7 @@ def ask(self):
         print(ask_exhange, ask_price, '取引B')
 
 
-def bid(self):
+def bid():
     if bitbank_bid > binance_bid:
         bid_price = bitbank_bid
         bid_exhange = 'bitbank'
@@ -31,4 +31,5 @@ def bid(self):
 
 
 if __name__ == "__main__":  # テスト用に追加
-    print(ask(0))
+    print('最安値' + ask())
+    print('最高値' + bid())
