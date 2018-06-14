@@ -8,15 +8,17 @@ from app.module.exchangess import bitbank
 
 class TestBitbank(unittest.TestCase):
     """bitbank.pyのテストクラス"""
-    """bitbankから値がとってこれているかどうか"""
+
     def test_currency_pair_xrp_jpy(self):
+        """bitbankからXRPがとってこれているかどうか"""
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
-        print(exhanges)
+        print(exhanges, ask, bid)
         self.assertEqual('XRP/JPY', bitbank.BITBANK.currency_pair_creation('XRP'))
 
     def test_currency_pair_btc_jpy(self):
+        """bitbankからBTCがとってこれているかどうか"""
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('BTC')
-        print(exhanges,ask,bid)
+        print(exhanges, ask, bid)
         self.assertEqual('BTC/JPY', bitbank.BITBANK.currency_pair_creation('BTC'))
 
 
