@@ -18,25 +18,28 @@ class ACCOUNTINFORMATION:
         while True:
             try:
                 balance = self.fetch_balance()  # selfから残高を取得
+                balancedata = None
                 if (getdata == 'ALL'):
                     # 全口座残高情報を返却する
                     print(self)
                     jsonstring = json.dumps(balance, indent=4)
                     print(jsonstring)
-                    return balance
+                    balancedata = balance
                 elif (getdata == 'assets'):
                     # 全資産情報情報を返却する
                     jsonstring = json.dumps(balance['info']['data'].get('assets'), indent=4)
                     print(jsonstring)
-                    return balance['info']['data'].get(getdata)
+                    balancedata = balance['info']['data'].get(getdata)
                 elif (getdata == 0 or getdata == 1 or getdata == 3):
                     # getdataの値が0の場合jpy、1の場合btc、3の場合xrpの資産情報を返却する。
                     jsonstring = json.dumps(balance['info']['data']['assets'][getdata], indent=4)
                     print(jsonstring)
-                    return balance['info']['data']['assets'][getdata]
+                    balancedata = balance['info']['data']['assets'][getdata]
                 else:
                     # それ以外の場合Noneを返却する。
-                    return None
+                    balancedata = None
+
+                return balancedata
             except ccxt.BaseError:
                 print("口座情報を取得できません。")
                 print("10秒待機してやり直します")
