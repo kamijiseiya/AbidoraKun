@@ -1,14 +1,18 @@
 sudo: false
 language: python
 python:
-  - 3.3
-  - 3.4
-  - 3.5
-  - 3.6.5
+- 3.3
+- 3.4
+- 3.5
+- 3.6.5
 install:
-  - pip install tox tox-travis
-  - pip install coverage coveralls
-  - pip install ccxt
+- pip install tox tox-travis
+- pip install coverage coveralls
+- pip install ccxt
 script:
-  - python --version
-  - python -m unittest discover test
+- python --version
+- python -m unittest discover test
+notifications:
+  email: false
+  slack:
+    secure: MOboSQtIS+CZc6Jk3WkYXAlDzWetCiQaF00a8k84dn6VshsXwSJHo+81TunRqrFJSY2SXRZB3CzeSLxpWIZHqnGPecpLLQB6nBrRR1M39KJq1RBkWJ8GTbtZIu3Qp6J/exKGrPzYg+5VsWiepSamf3HWF+fK3lws4zqaIqqY+3LEOewj8PEaSn+av7DQ/dKK6wR4mteGt4c1d6iOOrkjY5Mj1lUQcib+VzRIx0pOvoZgXABhZparhzCfXX+5LjlLS7gAdBnrDuSpXyWqq5hk3wmqkwmuV3qLP0iXuj0HXk/5wXnSb+l5FPbhEpYbfTGLY+F4kw60INgpeJeiJ2DIyeaxx+JRwaQtz4zQBq9cdXjAjSq5WgRhK7X+LCIzUZWzyIZ1PDFSXQ9aT+/Xd0nTrj0N6YC540jjCLSYiG6dl8jXGW1cnpCOr3DZGAAvokzgoT/0ZfrtA0iGapSLFUkoSVfwkSm5aCnd7GVANLqnyWhAiNzsfcCdAByP6X6mGOgFy8JtjX8NVTM7uJ+mERObTOK7Bwt5yj98+u7Kkh9pXMpYmNaTIMuf4fgNSePoTl598SFn4145dNfRQhqCzxkeCnsYomcumy2OhY2Q/EqJmbQPXh178CWnoB3KtW9rGYlzISBqOksS9JTVFBnym2dQtGl55+WXWvfpiNL/++OKzcQ=
