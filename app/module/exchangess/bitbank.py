@@ -20,14 +20,8 @@ class BITBANK:
                 bitbank_bid = BITBANK.price_acquisition('bids', bitbank_orderbook)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 bitbank_ask = BITBANK.price_acquisition('asks', bitbank_orderbook)
-                orderbook = {'bitbank': {
-                    'bitbank_id': bitbank.id
-                }, 'bid': {
-                    bitbank.id: bitbank_bid
-                }, 'ask': {
-                    bitbank.id: bitbank_ask
-                }}
-                return orderbook
+                print(bitbank_bid,bitbank_ask)
+                return {bitbank.id,bitbank_ask,bitbank_bid}
 
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
@@ -38,9 +32,11 @@ class BITBANK:
     def currency_pair_creation(self):
         """ 通貨ペアを返却する"""
         return self + '/JPY'
-
     def price_acquisition(self, orderbook):
         """selfで選択した価格をorderbookから取得しその値を返却する。"""
         return orderbook[self][0][0] \
             if (orderbook[self]) else None
 
+
+if __name__ == "__main__":  # テスト用に追加
+    print(BITBANK.currencyinformation('XRP'))
