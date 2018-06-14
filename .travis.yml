@@ -9,9 +9,14 @@ install:
 - pip install tox tox-travis
 - pip install coverage coveralls
 - pip install ccxt
+- pip install codecov
 script:
 - python --version
 - python -m unittest discover test
+
+after_success:
+  - codecov
+  
 notifications:
   email: false
   slack:
