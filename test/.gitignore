@@ -1,2 +1,2 @@
 #APIKEYを使用するpyのファイルをすべて無視する。
-test_line_alert.py
+/test_line_alert.py
