@@ -14,7 +14,7 @@ install:
 script:
 - python --version
 - python -m unittest discover test
-- osetests --with-xunit --with-coverage
+- nosetests --with-xunit --with-coverage
 after_success:
   - codecov
   
