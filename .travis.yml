@@ -10,10 +10,12 @@ install:
 - pip install coverage coveralls
 - pip install ccxt
 - pip install codecov
+- pip install -r requirements.txt -r test-requirements.txt
+- pip install coverage
 script:
 - python --version
 - python -m unittest discover test
-
+- osetests --with-xunit --with-coverage
 after_success:
   - codecov
   
