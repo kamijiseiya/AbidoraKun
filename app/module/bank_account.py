@@ -13,7 +13,7 @@ class ACCOUNTINFORMATION:
         })
         return bitbanks
 
-    def get_account_acquisition(self, getdata):
+    def get_account_balance(self, getdata):
         """getdataで指定された口座残高を返却する"""
         while True:
             try:
