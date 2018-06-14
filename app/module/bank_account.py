@@ -54,11 +54,11 @@ class ACCOUNTINFORMATION:
                 time.sleep(10)
 
 if __name__ == "__main__":  # テスト用
-    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 'ALL'))
-    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 'assets'))
-    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 0))
-    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 1))
-    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 3))
+    print(ACCOUNTINFORMATION.get_account_balance(ACCOUNTINFORMATION.get_private_api(0), 'ALL'))
+    print(ACCOUNTINFORMATION.get_account_balance(ACCOUNTINFORMATION.get_private_api(0), 'assets'))
+    print(ACCOUNTINFORMATION.get_account_balance(ACCOUNTINFORMATION.get_private_api(0), 0))
+    print(ACCOUNTINFORMATION.get_account_balance(ACCOUNTINFORMATION.get_private_api(0), 1))
+    print(ACCOUNTINFORMATION.get_account_balance(ACCOUNTINFORMATION.get_private_api(0), 3))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'JPY'))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'XRP'))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'BTC'))
