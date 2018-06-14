@@ -11,5 +11,4 @@ install:
   - pip install ccxt
 script:
   - python --version
-  - python -m unittest
-   -python3 -m unittest discover test
+   -python -m unittest discover test
