@@ -13,71 +13,30 @@ class ACCOUNTINFORMATION:
         })
         return bitbanks
 
-
-    def get_info(key):
-        """口座残高の情報を返却する"""
-
+    def get_account_acquisition(self, getdata):
+        """getdataで指定された口座残高を返却する"""
         while True:
             try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                print(key)
-                jsonstring = json.dumps(balance, indent=4)
-                print(jsonstring)
-                return balance
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
-    def get_data_assets(key):
-        """資産情報を返却する"""
-
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                print(key)
-                jsonstring = json.dumps(balance, indent=4)
-                print(jsonstring)
-                return balance['info']['data'].get('assets')
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
-    def get_data_asserts_jpy(key):
-        """JPYの資産情報を返却する"""
-
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                print(key)
-                return balance['info']['data']['assets'][0]
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
-    def get_data_asserts_btc(key):
-        """BTCの資産情報を返却する"""
-
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                print(key)
-                return balance['info']['data']['assets'][1]
-            except ccxt.BaseError:
-                print("口座情報を取得できません。")
-                print("10秒待機してやり直します")
-                time.sleep(10)
-
-    def get_data_asserts_xrp(key):
-        """BTCの資産情報を返却する"""
-
-        while True:
-            try:
-                balance = key.fetch_balance()  # keyから残高を取得
-                print(key)
-                return balance['info']['data']['assets'][3]
+                balance = self.fetch_balance()  # selfから残高を取得
+                if (getdata == 'ALL'):
+                    # 全口座残高情報を返却する
+                    print(self)
+                    jsonstring = json.dumps(balance, indent=4)
+                    print(jsonstring)
+                    return balance
+                elif (getdata == 'assets'):
+                    # 全資産情報情報を返却する
+                    jsonstring = json.dumps(balance['info']['data'].get('assets'), indent=4)
+                    print(jsonstring)
+                    return balance['info']['data'].get(getdata)
+                elif (getdata == 0 or getdata == 1 or getdata == 3):
+                    # getdataの値が0の場合jpy、1の場合btc、3の場合xrpの資産情報を返却する。
+                    jsonstring = json.dumps(balance['info']['data']['assets'][getdata], indent=4)
+                    print(jsonstring)
+                    return balance['info']['data']['assets'][getdata]
+                else:
+                    # それ以外の場合Noneを返却する。
+                    return None
             except ccxt.BaseError:
                 print("口座情報を取得できません。")
                 print("10秒待機してやり直します")
@@ -95,11 +54,11 @@ class ACCOUNTINFORMATION:
                 time.sleep(10)
 
 if __name__ == "__main__":  # テスト用
-    print(ACCOUNTINFORMATION.get_info(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_data_assets(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_data_asserts_jpy(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_data_asserts_btc(ACCOUNTINFORMATION.get_private_api(0)))
-    print(ACCOUNTINFORMATION.get_data_asserts_xrp(ACCOUNTINFORMATION.get_private_api(0)))
+    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 'ALL'))
+    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 'assets'))
+    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 0))
+    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 1))
+    print(ACCOUNTINFORMATION.get_account_acquisition(ACCOUNTINFORMATION.get_private_api(0), 3))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'JPY'))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'XRP'))
     print(ACCOUNTINFORMATION.get_cryptocurrency_balance(ACCOUNTINFORMATION.get_private_api(0), 'BTC'))
