@@ -3,6 +3,9 @@
 import time
 import ccxt  # 取引所ライブラリをインポート
 
+bitbank = ccxt.bitbank()
+"""bitbankを取得"""
+
 
 class BITBANK:
     """bitbankからの取引データを処理するクラス"""
@@ -11,7 +14,6 @@ class BITBANK:
         """bitbankのself(選択した通貨)/JPY取引データを返す"""
         while True:
             try:
-                bitbank = ccxt.bitbank()
                 # 通貨ペアself/JPYをcurrencypairに返却する。
                 currencypair = BITBANK.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
@@ -20,18 +22,21 @@ class BITBANK:
                 bitbank_bid = BITBANK.price_acquisition('bids', bitbank_orderbook)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 bitbank_ask = BITBANK.price_acquisition('asks', bitbank_orderbook)
-                print(bitbank_bid,bitbank_ask)
-                return {bitbank.id,bitbank_ask,bitbank_bid}
+                print(bitbank_bid, bitbank_ask)
+                varyu = bitbank.fetch_deposit_address('XRP')
+                print(varyu)
+                print(type(bitbank_bid), type(bitbank_ask))
+                return {bitbank.id, bitbank_ask, bitbank_bid}
 
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
                 time.sleep(10)
 
-
     def currency_pair_creation(self):
         """ 通貨ペアを返却する"""
         return self + '/JPY'
+
     def price_acquisition(self, orderbook):
         """selfで選択した価格をorderbookから取得しその値を返却する。"""
         return orderbook[self][0][0] \
@@ -40,3 +45,20 @@ class BITBANK:
 
 if __name__ == "__main__":  # テスト用に追加
     print(BITBANK.currencyinformation('XRP'))
+
+
+class order:
+    """注文をするクラス"""
+
+    def buy(self, price, currency):
+        """買い注文をするメソッド"""
+        varyu = bitbank.fetch_deposit_address('XRP')
+        print(varyu)
+        result = bitbank.create_limit_buy_order(currency, 1, price)  # xrpを購入
+        print(result)
+
+    def selling(self, price, curency):
+        """売り注文をするメソッド"""
+        bitbank.fetch_deposit_address()
+        result = bitbank.create_limit_sell_order(curency, 1, price)  # xrpを売却　
+        print(result)
