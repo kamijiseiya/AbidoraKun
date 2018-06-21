@@ -20,11 +20,12 @@ list_length_binance = 0
 list_time = []
 list_length_time = 0
 MAXLENGTH = 100 #ﾁｬｰﾄx方向最大値です。
-FREQUENCY = 10 #ﾃﾞｰﾀ取得周期です。
+FREQUENCY = 5 #ﾃﾞｰﾀ取得周期です。
 
 #print(ccxt.exchanges)
 plt.ion() # インタラクティブモードにする
 fig, ax = plt.subplots(1,1)
+#表示場所の設定
 ax_bitbank = plt.subplot(211)
 ax_binance = plt.subplot(212)
 while True:
@@ -60,7 +61,6 @@ while True:
 
     # ﾁｬｰﾄ用ﾃﾞｰﾀの作成をします。
     index = pd.DatetimeIndex(list_time)
-    index = index.floor('S')
 
     bitbank_xrp = pd.Series(list_bitbank_price, index = index)
     list_length_bitbank = len(list_bitbank_price)
@@ -71,8 +71,8 @@ while True:
     # ここからﾁｬｰﾄ作成です
     plt.figure(1)
     ax.xaxis.set_major_locator(mdates.SecondLocator())
-    bitbank_xrp_ohlc = bitbank_xrp.resample('B').ohlc()
-    binance_xrp_ohlc = binance_xrp.resample('B').ohlc()
+    bitbank_xrp_ohlc = bitbank_xrp.resample('30s').ohlc()
+    binance_xrp_ohlc = binance_xrp.resample('30s').ohlc()
     print(bitbank_xrp_ohlc)
     ax_bitbank.clear()
     ax_binance.clear()
@@ -80,5 +80,4 @@ while True:
     binance_xrp_ohlc.plot(stacked = True, ax = ax_binance)
     plt.legend()  # チャート名表示
     plt.draw()
-    plt.pause(.1)  # チャート画面を表示
-    time.sleep(FREQUENCY)
+    plt.pause(FREQUENCY)  # チャート画面を表示
