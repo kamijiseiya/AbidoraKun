@@ -1,7 +1,6 @@
 
 # ライブラリ
 import tkinter
-# tkinterよりデザインが良くなる
 from tkinter import ttk
 
 
@@ -10,7 +9,6 @@ def changePage(page):
     # MainPageを上位層にする
     page.tkraise()
 
-# main関数を追加し、スコープを切る
 def main() -> None:
     # インスタンス生成
     window = tkinter.Tk()
@@ -28,60 +26,65 @@ def main() -> None:
     #-----------------------------------StartPage---------------------------------
     ### StartPage用のFrameを生成
     startPage = ttk.Frame(window)
-    startTest = tkinter.Frame(startPage, width=300, height=200, bd=20, bg = '#000fff000')
-    backPage = tkinter.Frame(startPage, bg='blue', bd=40, height=100, width=300)
-    bidPage = tkinter.Frame(startPage, bg='red', height=100, width=200, bd=20)
-    askPage = tkinter.Frame(startPage, bg='yellow', height=100, width=200, bd=20)
+    startTest = tkinter.Frame(startPage, width=300, height=200, bd=20, bg = '#000fff000', relief="groove")
+    backPage = tkinter.Frame(startPage, bg='blue', height=300, width=200, relief="raised")
+    bidPage = tkinter.Frame(startPage, bg='red', height=150, width=200, bd=0)
+    askPage = tkinter.Frame(startPage, bg='yellow', height=150, width=200, bd=0, padx=100, pady=75)
+    tablePage = tkinter.Frame(startPage, width=590, height=350, bg='black', relief="groove")
+
 
     ### ボタン表示
     # APIキー登録ボタン生成
     startButton =\
      tkinter.Button(startTest, width=25, height=2, text="取引所APIキー登録画面", command=lambda : changePage(mainPage))
 
-    startButton.grid(row=0, column=0)
+    #expand 親に合わせて変化　fill frameの空きスペースを埋めるか
+    startButton.pack(side="left", expand=1, fill="both")
 
     # SNSボタン生成
     lineButton =\
      tkinter.Button(startTest, width=25, height=2, text="SNS登録", command= lambda : changePage(snsPage))
 
-    lineButton.grid(row=0, column=1)
+    lineButton.pack(side="left", expand=1, fill="both")
 
     # 設定ボタン生成
     ConfigButton =\
      tkinter.Button(startTest, width=25, height=2, text="設定", command= lambda : changePage(configPage))
 
-    ConfigButton.grid(row=0, column=2)
+    ConfigButton.pack(side="left", expand=1, fill="both")
 
 
     exchange = ttk.Label(backPage, text=u"取引所")
     # exchange.place(relx=0.8)
-    exchange.grid(row=0, column=0)
+    #exchange.grid(row=0, column=0)
     bid = ttk.Label(backPage, text=u'買値')
     # bid.place(relx=0.88)
-    bid.grid(row=1, column=0)
+    #bid.grid(row=1, column=0)
     ask = ttk.Label(backPage, text=u'売値')
     # ask.place(relx=0.93)
-    ask.grid(row=1, column=1)
+    #ask.grid(row=1, column=1)
     exchangeA = ttk.Label(backPage, text=u"取引所A")
     # exchangeA.place(relx=0.8, rely=0.05)
-    exchangeA.grid(row=2, column=0)
+    #exchangeA.grid(row=2, column=0)
     exchangeB = ttk.Label(backPage, text=u"取引所B")
     # exchangeB.place(relx=0.8, rely=0.1)
-    exchangeB.grid(row=3, column=0)
+    #exchangeB.grid(row=3, column=0)
 
     buy_order = ttk.Label(bidPage, text=u"買い注文")
     # buy_order.place(relx=0.85, rely=0.5)
-    buy_order.grid(row=0, column=0)
+    #buy_order.grid(row=0, column=0)
     sell_order = ttk.Label(askPage, text=u"売り注文")
     # sell_order.place(relx=0.85, rely=0.75)
     sell_order.grid(row=0, column=0)
 
+
     #フレームを配置
     startPage.grid(row=0, column=0, sticky="nsew")
     startTest.place(relx=0.01, rely=0.01)
-    backPage.place(relx=0.8, rely=0.01)
-    bidPage.place(relx=0.8, rely=0.5)
-    askPage.place(relx=0.8, rely=0.75)
+    backPage.place(relx=0.75, rely=0.01)
+    bidPage.place(relx=0.75, rely=0.5)
+    askPage.place(relx=0.75, rely=0.75)
+    tablePage.place(relx=0.01, rely=0.15)
 
     #-----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
