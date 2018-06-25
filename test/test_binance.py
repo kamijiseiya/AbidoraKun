@@ -12,7 +12,7 @@ class TestBitbank(unittest.TestCase):
     def test_returnbinancedata_id(self):
         """bainasuから値がとってこれているかどうか"""
 
-        print(exhanges,ask,bid)
+        print(exhanges, ask, bid)
         print(exhanges)
         self.assertEqual('binance', exhanges)
 
@@ -21,7 +21,7 @@ class TestBitbank(unittest.TestCase):
         """get_addressからBTCのアドレスが返されるかのテスト"""
         addressdata = binance.BINANCE.get_address('BTC')
         print(addressdata.get('address'))
-        self.assertEqual('1BXWsTqpUf23wottHy7utAqrCU3ygpMwCZ',addressdata['address'])
+        self.assertEqual('1BXWsTqpUf23wottHy7utAqrCU3ygpMwCZ', addressdata['address'])
 
     def test_get_address_btc_tag(self):
         """get_addressからBTCのtagが返されるかのテスト"""
