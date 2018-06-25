@@ -39,12 +39,14 @@ class BINANCE:
 
     def get_address(self):
         """binanceの取引通貨ごとのアドレスを返す"""
-        if (self == 'BTC' or self == 'XRP'):
+        if(self == 'BTC' or self == 'XRP'):
             while True:
                 try:
                     print(json.dumps(BINANCE.exchange.fetch_deposit_address(self), indent=4))
-                    address = BINANCE.exchange.fetch_deposit_address(self)
-                    return address
+                    address = BINANCE.exchange.fetch_deposit_address(self)['address']
+                    tag = BINANCE.exchange.fetch_deposit_address(self)['tag']
+                    addressinformation = {'addoress': address, 'tag': tag}
+                    return addressinformation
                 except ccxt.BaseError:
                     print("取引所から取引データを取得できません。")
                     print("10秒待機してやり直します")
