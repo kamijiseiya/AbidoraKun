@@ -42,23 +42,20 @@ class BITBANK:
         return orderbook[self][0][0] \
             if (orderbook[self]) else None
 
+    def buy(self,currency,amount, price,):
+        """買い注文をするメソッド"""
+        varyu = bitbank.fetch_deposit_address('XRP')
+
+        result = bitbank.create_limit_buy_order(currency, amount, price)  # xrpを購入
+        print(result)
+
+    def sell(self,currency,amount, price, ):
+        """売り注文をするメソッド"""
+
+        result = bitbank.create_limit_sell_order(currency, amount, price)  # xrpを売却　
+        print(result)
 
 if __name__ == "__main__":  # テスト用に追加
     print(BITBANK.currencyinformation('XRP'))
 
 
-class order:
-    """注文をするクラス"""
-
-    def buy(self, price, currency):
-        """買い注文をするメソッド"""
-        varyu = bitbank.fetch_deposit_address('XRP')
-        print(varyu)
-        result = bitbank.create_limit_buy_order(currency, 1, price)  # xrpを購入
-        print(result)
-
-    def selling(self, price, curency):
-        """売り注文をするメソッド"""
-        bitbank.fetch_deposit_address()
-        result = bitbank.create_limit_sell_order(curency, 1, price)  # xrpを売却　
-        print(result)
