@@ -4,6 +4,7 @@ import tkinter
 from tkinter import ttk
 
 
+
 # startボタンを押したときの処理
 def changePage(page):
     # MainPageを上位層にする
@@ -26,11 +27,11 @@ def main() -> None:
     #-----------------------------------StartPage---------------------------------
     ### StartPage用のFrameを生成
     startPage = ttk.Frame(window)
-    startTest = tkinter.Frame(startPage, width=300, height=200, bd=20, bg = '#000fff000', relief="groove")
-    backPage = tkinter.Frame(startPage, bg='blue', height=300, width=200, relief="raised")
-    bidPage = tkinter.Frame(startPage, bg='red', height=150, width=200, bd=0)
-    askPage = tkinter.Frame(startPage, bg='yellow', height=150, width=200, bd=0, padx=100, pady=75)
-    tablePage = tkinter.Frame(startPage, width=590, height=350, bg='black', relief="groove")
+    startTest = tkinter.Frame(startPage, bg='black', width=300, height=200, bd=20, relief="groove")
+    backPage = tkinter.Frame(startPage, bg='black', height=300, width=200, bd=10, relief="ridge")
+    bidPage = tkinter.Frame(startPage, bg='black', height=150, width=200, bd=10, relief="ridge")
+    askPage = tkinter.Frame(startPage, bg='black', height=150, width=200, bd=10, relief="ridge")
+    tablePage = tkinter.Frame(startPage, bg='black', width=590, height=350, bd=10, relief="sunken")
 
 
     ### ボタン表示
@@ -43,39 +44,34 @@ def main() -> None:
 
     # SNSボタン生成
     lineButton =\
-     tkinter.Button(startTest, width=25, height=2, text="SNS登録", command= lambda : changePage(snsPage))
+     tkinter.Button(startTest, width=25, height=2, text="SNS登録", command=lambda : changePage(snsPage))
 
     lineButton.pack(side="left", expand=1, fill="both")
 
     # 設定ボタン生成
     ConfigButton =\
-     tkinter.Button(startTest, width=25, height=2, text="設定", command= lambda : changePage(configPage))
+     tkinter.Button(startTest, width=25, height=2, text="設定", command=lambda : changePage(configPage))
 
     ConfigButton.pack(side="left", expand=1, fill="both")
 
 
-    exchange = ttk.Label(backPage, text=u"取引所")
-    # exchange.place(relx=0.8)
-    #exchange.grid(row=0, column=0)
-    bid = ttk.Label(backPage, text=u'買値')
-    # bid.place(relx=0.88)
-    #bid.grid(row=1, column=0)
-    ask = ttk.Label(backPage, text=u'売値')
-    # ask.place(relx=0.93)
-    #ask.grid(row=1, column=1)
-    exchangeA = ttk.Label(backPage, text=u"取引所A")
-    # exchangeA.place(relx=0.8, rely=0.05)
-    #exchangeA.grid(row=2, column=0)
-    exchangeB = ttk.Label(backPage, text=u"取引所B")
-    # exchangeB.place(relx=0.8, rely=0.1)
-    #exchangeB.grid(row=3, column=0)
+    exchange = ttk.Label(backPage, text=u"取引所", foreground='white', background='black')
+    exchange.place(relx=0.1, rely=0.1)
+    bid = ttk.Label(backPage, text=u'買値', foreground='white', background='black')
+    bid.place(relx=0.4, rely=0.1)
+    ask = ttk.Label(backPage, text=u'売値', foreground='white', background='black')
+    ask.place(relx=0.7, rely=0.1)
+    exchangeA = ttk.Label(backPage, text=u"取引所A", foreground='white', background='black')
+    exchangeA.place(relx=0.1, rely=0.2)
+    exchangeB = ttk.Label(backPage, text=u"取引所B", foreground='white', background='black')
+    exchangeB.place(relx=0.1, rely=0.3)
 
-    buy_order = ttk.Label(bidPage, text=u"買い注文")
-    # buy_order.place(relx=0.85, rely=0.5)
-    #buy_order.grid(row=0, column=0)
-    sell_order = ttk.Label(askPage, text=u"売り注文")
-    # sell_order.place(relx=0.85, rely=0.75)
-    sell_order.grid(row=0, column=0)
+
+
+    buy_order = ttk.Label(bidPage, text=u"買い注文", foreground='white', background='black')
+    buy_order.place(relx=0.1, rely=0.1)
+    sell_order = ttk.Label(askPage, text=u"売り注文", foreground='white', background='black')
+    sell_order.place(relx=0.1, rely=0.1)
 
 
     #フレームを配置
@@ -89,10 +85,6 @@ def main() -> None:
     #-----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
     mainPage = tkinter.Frame(window)
-
-    ###  空白
-    #---  ラベル生成
-    spaceLabel1 = [tkinter.Label(mainPage, text="") for column in range(5)]
 
     #別ファイルから読み込み実行
     #exec(open("./entry.py",'r',encoding="utf-8").read())
