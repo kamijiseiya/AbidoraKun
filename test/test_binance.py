@@ -29,5 +29,11 @@ class TestBitbank(unittest.TestCase):
         print(addressdata.get('tag'))
         self.assertEqual('', addressdata['tag'])
 
+    def test_get_address_xrp_address(self):
+        """get_addressからXRPのaddressが返されるかのテスト"""
+        addressdata = binance.BINANCE.get_address('XRP')
+        print(addressdata.get('address'))
+        self.assertEqual('rEb8TK3gBgk5auZkwc6sHnwrGVJH8DuaLh', addressdata['address'])
+
 if __name__ == "__main__":
     unittest.main()
