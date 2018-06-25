@@ -41,5 +41,12 @@ class TestBitbank(unittest.TestCase):
         print(addressdata.get('tag'))
         self.assertEqual('103219183', addressdata['tag'])
 
+
+    def test_get_address_jpy_none(self):
+        """XRPとBTC以外の値(JPY)の場合get_addressからNoneが返されるかのテスト"""
+        addressdata = binance.BINANCE.get_address('JPY')
+        print(addressdata)
+        self.assertIsNone(addressdata)
+
 if __name__ == "__main__":
     unittest.main()
