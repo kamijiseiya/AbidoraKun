@@ -18,10 +18,16 @@ class TestBitbank(unittest.TestCase):
 
 
     def test_get_address_btc_address(self):
+        """get_addressからBTCのアドレスが返されるかのテスト"""
         addressdata = binance.BINANCE.get_address('BTC')
         print(addressdata.get('address'))
         self.assertEqual('1BXWsTqpUf23wottHy7utAqrCU3ygpMwCZ',addressdata['address'])
 
+    def test_get_address_btc_tag(self):
+        """get_addressからBTCのtagが返されるかのテスト"""
+        addressdata = binance.BINANCE.get_address('BTC')
+        print(addressdata.get('tag'))
+        self.assertEqual('', addressdata['tag'])
 
 if __name__ == "__main__":
     unittest.main()
