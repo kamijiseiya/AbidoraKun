@@ -17,5 +17,11 @@ class TestBitbank(unittest.TestCase):
         self.assertEqual('binance', exhanges)
 
 
+    def test_get_address_btc_address(self):
+        addressdata = binance.BINANCE.get_address('BTC')
+        print(addressdata.get('address'))
+        self.assertEqual('1BXWsTqpUf23wottHy7utAqrCU3ygpMwCZ',addressdata['address'])
+
+
 if __name__ == "__main__":
     unittest.main()
