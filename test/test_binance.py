@@ -48,5 +48,12 @@ class TestBitbank(unittest.TestCase):
         print(addressdata)
         self.assertIsNone(addressdata)
 
+
+    def test_get_address_number_none(self):
+        """XRPとBTC以外の値(数値)の場合get_addressからNoneが返されるかのテスト"""
+        addressdata = binance.BINANCE.get_address(0)
+        print(addressdata)
+        self.assertIsNone(addressdata)
+
 if __name__ == "__main__":
     unittest.main()
