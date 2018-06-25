@@ -1,9 +1,13 @@
-
+"""メイン画面"""
+import os  # パスを操作するモジュール
+import sys  # パスを読み込むモジュール
+sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールのパス指定
 # ライブラリ
 import tkinter
 from tkinter import ttk
 
-
+from app.module.exchangess import bitbank
+from app.module.exchangess import binance
 
 # startボタンを押したときの処理
 def changePage(page):
@@ -61,11 +65,27 @@ def main() -> None:
     bid.place(relx=0.4, rely=0.1)
     ask = ttk.Label(backPage, text=u'売値', foreground='white', background='black')
     ask.place(relx=0.7, rely=0.1)
-    exchangeA = ttk.Label(backPage, text=u"取引所A", foreground='white', background='black')
+    exchangeA = ttk.Label(backPage, text=u"bitbank", foreground='white', background='black')
     exchangeA.place(relx=0.1, rely=0.2)
-    exchangeB = ttk.Label(backPage, text=u"取引所B", foreground='white', background='black')
+    exchangeB = ttk.Label(backPage, text=u"binance", foreground='white', background='black')
     exchangeB.place(relx=0.1, rely=0.3)
 
+
+    # bitbankから価格の取得
+    exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
+    print(exchange, ask, bid)
+    bitbank_ask = ttk.Label(backPage, text=ask, foreground='white', background='black')
+    bitbank_ask.place(relx=0.4, rely=0.2)
+    bitbank_bid = ttk.Label(backPage, text=bid, foreground='white', background='black')
+    bitbank_bid.place(relx=0.7, rely=0.2)
+
+    # binanceから価格の取得
+    exchange2, ask2, bid2 = binance.BINANCE.xrp(0)
+    print(exchange2, ask2, bid2)
+    binance_ask = ttk.Label(backPage, text=ask2, foreground='white', background='black')
+    binance_ask.place(relx=0.4, rely=0.3)
+    binance_bid = ttk.Label(backPage, text=bid2, foreground='white', background='black')
+    binance_bid.place(relx=0.7, rely=0.3)
 
 
     buy_order = ttk.Label(bidPage, text=u"買い注文", foreground='white', background='black')
