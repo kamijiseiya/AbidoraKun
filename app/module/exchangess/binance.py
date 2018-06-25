@@ -45,7 +45,7 @@ class BINANCE:
                     print(json.dumps(BINANCE.exchange.fetch_deposit_address(self), indent=4))
                     address = BINANCE.exchange.fetch_deposit_address(self)['address']
                     tag = BINANCE.exchange.fetch_deposit_address(self)['tag']
-                    addressinformation = {'addoress': address, 'tag': tag}
+                    addressinformation = {'address': address, 'tag': tag}
                     return addressinformation
                 except ccxt.BaseError:
                     print("取引所から取引データを取得できません。")
