@@ -12,7 +12,7 @@ def btc_to_jpy(btc: float) -> float:
         jpy = btc * bid  # BTCを日本円の額に変換する bitbank btc/jpy bidを呼び出す。
         print(type(btc), type(bid), type(jpy))
         print(jpy)
-        return jpy
+        return round(jpy, 3)
     except TypeError:
         return print('変換の処理に問題が発生しました')
 
