@@ -3,9 +3,11 @@ import time
 import datetime
 import matplotlib.dates as mdates
 #import ccxt
-import numpy as np#インストールが必要
-import pandas as pd#インストールが必要
-import matplotlib.pyplot as plt#インストールが必要
+import numpy as np  #インストールが必要
+import pandas as pd  #インストールが必要
+import matplotlib.pyplot as plt  #インストールが必要
+from matplotlib import ticker
+import mpl_finance as mpf  #インストールが必要
 from module import exchanges_bitbank
 from module import exchanges_binance
 from module import btc_to_jpy
@@ -60,7 +62,7 @@ while True:
             list_time.append(now)
 
     # ﾁｬｰﾄ用ﾃﾞｰﾀの作成をします。
-    index = pd.DatetimeIndex(list_time)
+    index = pd.DatetimeIndex(list_time, start = list_time[0])
 
     bitbank_xrp = pd.Series(list_bitbank_price, index = index)
     list_length_bitbank = len(list_bitbank_price)
@@ -76,8 +78,22 @@ while True:
     print(bitbank_xrp_ohlc)
     ax_bitbank.clear()
     ax_binance.clear()
-    bitbank_xrp_ohlc.plot(stacked = True, ax = ax_bitbank)
-    binance_xrp_ohlc.plot(stacked = True, ax = ax_binance)
-    plt.legend()  # チャート名表示
+    # ローソク足
+    mpf.candlestick2_ohlc(ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high, lows=bitbank_xrp_ohlc.low, closes=bitbank_xrp_ohlc.close, width=1)
+    mpf.candlestick2_ohlc(ax_binance, opens=binance_xrp_ohlc.open, highs=binance_xrp_ohlc.high, lows=binance_xrp_ohlc.low, closes=binance_xrp_ohlc.close, width=1)
+    # x軸を時間にする
+    xdate = bitbank_xrp_ohlc.index
+
+    def mydate(x, pos):
+        try:
+            return xdate[int(x)]
+        except IndexError:
+            return ''
+
+    ax.xaxis.set_major_formatter(ticker.FuncFormatter(mydate))
+    ax.format_xdata = mdates.DateFormatter('%H-%T-%s')
+
+    fig.autofmt_xdate()
+    fig.tight_layout()
     plt.draw()
     plt.pause(FREQUENCY)  # チャート画面を表示
