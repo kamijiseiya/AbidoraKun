@@ -11,7 +11,9 @@
 
 
 ## Description
-
+It is a tool to calculate the price difference of each exchange and to trade automatically.  
+The transaction is started by entering the API key.  
+Cooperation with each SNS is also possible.
 ## Demo
 
 ## VS.
