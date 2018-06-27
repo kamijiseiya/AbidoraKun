@@ -30,4 +30,4 @@
 
 ## Author
 
-[tcnksm](https://github.com/tcnksm)
+[kamijiseiya](https://github.com/kamijiseiya/)
