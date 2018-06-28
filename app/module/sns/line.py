@@ -1,42 +1,42 @@
-"""ユーザーのトークンキーをDBに登録する"""
-# インポート
+# Python 3.5.2 にて動作を確認
+# sqlite3 標準モジュールをインポート
 import sqlite3
 
-# データベースファイルのパス(なければ作られる)
-DBPATH = 'cash-cow_db.sqlite'
+# データベースファイルのパス
+DBPATH = 'sample_db.sqlite'
+
 # データベース接続とカーソル生成
 CONNECTION = sqlite3.connect(DBPATH)
 # 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
-CONNECTION.isolation_level = None
+# connection.isolation_level = None
 CURSOR = CONNECTION.cursor()
 
 
+# エラー処理（例外処理）
 class LINE:
-    """"LINEを操作するクラス"""
-    def registration(name, apykey):
-        """""APIキーを登録するメソッド
-        :param apykey:
-        :return:
-        """
+
+    def registration(name, api):
         try:
-            # CREATE  (IF NOT EXISTS　は作成済みのテーブルを作るエラーを解消)
-            # execute (SQLを実行する)
+
+            CURSOR.execute("DROP TABLE IF EXISTS sample")
             CURSOR.execute(
-                "CREATE TABLE IF NOT EXISTS line (name TEXT PRIMARY KEY,apykey TEXT)")
-
-            # エラー時の処理
-            print(apykey)
-
-            CURSOR.execute('SELECT * FROM Line ORDER BY name')
-            # 全件取得は cursor.fetchall()
-            res = CURSOR.fetchall()
-            print(res)
-            return name, apykey
+                "CREATE TABLE IF NOT EXISTS sample (name TEXT PRIMARY KEY, api TEXT)")
+            # INSERT
+            CURSOR.execute("INSERT INTO sample VALUES (:name, :api)",
+                           {'name': name, 'api':  api})
+            # プレースホルダの使用例
+            # プレースホルダには疑問符(qmark スタイル)と名前(named スタイル)の2つの方法がある
+            # 1つの場合には最後に , がないとエラー。('鈴木') ではなく ('鈴木',)
+            CURSOR.execute("INSERT INTO sample VALUES ('LINE', 'kpksdkふぉsじょそぼsmvsd「')")
+            # 保存を実行（忘れると保存されないので注意）
+            CONNECTION.commit()
+            # 接続を閉じる
+            CONNECTION.close()
+            return api, name
         except sqlite3.Error as e:
             print('sqlite3.Error occurred:', e.args[0])
             return 'none'
 
 
-if __name__ == "__main__":
-
-    print(LINE.registration('slack', '110asd03dk'))
+if __name__ == "__main__":  # テスト用に追加
+    print(LINE.registration('slack' , '上地'))
