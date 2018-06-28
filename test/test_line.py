@@ -12,6 +12,10 @@ class Testline(unittest.TestCase):
 
     def test_registration(self):
         """入力された値が保存されたかどうか"""
+
         name, api, = line.LINE.registration('test', 'jojnvsidvnpsd')
-        #name, api, = line.LINE.registration('test', 'megane')
         self.assertEqual(name == 'test', api == 'jojnvsidvnpsd')
+
+        """例外処理が発生したかどうか"""
+        self.assertEqual('none' ,line.LINE.registration('test', 'jojnvsidvnpsd2222'))
+
