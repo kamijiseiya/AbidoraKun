@@ -1,4 +1,7 @@
 """XRPの売値をccxtを使用して取得しそれを利用してチャートを表示する"""
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join('..')))
 import time
 import datetime
 import matplotlib.dates as mdates
@@ -8,9 +11,9 @@ import pandas as pd  #インストールが必要
 import matplotlib.pyplot as plt  #インストールが必要
 from matplotlib import ticker
 import mpl_finance as mpf  #インストールが必要
-from module import exchanges_bitbank
-from module import exchanges_binance
-from module import btc_to_jpy
+from module.exchangess.bitbank import BITBANK
+from module.exchangess.binance import BINANCE
+#from module.money_exchange import btc_to_jpy
 
 #参考
 #http://okuribitoni.hatenablog.com/entry/2018/01/11/211204
@@ -32,13 +35,13 @@ ax_bitbank = plt.subplot(211)
 ax_binance = plt.subplot(212)
 while True:
     # BITBANKでのXRP売値=bitbank_ask
-    bitbank_ask = exchanges_bitbank.bitbank_ask()\
-        if exchanges_bitbank.bitbank_ask() is not None else None
+    bitbank_id, bitbank_ask, bitbank_bid = BITBANK.currencyinformation('XRP')\
+        if BITBANK.currencyinformation('XRP') is not None else None
     # 現在の時刻を取得
     now = datetime.datetime.now()
     print(now)
 
-    binance_ask = btc_to_jpy.btc_to_jpy(exchanges_binance.binace_ask())
+    binance_ask = BINANCE.xrp(1)[1]
     print(bitbank_ask)
     print(binance_ask)
 
