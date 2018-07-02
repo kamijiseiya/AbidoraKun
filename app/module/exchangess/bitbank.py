@@ -71,16 +71,12 @@ class BITBANK:
         """" APIkキーを登録するメソッド"""
         try:
 
-            CURSOR.execute("DROP TABLE IF EXISTS exchanges")
             # テーブルがない場合は作成する。
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
             # INSERT
             CURSOR.execute("INSERT INTO exchanges VALUES (:name, :api,:secret)",
                            {'name': name, 'api': api, 'secret': secret})
-
-            CURSOR.execute('SELECT * FROM exchanges ORDER BY name')
-
             # 保存を実行（忘れると保存されないので注意）
             CONNECTION.commit()
             # 接続を閉じる
