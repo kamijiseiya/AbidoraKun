@@ -14,7 +14,7 @@ class BINANCE:
         'secret': 'シークレットキー'
     })
 
-    def xrp(self):
+    def currencyinformation(self):
         """binanceの取引データを返す"""
         while True:
             try:
