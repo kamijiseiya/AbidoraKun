@@ -2,7 +2,19 @@
 # coding: UTF-8 文字コード指定
 import time
 import ccxt  # 取引所ライブラリをインポート
+# sqlite3 標準モジュールをインポート
+import sqlite3
 
+# データベースファイルのパス
+DBPATH = 'cash_cow_db.sqlite'
+
+# データベース接続とカーソル生成
+CONNECTION = sqlite3.connect(DBPATH)
+# 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
+# connection.isolation_level = None
+CURSOR = CONNECTION.cursor()
+
+# エラー処理（例外処理）
 bitbank = ccxt.bitbank()
 """bitbankを取得"""
 
@@ -42,18 +54,45 @@ class BITBANK:
         return orderbook[self][0][0] \
             if (orderbook[self]) else None
 
-    def buy(self, currency, amount, price,):
+    @staticmethod
+    def buy(currency, amount, price, ):
         """買い注文をするメソッド"""
         result = bitbank.create_limit_buy_order(currency, amount, price)  # xrpを購入
         print(result)
 
-    def sell(self, currency, amount, price, ):
+    @staticmethod
+    def sell(currency, amount, price, ):
         """売り注文をするメソッド"""
 
         result = bitbank.create_limit_sell_order(currency, amount, price)  # xrpを売却　
         print(result)
 
-if __name__ == "__main__":  # テスト用に追加
-    print(BITBANK.currencyinformation('XRP'))
+    def registration(name, api, secret):
+        """" APIkキーを登録するメソッド"""
+        try:
 
+            CURSOR.execute("DROP TABLE IF EXISTS exchanges")
+            # テーブルがない場合は作成する。
+            CURSOR.execute(
+                "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
+            # INSERT
+            CURSOR.execute("INSERT INTO exchanges VALUES (:name, :api,:secret)",
+                           {'name': name, 'api': api, 'secret': secret})
+
+            CURSOR.execute('SELECT * FROM exchanges ORDER BY name')
+
+            # 保存を実行（忘れると保存されないので注意）
+            CONNECTION.commit()
+            # 接続を閉じる
+            CONNECTION.close()
+            # 登録された値を返す
+            return name, api,secret
+        except sqlite3.Error as error:
+            print('sqlite3.Error occurred:', error.args[0])
+            print('すでに追加されています。')
+            return 'none'
+
+
+if __name__ == "__main__":  # テスト用に追加
+    print(BITBANK.registration('test', '0001', '0002'))
 
