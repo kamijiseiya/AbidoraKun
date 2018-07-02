@@ -21,6 +21,13 @@ class TestBitbank(unittest.TestCase):
         print(exhanges, ask, bid)
         self.assertEqual('BTC/JPY', bitbank.BITBANK.currency_pair_creation('BTC'))
 
+    def test_registration(self):
+        """APIキーが保存されたかどうか"""
+        name, api, secret = bitbank.BITBANK.registration('test', '01', '02')
+        print(name, api, secret)
+        self.assertEqual(name == 'test', api == '01', secret == '02')
+        """同じAPIキーが保存された場合例外処理がハッセしたかどうか"""
+        self.assertEqual('none', bitbank.BITBANK.registration('test', '01', '02'))
 
 if __name__ == "__main__":
     unittest.main()
