@@ -79,7 +79,7 @@ class BINANCE:
     def registration(name, api, secret):
         """" APIkキーを登録するメソッド"""
         try:
-            CURSOR.execute("DROP TABLE IF EXISTS exchanges")
+
             # テーブルがない場合は作成する。
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
