@@ -9,7 +9,7 @@ DBPATH = 'cash_cow_db.sqlite'
 # データベース接続とカーソル生成
 CONNECTION = sqlite3.connect(DBPATH)
 # 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
-# connection.isolation_level = None
+CONNECTION .isolation_level = None
 CURSOR = CONNECTION.cursor()
 
 
@@ -28,8 +28,11 @@ class LINE:
             # INSERT
             CURSOR.execute("INSERT INTO sns VALUES (:name, :api)",
                            {'name': name, 'api': api})
-
             CURSOR.execute('SELECT * FROM sns ORDER BY name')
+            res = CURSOR.fetchall()
+            print(res)
+            res = CURSOR.execute('SELECT name FROM sns ')
+
 
             # 保存を実行（忘れると保存されないので注意）
             CONNECTION.commit()
@@ -40,3 +43,19 @@ class LINE:
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
             return 'none'
+
+    def search_apykey():
+        try:
+            CURSOR.execute('SELECT * FROM sns ORDER BY name')
+            res = CURSOR.fetchall()
+            print(res)
+            CONNECTION.close()
+            return res
+        except sqlite3.Error as error:
+            print('sqlite3.Error occurred:', error.args[0])
+        return 'none'
+
+
+if __name__ == "__main__":  # テスト用に追加
+    #print(LINE.registration('slack','0001'))
+    print(LINE.search_apykey())
