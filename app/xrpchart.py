@@ -32,18 +32,18 @@ plt.ion() # インタラクティブモードにする
 fig, ax = plt.subplots(1,1)
 #表示場所の設定
 ax_bitbank = plt.subplot(211)
-ax_binance = plt.subplot(212)
+ax_binance = plt.subplot(212, sharex=ax_bitbank)
 while True:
     # BITBANKでのXRP売値=bitbank_ask
     bitbank_id, bitbank_ask, bitbank_bid = BITBANK.currencyinformation('XRP')\
         if BITBANK.currencyinformation('XRP') is not None else None
     # 現在の時刻を取得
     now = datetime.datetime.now()
-    print(now)
+#    print(now)
 
     binance_ask = BINANCE.xrp(1)[1]
-    print(bitbank_ask)
-    print(binance_ask)
+#    print(bitbank_ask)
+#    print(binance_ask)
 
     if list_length_bitbank < MAXLENGTH and list_length_binance < MAXLENGTH and list_length_time < MAXLENGTH:
         list_bitbank_price.append(bitbank_ask)
@@ -78,24 +78,28 @@ while True:
     ax.xaxis.set_major_locator(mdates.SecondLocator())
     bitbank_xrp_ohlc = bitbank_xrp.resample('30s').ohlc()
     binance_xrp_ohlc = binance_xrp.resample('30s').ohlc()
-    print(bitbank_xrp_ohlc)
+#    print(bitbank_xrp_ohlc)
     ax_bitbank.clear()
     ax_binance.clear()
     # ローソク足
     mpf.candlestick2_ohlc(ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high, lows=bitbank_xrp_ohlc.low, closes=bitbank_xrp_ohlc.close, width=1)
     mpf.candlestick2_ohlc(ax_binance, opens=binance_xrp_ohlc.open, highs=binance_xrp_ohlc.high, lows=binance_xrp_ohlc.low, closes=binance_xrp_ohlc.close, width=1)
-    # x軸を時間にする
+
+
+
     xdate = bitbank_xrp_ohlc.index
+    print(xdate)
+    ax_bitbank.xaxis.set_major_locator(ticker.AutoLocator())
 
     def mydate(x, pos):
         try:
             return xdate[int(x)]
         except IndexError:
             return ''
+    ax_bitbank.xaxis.set_major_formatter(ticker.FuncFormatter(mydate))
+    ax_bitbank.format_xdata = mdates.DateFormatter('%H-%T-%s')
 
-    ax.xaxis.set_major_formatter(ticker.FuncFormatter(mydate))
-    ax.format_xdata = mdates.DateFormatter('%H-%T-%s')
-
+    plt.xlim(-0.5,16.5)
     fig.autofmt_xdate()
     fig.tight_layout()
     plt.draw()
