@@ -22,7 +22,7 @@ class LINE:
         """" APIkキーを登録するメソッド"""
         try:
 
-            CURSOR.execute("DROP TABLE IF EXISTS sns")
+
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS sns (name TEXT PRIMARY KEY, api TEXT)")
             # INSERT
@@ -30,8 +30,6 @@ class LINE:
                            {'name': name, 'api': api})
             CURSOR.execute('SELECT * FROM sns ORDER BY name')
             res = CURSOR.fetchall()
-            print(res)
-            res = CURSOR.execute('SELECT name FROM sns ')
 
             # 保存を実行（忘れると保存されないので注意）
             CONNECTION.commit()
@@ -55,5 +53,5 @@ class LINE:
             print('sqlite3.Error occurred:', error.args[0])
         return 'none'
 if __name__ == "__main__":  # テスト用に追加
-    # print(LINE.registration('slack','0001'))
-    print(LINE.search_apykey('slack'))
+    #print(LINE.registration('test','0001'))
+    print(LINE.search_apykey('test'))
