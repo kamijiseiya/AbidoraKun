@@ -54,6 +54,19 @@ class BINANCE:
         else:
             return None
 
+        @staticmethod
+        def buy(currency, amount, price, ):
+            """買い注文をするメソッド"""
+            result = BINANCE.create_limit_buy_order(currency, amount, price)  # xrpを購入
+            print(result)
+
+        @staticmethod
+        def sell(currency, amount, price, ):
+            """売り注文をするメソッド"""
+
+            result = BINANCE.create_limit_sell_order(currency, amount, price)  # xrpを売却　
+            print(result)
+
 
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.xrp(0))
