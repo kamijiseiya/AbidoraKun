@@ -12,7 +12,6 @@ CURSOR = CONNECTION.cursor()
 CURSOR.execute("SELECT API_KYE FROM lline")
 GET_TOKEN = CURSOR.fetchone()  # fetchone　一件取得
 
-
 class LINE_ALERT:
     @staticmethod
     def sql():

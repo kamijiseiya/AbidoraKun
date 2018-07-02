@@ -3,8 +3,17 @@
 import time
 import ccxt  # 取引所ライブラリをインポート
 import json
+# sqlite3 標準モジュールをインポート
+import sqlite3
 from app.module.money_exchange import btc_to_jpy
+# データベースファイルのパス
+DBPATH = 'cash_cow_db.sqlite'
 
+# データベース接続とカーソル生成
+CONNECTION = sqlite3.connect(DBPATH)
+# 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
+# connection.isolation_level = None
+CURSOR = CONNECTION.cursor()
 
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
@@ -14,7 +23,7 @@ class BINANCE:
         'secret': 'シークレットキー'
     })
 
-    def xrp(self):
+    def currencyinformation(self):
         """binanceの取引データを返す"""
         while True:
             try:
@@ -54,6 +63,39 @@ class BINANCE:
         else:
             return None
 
+        @staticmethod
+        def buy(currency, amount, price, ):
+            """買い注文をするメソッド"""
+            result = BINANCE.create_limit_buy_order(currency, amount, price)  # xrpを購入
+            print(result)
+
+        @staticmethod
+        def sell(currency, amount, price, ):
+            """売り注文をするメソッド"""
+
+            result = BINANCE.create_limit_sell_order(currency, amount, price)  # xrpを売却　
+            print(result)
+
+    def registration(name, api, secret):
+        """" APIkキーを登録するメソッド"""
+        try:
+
+            # テーブルがない場合は作成する。
+            CURSOR.execute(
+                "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
+            # INSERT
+            CURSOR.execute("INSERT INTO exchanges VALUES (:name, :api,:secret)",
+                           {'name': name, 'api': api, 'secret': secret})
+            # 保存を実行（忘れると保存されないので注意）
+            CONNECTION.commit()
+            # 接続を閉じる
+            CONNECTION.close()
+            # 登録された値を返す
+            return name, api,secret
+        except sqlite3.Error as error:
+            print('sqlite3.Error occurred:', error.args[0])
+            print('すでに追加されています。')
+            return 'none'
 
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.xrp(0))
