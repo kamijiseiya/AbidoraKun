@@ -9,6 +9,7 @@ import json
 # sqlite3 標準モジュールをインポート
 import sqlite3
 from app.module.money_exchange import btc_to_jpy
+
 # データベースファイルのパス
 DBPATH = 'cash_cow_db.sqlite'
 
@@ -18,29 +19,29 @@ CONNECTION = sqlite3.connect(DBPATH)
 # connection.isolation_level = None
 CURSOR = CONNECTION.cursor()
 
+binance = ccxt.binance()
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
-
-    exchange = ccxt.binance({
-        'apiKey': 'APIキー',
-        'secret': 'シークレットキー'
-    })
 
     def currencyinformation(self):
         """binanceの取引データを返す"""
         while True:
             try:
-                binance = ccxt.binance()
-                # biybankのXRP/JPYのオーダーブックの取得
-                binance_orderbook = binance.fetch_order_book('XRP/BTC')
-                # bitbank_orderbookからbidsの値を取得
-                binance_bid = binance_orderbook['bids'][0][0] \
-                    if (binance_orderbook['bids']) else None
-                # bitbank_orderbookからasksの値を取得
-                binance_ask = binance_orderbook['asks'][0][0] \
-                    if (binance_orderbook['asks']) else None
-                print(btc_to_jpy.btc_to_jpy(binance_ask),
-                      btc_to_jpy.btc_to_jpy(binance_bid))
+                # 通貨ペアself/JPYをcurrencypairに返却する。
+                currencypair = BINANCE.currency_pair_creation(self)
+                # biybankのcurrencypairのオーダーブックの取得
+                binance_orderbook = binance.fetch_order_book(currencypair)
+                # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
+                binance_bid = BINANCE.price_acquisition('bids', binance_orderbook)
+                # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
+                binance_ask = BINANCE.price_acquisition('asks', binance_orderbook)
+                print(binance_bid, binance_ask)
+                varyu = binance.fetch_deposit_address('XRP')
+                print(varyu)
+                #  タイプの確認のための処理
+                print(type(binance_bid), type(binance_ask))
+                print(binance_ask,
+                      binance_bid)
                 return [binance.id,
                         btc_to_jpy.btc_to_jpy(binance_ask),
                         btc_to_jpy.btc_to_jpy(binance_bid)]
@@ -49,9 +50,31 @@ class BINANCE:
                 print("10秒待機してやり直します")
                 time.sleep(10)
 
+    def currency_pair_creation(self):
+        """ 通貨ペアを返却する"""
+        return self + '/JPY'
+
+    def price_acquisition(self, orderbook):
+        """selfで選択した価格をorderbookから取得しその値を返却する。"""
+        return orderbook[self][0][0] \
+            if (orderbook[self]) else None
+
+    @staticmethod
+    def buy(currency, amount, price, ):
+        """買い注文をするメソッド"""
+        result = binance.create_limit_buy_order(currency, amount, price)  # xrpを購入
+        print(result)
+
+    @staticmethod
+    def sell(currency, amount, price, ):
+        """売り注文をするメソッド"""
+
+        result = binance.create_limit_sell_order(currency, amount, price)  # xrpを売却　
+        print(result)
+
     def get_address(self):
         """binanceの取引通貨ごとのアドレスを返す"""
-        if(self == 'BTC' or self == 'XRP'):
+        if self == 'BTC' or self == 'XRP':
             while True:
                 try:
                     print(json.dumps(BINANCE.exchange.fetch_deposit_address(self), indent=4))
@@ -66,23 +89,9 @@ class BINANCE:
         else:
             return None
 
-        @staticmethod
-        def buy(currency, amount, price, ):
-            """買い注文をするメソッド"""
-            result = BINANCE.create_limit_buy_order(currency, amount, price)  # xrpを購入
-            print(result)
-
-        @staticmethod
-        def sell(currency, amount, price, ):
-            """売り注文をするメソッド"""
-
-            result = BINANCE.create_limit_sell_order(currency, amount, price)  # xrpを売却　
-            print(result)
-
     def registration(name, api, secret):
-        """" APIkキーを登録するメソッド"""
+        """APIkキーを登録するメソッド"""
         try:
-
             # テーブルがない場合は作成する。
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
@@ -94,11 +103,12 @@ class BINANCE:
             # 接続を閉じる
             CONNECTION.close()
             # 登録された値を返す
-            return name, api,secret
+            return name, api, secret
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
             print('すでに追加されています。')
-            return 'none'
+            return None
+
 
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.xrp(0))
