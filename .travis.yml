@@ -1,21 +1,26 @@
 sudo: false
 language: python
 python:
-- 3.3
-- 3.4
-- 3.5
-- 3.6
-- 3.6.5
+  - 3.3
+  - 3.4
+  - 3.5
+  - 3.6
+  - 3.6.5
+before_install:
+  - ls
+  - cd /app/config
+  - ls
+  - openssl aes-256-cbc -K $encrypted_ef3fff0c632b_key -iv $encrypted_ef3fff0c632b_iv -in cash_cow_db.sqlite.enc -out cash_cow_db.sqlite -d
 install:
-- pip install tox tox-travis
-- pip install coverage coveralls
-- pip install ccxt
-- pip install codecov
-- pip install coverage
+  - pip install tox tox-travis
+  - pip install coverage coveralls
+  - pip install ccxt
+  - pip install codecov
+  - pip install coverage
 script:
-- python --version
-- python -m unittest discover test
-- nosetests --with-xunit --with-coverage
+  - python --version
+  - python -m unittest discover test
+  - nosetests --with-xunit --with-coverage
 after_success:
   - codecov
   
@@ -24,6 +29,3 @@ notifications:
   slack:
     secure: MOboSQtIS+CZc6Jk3WkYXAlDzWetCiQaF00a8k84dn6VshsXwSJHo+81TunRqrFJSY2SXRZB3CzeSLxpWIZHqnGPecpLLQB6nBrRR1M39KJq1RBkWJ8GTbtZIu3Qp6J/exKGrPzYg+5VsWiepSamf3HWF+fK3lws4zqaIqqY+3LEOewj8PEaSn+av7DQ/dKK6wR4mteGt4c1d6iOOrkjY5Mj1lUQcib+VzRIx0pOvoZgXABhZparhzCfXX+5LjlLS7gAdBnrDuSpXyWqq5hk3wmqkwmuV3qLP0iXuj0HXk/5wXnSb+l5FPbhEpYbfTGLY+F4kw60INgpeJeiJ2DIyeaxx+JRwaQtz4zQBq9cdXjAjSq5WgRhK7X+LCIzUZWzyIZ1PDFSXQ9aT+/Xd0nTrj0N6YC540jjCLSYiG6dl8jXGW1cnpCOr3DZGAAvokzgoT/0ZfrtA0iGapSLFUkoSVfwkSm5aCnd7GVANLqnyWhAiNzsfcCdAByP6X6mGOgFy8JtjX8NVTM7uJ+mERObTOK7Bwt5yj98+u7Kkh9pXMpYmNaTIMuf4fgNSePoTl598SFn4145dNfRQhqCzxkeCnsYomcumy2OhY2Q/EqJmbQPXh178CWnoB3KtW9rGYlzISBqOksS9JTVFBnym2dQtGl55+WXWvfpiNL/++OKzcQ
 
-env:
-  global
-   secure:i+vRgMFWb39mjvRU2Nf0YcfbZzqkKIYqNKDRN8bS0BtWPoJd78EaEBBwfNsPI7fF1YyzC7fo4EwCW2RFJYJgCoOT7+5wvrR+BNY5XTSxZOICyUANDb1gwMGYw2XjBpmEVh3Vf2TXR/wCfLUDMMMXFlxwehK5g5eoITLST3TJZB1Pxv9gIvOt7T+dbVn4hKxjRRMWGhLDO9yXZBl0sCKlLWx2WYfW1sVf5zAVc0R/3IaJxlJhViLS8dq+5shkDtGTaVQjRJdCAjhKCgHZCnMzpFGQsBsAbZCHpQExOdytgvrNvok8AHhNG3NBeM+P0oWHiVPjF12xrve2XCU3iNmxwo0ua4gx0L1gzV1Vu7auRzQ3yttZtHfCO54MJxqb7c39IZIzrI6aGdK/Fu4tRSY5ILvJEEbSI4XpwZkboNz+gbuqoRj+AVUYD4l7R4NjZ9rzZDABNsNFRyX0cMHFCVsvV8OISvKeEnHVoObLTxEsuP0UjehGKK94OgX16jzf80NjMHOawBiWW7s/U0GKzPwdMVt6NJ/zm11od/TFZOhuy9Sk3WNsxTQ5spQF4QLmcqgqRfxm6RN88+dH2lSSenEFHq3RainpRbxoB5Mr2i7gwnxJWcERP2Xir/Mb/G4CsNzam3YAz0Zt2qe80/Y+jvtQJv+j+LRBD5L32XLAHkIcP5o=
