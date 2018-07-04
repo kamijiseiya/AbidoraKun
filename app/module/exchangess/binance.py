@@ -92,7 +92,7 @@ class BINANCE:
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
             print('すでに追加されています。')
-            return 'none'
+            return None
 
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.xrp(0))
