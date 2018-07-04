@@ -18,16 +18,14 @@ CURSOR = CONNECTION.cursor()
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
 
-    exchange = ccxt.binance({
-        'apiKey': 'APIキー',
-        'secret': 'シークレットキー'
-    })
 
     def currencyinformation(self):
         """binanceの取引データを返す"""
         while True:
             try:
+
                 binance = ccxt.binance()
+
                 # biybankのXRP/JPYのオーダーブックの取得
                 binance_orderbook = binance.fetch_order_book('XRP/BTC')
                 # bitbank_orderbookからbidsの値を取得
@@ -36,8 +34,8 @@ class BINANCE:
                 # bitbank_orderbookからasksの値を取得
                 binance_ask = binance_orderbook['asks'][0][0] \
                     if (binance_orderbook['asks']) else None
-                print(btc_to_jpy.btc_to_jpy(binance_ask),
-                      btc_to_jpy.btc_to_jpy(binance_bid))
+                print(binance_ask,
+                     binance_bid)
                 return [binance.id,
                         btc_to_jpy.btc_to_jpy(binance_ask),
                         btc_to_jpy.btc_to_jpy(binance_bid)]
@@ -77,9 +75,8 @@ class BINANCE:
             print(result)
 
     def registration(name, api, secret):
-        """" APIkキーを登録するメソッド"""
+        """APIkキーを登録するメソッド"""
         try:
-
             # テーブルがない場合は作成する。
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
