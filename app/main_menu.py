@@ -6,9 +6,12 @@ sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールの
 import tkinter
 from tkinter import ttk
 import time #価格取得を繰り返す為
+import sqlite3 #DBへの追加時のエラーを取得する為
 
-#from app.module.exchangess import bitbank
+from app.module.exchangess import bitbank
 #from app.module.exchangess import binance
+from app.module.sns import line
+
 
 # startボタンを押したときの処理
 def changePage(page):
@@ -137,7 +140,7 @@ def main() -> None:
 
     BANK = tkinter.Label(MainPage, text=u'  bitbank   ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     BANK.place(relx=0.01, rely=0.2)
-    BINA = tkinter.Label(MainPage, text=u'   binace   ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
+    BINA = tkinter.Label(MainPage, text=u'  binance  ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     BINA.place(relx=0.01, rely=0.4)
 
     # エントリー　（APIキーの値を入れる)
@@ -149,18 +152,29 @@ def main() -> None:
 
     # エントリー２ (トークンの値を入れる)
     BITBANK_TOKEN = tkinter.Entry(MainPage, width=29, bd=25, font=("",20), relief="flat")
-    BITBANK_TOKEN.insert(tkinter.END, "トークンの値")
     BITBANK_TOKEN.place(relx=0.55, rely=0.2)
 
     BINACE_TOKEN = tkinter.Entry(MainPage, width=29, bd=25, font=("",20), relief="flat")
-    BINACE_TOKEN.insert(tkinter.END, "トークンの値")
     BINACE_TOKEN.place(relx=0.55, rely=0.4)
+
+    def bitbank_entry(self):
+        API_value = BITBANK_API.get()
+        TOKEN_value = BITBANK_TOKEN.get()
+        bitbank.BITBANK.registration("BITBANK", API_value, TOKEN_value)
+
 
     BUTTON_BITBANK = tkinter.Button(MainPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_BITBANK.place(relx=0.9, rely=0.2)
+    BUTTON_BITBANK.bind("<Button-1>", bitbank_entry)
+
+    def binance_entry(self):
+        API_value = BINACE_API.get()
+        TOKEN_value = BINACE_TOKEN.get()
+        #binance.BINANCE.registration("BINANCE", API_value, TOKEN_value)
 
     BUTTON_BINANCE = tkinter.Button(MainPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_BINANCE.place(relx=0.9, rely=0.4)
+    BUTTON_BINANCE.bind("<Button-1>", binance_entry)
 
 
     MAIN_MENU = tkinter.Button(MainPage, width=30, height=1, text="  戻る  ", command=lambda : changePage(startPage), font=("",24))
@@ -171,68 +185,74 @@ def main() -> None:
     TitlePage.place(relx=0.01, rely=0.01)
     MainPage.place(relx=0.01, rely=0.3)
 
+
+
     # StartPageを上位層にする
     startPage.tkraise()
+
 
 #----snsPage------------------------------------
 
     # SNS登録のフレーム
     snsPage = ttk.Frame(window)
 
-    #別ファイルから読み込み実行
-    #exec(open("./sns.py",'r',encoding="utf-8").read())
+    titlePage = tkinter.Frame(snsPage, bg='gray', width=1340, height=250, bd=10)
+    SnsPage = tkinter.Frame(snsPage, bg='gray', width=1340, height=450, bd=10)
 
-
+    side = ("", 32)
 
     #以下、line_screenから流用
-    HEAD = tkinter.Label(snsPage, text=u'API KEYS')
-    HEAD.grid(row=0, column=1)
-    CONTENT = tkinter.Label(snsPage, text=u'各SNSからAPIキーを取得してください。')
-    CONTENT.grid(row=1, column=1)
+    HEAD = tkinter.Label(titlePage, text=u'API KEYS', foreground='white', background='gray', font=("", 40))
+    HEAD.place(relx=0.01, rely=0.01)
+    CONTENT = tkinter.Label(titlePage, text=u'各SNSからAPIキーを取得してください。',  foreground='white', background='gray', font=("", 25))
+    CONTENT.place(relx=0.15, rely=0.3)
 
-    EXCHANGES = tkinter.Label(snsPage, text=u'SNS')
-    EXCHANGES.grid(row=2, column=0)
+    EXCHANGES = tkinter.Label(SnsPage, text=u'SNS', foreground='white', background='gray', font=side)
+    EXCHANGES.place(relx=0.015, rely=0.01)
 
-    APIK = tkinter.Label(snsPage, text=u'APIキー')
-    APIK.grid(row=2, column=1)
+    APIK = tkinter.Label(SnsPage, text=u'APIキー', foreground='white', background='gray', font=side)
+    APIK.place(relx=0.3, rely=0.01)
 
-    SNS = tkinter.Label(snsPage, text=u'LINE')
-    SNS.grid(row=3, column=0)
-    PLANS = tkinter.Label(snsPage, text=u'予定')
-    PLANS.grid(row=4, column=0)
+    SNS = tkinter.Label(SnsPage, text=u'LINE', foreground='white', background='gray', font=side, bd=25, relief="ridge")
+    SNS.place(relx=0.01, rely=0.2)
+    PLANS = tkinter.Label(SnsPage, text=u'予定', foreground='white', background='gray', font=side, bd=25, relief="ridge")
+    PLANS.place(relx=0.01, rely=0.4)
 
     # エントリー２ (トークンの値を入れる)
-    LINE_TOKEN = tkinter.Entry(snsPage)
-    LINE_TOKEN.grid(row=3, column=1, padx=20)
+    LINE_TOKEN = tkinter.Entry(SnsPage, width=29, bd=25, font=("",20), relief="flat")
+    LINE_TOKEN.place(relx=0.3, rely=0.2)
 
-    PLANS_TOKEN = tkinter.Entry(snsPage)
-    PLANS_TOKEN.grid(row=4, column=1, padx=20)
+    PLANS_TOKEN = tkinter.Entry(SnsPage, width=29, bd=25, font=("",20), relief="flat")
+    PLANS_TOKEN.place(relx=0.3, rely=0.4)
 
-    BUTTON_LINE = tkinter.Button(snsPage, text=u'登録')
-    BUTTON_LINE.grid(row=3, column=2)
+    def line_entry(self):
+        line_value = LINE_TOKEN.get()
+        line.LINE.registration("LINE", line_value)
 
-    BUTTON_PLANS = tkinter.Button(snsPage, text=u'登録')
-    BUTTON_PLANS.grid(row=4, column=2)
+    BUTTON_LINE = tkinter.Button(SnsPage, text=u'登録', foreground='white', background='gray', font=side)
+    BUTTON_LINE.place(relx=0.9, rely=0.2)
+    BUTTON_LINE.bind("<Button-1>", line_entry)
 
-    # ボタン(メインに戻る用)
-    MAIN_MENU = tkinter.Button(snsPage, text=u'決定')
-    MAIN_MENU.grid(row=5, column=1)
+    BUTTON_PLANS = tkinter.Button(SnsPage, text=u'登録', foreground='white', background='gray', font=side)
+    BUTTON_PLANS.place(relx=0.9, rely=0.4)
 
 
-    LINE_Button = ttk.Button(snsPage, text="  戻る  ", command=lambda: changePage(startPage))
-    LINE_Button.grid(row=6, column=1)
+    LINE_Button = tkinter.Button(SnsPage, width=30, height=1, text="  戻る  ", command=lambda: changePage(startPage), font=("", 24))
+    LINE_Button.place(relx=0.3, rely=0.7)
 
     # MainPageを配置
     snsPage.grid(row=0, column=0, sticky="nsew")
+    titlePage.place(relx=0.01, rely=0.01)
+    SnsPage.place(relx=0.01, rely=0.3)
 
     # StartPageを上位層にする
     startPage.tkraise()
 
 
-
     # プログラムを始める
     window.mainloop()
 
-# 本体処理
-if __name__ == "__main__":
+
+# メイン
+if __name__ == '__main__':
     main()
