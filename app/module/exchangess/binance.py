@@ -8,7 +8,7 @@ import sqlite3
 from app.module.money_exchange import btc_to_jpy
 
 # データベースファイルのパス
-DBPATH = 'cash_cow_db.sqlite'
+DBPATH = '../../config/cash_cow_db.sqlite'
 
 # データベース接続とカーソル生成
 CONNECTION = sqlite3.connect(DBPATH)
