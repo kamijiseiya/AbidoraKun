@@ -6,7 +6,7 @@ import ccxt  # 取引所ライブラリをインポート
 import sqlite3
 
 # データベースファイルのパス
-DBPATH = 'cash_cow_db.sqlite'
+DBPATH = '../../config/cash_cow_db.sqlite'
 
 # データベース接続とカーソル生成
 CONNECTION = sqlite3.connect(DBPATH)
@@ -21,6 +21,12 @@ bitbank = ccxt.bitbank()
 
 class BITBANK:
     """bitbankからの取引データを処理するクラス"""
+
+    def tickers(self):
+        """XRPの取引高を取得するメソッド"""
+        currencypair = BITBANK.currency_pair_creation(self)
+        tk = bitbank.fetch_ticker(currencypair)
+        return tk
 
     def currencyinformation(self):
         """bitbankのself(選択した通貨)/JPY取引データを返す"""
@@ -55,7 +61,7 @@ class BITBANK:
             if (orderbook[self]) else None
 
     @staticmethod
-    def buy(currency, amount, price, ):
+    def buy(currency, amount, price,):
         """買い注文をするメソッド"""
         result = bitbank.create_limit_buy_order(currency, amount, price)  # xrpを購入
         print(result)
@@ -70,7 +76,6 @@ class BITBANK:
     def registration(name, api, secret):
         """" APIkキーを登録するメソッド"""
         try:
-
             # テーブルがない場合は作成する。
             CURSOR.execute(
                 "CREATE TABLE IF NOT EXISTS exchanges (name TEXT PRIMARY KEY, api TEXT,secret TEXT)")
@@ -90,5 +95,6 @@ class BITBANK:
 
 
 if __name__ == "__main__":  # テスト用に追加
-    print(BITBANK.registration('test', '0001', '0002'))
+    #print(BITBANK.registration('test', '0001', '0002'))
+    print(BITBANK.tickers('XRP'))
 
