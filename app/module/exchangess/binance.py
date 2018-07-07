@@ -25,18 +25,16 @@ class BINANCE:
         while True:
             try:
                 # 通貨ペアself/JPYをcurrencypairに返却する。
+
                 currencypair = BINANCE.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
+
                 binance_orderbook = binance.fetch_order_book(currencypair)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 binance_bid = BINANCE.price_acquisition('bids', binance_orderbook)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 binance_ask = BINANCE.price_acquisition('asks', binance_orderbook)
-                print(binance_bid, binance_ask)
-                varyu = binance.fetch_deposit_address('XRP')
-                print(varyu)
                 #  タイプの確認のための処理
-                print(type(binance_bid), type(binance_ask))
                 print(binance_ask,
                       binance_bid)
                 return [binance.id,
@@ -49,7 +47,7 @@ class BINANCE:
 
     def currency_pair_creation(self):
         """ 通貨ペアを返却する"""
-        return self + '/JPY'
+        return self + '/BTC'
 
     def price_acquisition(self, orderbook):
         """selfで選択した価格をorderbookから取得しその値を返却する。"""
@@ -65,7 +63,6 @@ class BINANCE:
     @staticmethod
     def sell(currency, amount, price, ):
         """売り注文をするメソッド"""
-
         result = binance.create_limit_sell_order(currency, amount, price)  # xrpを売却　
         print(result)
 
@@ -108,8 +105,4 @@ class BINANCE:
 
 
 if __name__ == "__main__":  # テスト用に追加
-    print(BINANCE.xrp(0))
-    print(BINANCE.get_address(0))  # None
-    print(BINANCE.get_address('BTC'))  # BTCのアドレス
-    print(BINANCE.get_address('XRP'))  # XRPのアドレス
-    print(BINANCE.get_address('JPY'))  # None
+    print(BINANCE.currencyinformation('XRP'))

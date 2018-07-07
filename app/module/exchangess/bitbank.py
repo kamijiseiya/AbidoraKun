@@ -41,9 +41,7 @@ class BITBANK:
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 bitbank_ask = BITBANK.price_acquisition('asks', bitbank_orderbook)
                 print(bitbank_bid, bitbank_ask)
-                varyu = bitbank.fetch_deposit_address('XRP')
-                print(varyu)
-                print(type(bitbank_bid), type(bitbank_ask))
+
                 return {bitbank.id, bitbank_ask, bitbank_bid}
 
             except ccxt.BaseError:
@@ -96,5 +94,6 @@ class BITBANK:
 
 if __name__ == "__main__":  # テスト用に追加
     #print(BITBANK.registration('test', '0001', '0002'))
+    print(BITBANK.currencyinformation('XRP'))
     print(BITBANK.tickers('XRP'))
 
