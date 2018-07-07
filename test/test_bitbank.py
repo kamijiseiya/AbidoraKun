@@ -23,11 +23,10 @@ class TestBitbank(unittest.TestCase):
 
     def test_registration(self):
         """APIキーが保存されたかどうか"""
-        name, api, secret = bitbank.BITBANK.registration('test', '01', '02')
-        print(name, api, secret)
-        self.assertEqual(name == 'test', api == '01', secret == '02')
-        """同じAPIキーが保存された場合例外処理がハッセしたかどうか"""
-        self.assertEqual('none', bitbank.BITBANK.registration('test', '01', '02'))
+        type = bitbank.BITBANK.registration('test', '01', '02')
+        """同じAPIキーが保存された場合例外処理が発生したかどうか"""
+        self.assertIsNone(type)
+
 
 if __name__ == "__main__":
     unittest.main()
