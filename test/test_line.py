@@ -12,10 +12,17 @@ class Testline(unittest.TestCase):
 
     def test_registration(self):
         """入力された値が保存されたかどうか"""
+        type = line.LINE.registration('test', 'jojnvsidvnpsd')
+        """すでに登録された値が登録された場合の例外処理のテスト"""
+        print(type)
+        self.assertIsNone(type)
 
-        name, api, = line.LINE.registration('test', 'jojnvsidvnpsd')
-        self.assertEqual(name == 'test', api == 'jojnvsidvnpsd')
+    def test_search_apykey(self):
+     """値が取り出せるかどうか"""
+     type = line.LINE.search_apykey('test')
+     """すでに登録された値が登録された場合の例外処理のテスト"""
+     print(type)
+     self.assertEqual('[jojnvsidvnpsd]', type)
 
-        """例外処理が発生したかどうか"""
-        self.assertEqual('none' ,line.LINE.registration('test', 'jojnvsidvnpsd2222'))
-
+if __name__ == "__main__":
+    unittest.main()
