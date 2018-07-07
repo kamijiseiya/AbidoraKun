@@ -5,10 +5,12 @@ import ccxt  # 取引所ライブラリをインポート
 import json
 # sqlite3 標準モジュールをインポート
 import sqlite3
+import re  # 正規表現を使用するため
 from app.module.money_exchange import btc_to_jpy
 
+
 # データベースファイルのパス
-DBPATH = '../../config/cash_cow_db.sqlite'
+DBPATH = 'cash_cow_db.sqlite'
 
 # データベース接続とカーソル生成
 CONNECTION = sqlite3.connect(DBPATH)
@@ -25,10 +27,8 @@ class BINANCE:
         while True:
             try:
                 # 通貨ペアself/JPYをcurrencypairに返却する。
-
                 currencypair = BINANCE.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
-
                 binance_orderbook = binance.fetch_order_book(currencypair)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 binance_bid = BINANCE.price_acquisition('bids', binance_orderbook)
@@ -83,7 +83,7 @@ class BINANCE:
         else:
             return None
 
-    def registration(name, api, secret):
+    def add_api(name, api, secret):
         """APIkキーを登録するメソッド"""
         try:
             # テーブルがない場合は作成する。
@@ -103,6 +103,20 @@ class BINANCE:
             print('すでに追加されています。')
             return None
 
+    def get_api(name):
+        try:
+            CURSOR.execute("SELECT api,secret FROM exchanges where  name like" + "'"+name+"'")
+            """正規表現で形を整える"""
+            token = re.sub('\)|\(|\,|\\)|}|{|\'', '', str(CURSOR.fetchall()))
+            CONNECTION.close()
+            apikey,secretkey = token.split()
+            apykey = re.sub('[[]|[]]', "",apikey)
+            secretkey = re.sub('[[]|[]]', "", secretkey)
+            return apykey, secretkey
+        except sqlite3.Error as error:
+            print('sqlite3.Error occurred:', error.args[0])
+        return None
 
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.currencyinformation('XRP'))
+    print(BINANCE.get_api('test'))
