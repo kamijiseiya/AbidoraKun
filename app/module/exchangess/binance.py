@@ -2,12 +2,10 @@
 # coding: UTF-8 文字コード指定
 import time
 import ccxt  # 取引所ライブラリをインポート
-import json
 # sqlite3 標準モジュールをインポート
 import sqlite3
 import re  # 正規表現を使用するため
 from app.module.money_exchange import btc_to_jpy
-
 
 # データベースファイルのパス
 DBPATH = 'cash_cow_db.sqlite'
@@ -18,9 +16,29 @@ CONNECTION = sqlite3.connect(DBPATH)
 # connection.isolation_level = None
 CURSOR = CONNECTION.cursor()
 
-binance = ccxt.binance()
+
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
+
+    @classmethod
+    def private_binance(self):
+
+        try:
+            api, secret = BINANCE.get_api('BINANCE')
+            binances = ccxt.binance({
+                'apiKey': api,
+                'secret': secret
+            })
+            return binances
+        except ccxt.BaseError:
+            print("取引所から取引データを取得できません。")
+            print("10秒待機してやり直します")
+            time.sleep(10)
+
+    @classmethod
+    def public_binance(self):
+        binances = ccxt.binance()
+        return binances
 
     def currencyinformation(self):
         """binanceの取引データを返す"""
@@ -29,15 +47,13 @@ class BINANCE:
                 # 通貨ペアself/JPYをcurrencypairに返却する。
                 currencypair = BINANCE.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
-                binance_orderbook = binance.fetch_order_book(currencypair)
+                binance_orderbook = BINANCE.public_binance().fetch_order_book(currencypair)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 binance_bid = BINANCE.price_acquisition('bids', binance_orderbook)
                 # price_acquisitionからbitbank_bidにbitbank_orderbookのbidsの値を返却する。
                 binance_ask = BINANCE.price_acquisition('asks', binance_orderbook)
                 #  タイプの確認のための処理
-                print(binance_ask,
-                      binance_bid)
-                return [binance.id,
+                return [BINANCE.public_binance().id,
                         btc_to_jpy.btc_to_jpy(binance_ask),
                         btc_to_jpy.btc_to_jpy(binance_bid)]
             except ccxt.BaseError:
@@ -57,13 +73,13 @@ class BINANCE:
     @staticmethod
     def buy(currency, amount, price, ):
         """買い注文をするメソッド"""
-        result = binance.create_limit_buy_order(currency, amount, price)  # xrpを購入
+        result = BINANCE.private_binance().create_limit_buy_order(currency, amount, price)  # xrpを購入
         print(result)
 
     @staticmethod
     def sell(currency, amount, price, ):
         """売り注文をするメソッド"""
-        result = binance.create_limit_sell_order(currency, amount, price)  # xrpを売却　
+        result = BINANCE.private_binance().create_limit_sell_order(currency, amount, price)  # xrpを売却　
         print(result)
 
     def get_address(self):
@@ -71,9 +87,8 @@ class BINANCE:
         if self == 'BTC' or self == 'XRP':
             while True:
                 try:
-                    print(json.dumps(BINANCE.exchange.fetch_deposit_address(self), indent=4))
-                    address = BINANCE.exchange.fetch_deposit_address(self)['address']
-                    tag = BINANCE.exchange.fetch_deposit_address(self)['tag']
+                    address = BINANCE.private_binance().fetch_deposit_address(self)['address']
+                    tag = BINANCE.private_binance().fetch_deposit_address(self)['tag']
                     addressinformation = {'address': address, 'tag': tag}
                     return addressinformation
                 except ccxt.BaseError:
@@ -94,8 +109,6 @@ class BINANCE:
                            {'name': name, 'api': api, 'secret': secret})
             # 保存を実行（忘れると保存されないので注意）
             CONNECTION.commit()
-            # 接続を閉じる
-            CONNECTION.close()
             # 登録された値を返す
             return name, api, secret
         except sqlite3.Error as error:
@@ -104,19 +117,19 @@ class BINANCE:
             return None
 
     def get_api(name):
+        """apiキーを取得するメソッド"""
         try:
-            CURSOR.execute("SELECT api,secret FROM exchanges where  name like" + "'"+name+"'")
+            CURSOR.execute("SELECT api,secret FROM exchanges where  name like" + "'" + name + "'")
             """正規表現で形を整える"""
             token = re.sub('\)|\(|\,|\\)|}|{|\'', '', str(CURSOR.fetchall()))
-            CONNECTION.close()
-            apikey,secretkey = token.split()
-            apykey = re.sub('[[]|[]]', "",apikey)
-            secretkey = re.sub('[[]|[]]', "", secretkey)
-            return apykey, secretkey
+            # 配列に変換する
+            apikey = re.sub('[[]|[]]', "", token)
+            return apikey.split()
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
         return None
 
+
 if __name__ == "__main__":  # テスト用に追加
-    print(BINANCE.currencyinformation('XRP'))
-    print(BINANCE.get_api('test'))
+    print(BINANCE.get_api('BINANCE'))
+    print(BINANCE.get_address('XRP'))
