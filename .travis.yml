@@ -8,19 +8,22 @@ python:
   - 3.6.5
 before_install:
   - ls
-  - cd app/config
+  - cd app/module/exchangess 
   - ls
-  - openssl aes-256-cbc -K $encrypted_ef3fff0c632b_key -iv $encrypted_ef3fff0c632b_iv -in cash_cow_db.sqlite.enc -out cash_cow_db.sqlite -d
+  - openssl aes-256-cbc -K $encrypted_853217acab54_key -iv $encrypted_853217acab54_iv-in cash_cow_db.sqlite.enc -out cash_cow_db.sqlite -d
+  - ls 
 install:
   - pip install tox tox-travis
   - pip install coverage coveralls
   - pip install ccxt
   - pip install codecov
   - pip install coverage
+  - yum install -y python-setuptools
+  - easy_install nose
 script:
   - python --version
-  - python -m unittest discover test
-  - nosetests --with-xunit --with-coverage
+  - cd test
+  - nosetests -v
 after_success:
   - codecov
   
