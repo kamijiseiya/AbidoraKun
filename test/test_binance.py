@@ -9,6 +9,7 @@ from app.module.exchangess import binance
 EXHANGES, ASK, BID = binance.BINANCE.currencyinformation('XRP')
 
 
+
 class TestBitbank(unittest.TestCase):
     """bainasu.pyのテストクラス"""
 
@@ -22,6 +23,8 @@ class TestBitbank(unittest.TestCase):
     def test_get_address_btc_address(self):
         """get_addressからBTCのアドレスが返されるかのテスト"""
         addressdata = binance.BINANCE.get_address('BTC')
+        print(binance.BINANCE.get_address('BTC'))
+        print(addressdata)
         print(addressdata.get('address'))
         self.assertEqual('1BXWsTqpUf23wottHy7utAqrCU3ygpMwCZ', addressdata['address'])
 
@@ -63,11 +66,9 @@ class TestBitbank(unittest.TestCase):
 
     def test_get_api(self):
         """APIキーが検索できるかどうか"""
-        apikey, secretkey = binance.BINANCE.get_api('test')
+        apikey, secret = binance.BINANCE.get_api('test')
+        self.assertEqual('01', apikey)
 
-        self.assertEqual('01' == apikey, '02' == secretkey)
-        """保存されていない場合の処理"""
-        api = binance.BINANCE.get_api('')
-        self.assertIsNone(api)
+
 if __name__ == "__main__":
         unittest.main()
