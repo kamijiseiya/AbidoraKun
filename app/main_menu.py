@@ -8,9 +8,14 @@ from tkinter import ttk
 import time #価格取得を繰り返す為
 import sqlite3 #DBへの追加時のエラーを取得する為
 
-from app.module.exchangess import bitbank
+#from app.module.exchangess import bitbank
 #from app.module.exchangess import binance
-from app.module.sns import line
+#from app.module.sns import line
+
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg , NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
 
 
 # startボタンを押したときの処理
@@ -43,6 +48,71 @@ def main() -> None:
 
     PointFont = ("Helevetice", 14)
     PointFont2 = ("", 11)
+
+    class Helmholtz_App(tkinter.Tk):
+        def __init__(self, *args, **kwargs):
+            tkinter.Tk.__init__(self, *args, **kwargs)
+            tkinter.Tk.wm_title(self, "Helmholtz Coils Data")
+
+            container = tkinter.Frame(tablePage)
+            container.pack(side="top", fill="both", expand=True)
+            container.grid_rowconfigure(0, weight=1)
+            container.grid_columnconfigure(0, weight=1)
+
+            self.frames = {}
+
+            for F in (PageOne, PageTwo):
+                frame = F(container, self)
+
+                self.frames[F] = frame
+
+                frame.grid(row=0, column=0, sticky="nsew")
+
+            self.show_frame(PageOne)
+
+        def show_frame(self, cont):
+            frame = self.frames[cont]
+            frame.tkraise()
+
+    class PageOne(tkinter.Frame):
+        def __init__(self, parent, controller):
+            tkinter.Frame.__init__(self, parent)
+
+            fig1 = Figure(figsize=(5, 5), dpi=100)
+            a = fig1.add_subplot(111)
+
+            def callback():
+                volt = [[0, 1, 2, 3, 4], [0, 1, 2, 3, 4]]
+                a.plot(volt[1], volt[0], 'bo')
+
+                canvas = FigureCanvasTkAgg(fig1, self)
+                canvas.show()
+                canvas.get_tk_widget().pack(side=tkinter.BOTTOM, fill=tkinter.BOTH, expand=True)
+
+                toolbar = NavigationToolbar2TkAgg(canvas, self)
+                toolbar.update()
+                canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True)
+
+                def ClearCallback():
+                    # problem line
+                    # ~~~~~~~~~~~
+                    fig1.clf()
+                    # ~~~~~~~~~~
+
+                    clearbutton.destroy()
+
+                clearbutton = ttk.Button(tablePage, text="Clear", command=ClearCallback)
+                clearbutton.pack()
+
+            b = ttk.Button(tablePage, text="Plot Data", command=callback)
+            b.pack()
+
+    class PageTwo(tkinter.Frame):
+        def __init__(self, parent, controller):
+            tkinter.Frame.__init__(self, parent)
+
+    app = Helmholtz_App()
+
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -160,7 +230,7 @@ def main() -> None:
     def bitbank_entry(self):
         API_value = BITBANK_API.get()
         TOKEN_value = BITBANK_TOKEN.get()
-        bitbank.BITBANK.registration("BITBANK", API_value, TOKEN_value)
+        #bitbank.BITBANK.registration("BITBANK", API_value, TOKEN_value)
 
 
     BUTTON_BITBANK = tkinter.Button(MainPage, text=u'登録', foreground='white', background='gray', font=side)
@@ -227,7 +297,7 @@ def main() -> None:
 
     def line_entry(self):
         line_value = LINE_TOKEN.get()
-        line.LINE.registration("LINE", line_value)
+        #line.LINE.registration("LINE", line_value)
 
     BUTTON_LINE = tkinter.Button(SnsPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_LINE.place(relx=0.9, rely=0.2)
