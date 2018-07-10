@@ -17,8 +17,8 @@ sys.path.append(os.path.abspath(os.path.join('..')))
 def candlechart():
     """チャートを表示する"""
     list_bitbank_price = []
-    list_binance_price = []
     list_time = []
+    list_ticker = []
     MAXLENGTH = 100  # 取得したﾃﾞｰﾀを保存する数
     FREQUENCY = 5  # ﾃﾞｰﾀ取得周期
 
@@ -26,29 +26,31 @@ def candlechart():
     fig, ax = plt.subplots(1, 1)
     # 表示場所の設定
     ax_bitbank = plt.subplot(211)
-    ax_binance = plt.subplot(212, sharex=ax_bitbank)
+    ax_ticker = plt.subplot(212, sharex=ax_bitbank)
     while True:
         # BITBANKでのXRP売値=bitbank_ask
         bitbank_id, bitbank_ask, bitbank_bid = BITBANK.currencyinformation('XRP')\
                 if BITBANK.currencyinformation('XRP') is not None else None
-        # BINANCEでのXRP売値=binance_ask
-        binance_ask = BINANCE.xrp(1)[1] if BINANCE.xrp(1)[1] is not None else None
+        # 取引高を取得
+        bitbank_ticker_json = BITBANK.tickers('XRP')
+        print(bitbank_ticker_json['baseVolume'])
+        bitbank_ticker = bitbank_ticker_json['baseVolume']
         # 現在の時刻を取得
         now = datetime.datetime.now()
 
-        if len(list_bitbank_price) < MAXLENGTH and len(list_binance_price) < MAXLENGTH\
-                and len(list_time) < MAXLENGTH:
+        if len(list_bitbank_price) < MAXLENGTH and len(list_time) < MAXLENGTH \
+                and len(list_ticker) < MAXLENGTH:
             list_bitbank_price.append(bitbank_ask)
-            list_binance_price.append(binance_ask)
+            list_ticker.append(bitbank_ticker)
             list_time.append(now)
         else:
             # list内の要素がMAXLENGTHを超えたら、
             # 先頭の1要素を削除し、最後尾に追加する
-            list_binance_price.pop(0)
+            list_bitbank_price.pop(0)
             list_bitbank_price.append(bitbank_ask)
 
-            list_bitbank_price.pop(0)
-            list_binance_price.append(binance_ask)
+            list_ticker.pop(0)
+            list_ticker.append(bitbank_ticker)
 
             list_time.pop(0)
             list_time.append(now)
@@ -56,21 +58,22 @@ def candlechart():
         # ﾁｬｰﾄ用ﾃﾞｰﾀの作成
         index = pd.DatetimeIndex(list_time, start=list_time[0])
         bitbank_xrp = pd.Series(list_bitbank_price, index=index)
-        binance_xrp = pd.Series(list_binance_price, index=index)
+        tickers = pd.Series(list_ticker, index=index)
+        print(list_ticker)
+        print(tickers)
 
         # ここからﾁｬｰﾄ作成
         plt.figure(1)
         ax.xaxis.set_major_locator(mdates.SecondLocator())
         bitbank_xrp_ohlc = bitbank_xrp.resample('30s').ohlc()
-        binance_xrp_ohlc = binance_xrp.resample('30s').ohlc()
+        tickers_resampled = tickers.resample('30s').max()
         ax_bitbank.clear()
-        ax_binance.clear()
+        ax_ticker.clear()
         # ローソク足
-        mpf.candlestick2_ohlc(ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high,\
+        mpf.candlestick2_ohlc(ax=ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high,\
                 lows=bitbank_xrp_ohlc.low, closes=bitbank_xrp_ohlc.close, width=1)
-        mpf.candlestick2_ohlc(ax_binance, opens=binance_xrp_ohlc.open, highs=binance_xrp_ohlc.high,\
-                lows=binance_xrp_ohlc.low, closes=binance_xrp_ohlc.close, width=1)
-
+        # 取引高
+        tickers_resampled.plot(kind='bar', ax=ax_ticker)
         # 横軸を日付にする
         xdate = bitbank_xrp_ohlc.index
         ax_bitbank.xaxis.set_major_locator(ticker.AutoLocator())

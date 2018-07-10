@@ -3,15 +3,23 @@
 import time
 import ccxt  # 取引所ライブラリをインポート
 
+bitbank = ccxt.bitbank()
 
 class BITBANK:
     """bitbankからの取引データを処理するクラス"""
+
+
+    def tickers(self):
+            """XRPの取引高を取得するメソッド"""
+            currencypair = BITBANK.currency_pair_creation(self)
+            tk = bitbank.fetch_ticker(currencypair)
+            return tk
+
 
     def currencyinformation(self):
         """bitbankのself(選択した通貨)/JPY取引データを返す"""
         while True:
             try:
-                bitbank = ccxt.bitbank()
                 # 通貨ペアself/JPYをcurrencypairに返却する。
                 currencypair = BITBANK.currency_pair_creation(self)
                 # biybankのcurrencypairのオーダーブックの取得
