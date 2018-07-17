@@ -42,6 +42,11 @@ class LINE_ALERT:
             time.sleep(3600)
             return post.status_code
 
+    @staticmethod
+    def line_image():
+        """Lineに画像を送るためのサンプル"""
+        pass
+
 print(LINE_ALERT.line())
 
 
