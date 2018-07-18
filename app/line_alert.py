@@ -51,7 +51,8 @@ class LINE_ALERT:
             headers = {"Authorization": "Bearer " + token}
             message = ("今から画像を送ります。")
             params = {"message": message}
-            post = requests.post(url, headers=headers, params=params)
+            files = {"imageFile": open("画像を指定", "rb")}
+            post = requests.post(url, headers=headers, params=params, files=files)
             print(post.status_code)  # ステータスコード取得
             # １時間ごとに取得
             time.sleep(3600)
