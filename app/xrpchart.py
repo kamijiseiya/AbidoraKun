@@ -38,8 +38,7 @@ def candlechart():
         # 現在の時刻を取得
         now = datetime.datetime.now()
 
-        if len(list_bitbank_price) < MAXLENGTH and len(list_time) < MAXLENGTH \
-                and len(list_ticker) < MAXLENGTH:
+        if len(list_time) < MAXLENGTH:
             list_bitbank_price.append(bitbank_ask)
             list_ticker.append(bitbank_ticker)
             list_time.append(now)
@@ -59,8 +58,8 @@ def candlechart():
         index = pd.DatetimeIndex(list_time, start=list_time[0])
         bitbank_xrp = pd.Series(list_bitbank_price, index=index)
         tickers = pd.Series(list_ticker, index=index)
-        print(list_ticker)
-        print(tickers)
+        print(list_bitbank_price)
+        print(bitbank_xrp)
 
         # ここからﾁｬｰﾄ作成
         plt.figure(1)
