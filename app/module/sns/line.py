@@ -2,6 +2,8 @@
 # Python 3.5.2 にて動作を確認
 # sqlite3 標準モジュールをインポート
 import sqlite3
+import requests
+import time
 
 # データベースファイルのパス
 DBPATH = 'cash_cow_db.sqlite'
@@ -52,6 +54,25 @@ class LINE:
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
         return 'none'
+
+
+    @staticmethod
+    def line_image():
+        """Lineに画像を送るためのサンプル"""
+        while True:
+            url = "https://notify-api.line.me/api/notify"
+            token = 'LINE Notifyのアクセストークン'  # DBから取得予定
+            headers = {"Authorization": "Bearer " + token}
+            message = ("今から画像を送ります。")
+            params = {"message": message}
+            files = {"imageFile": open("../../../img/sample.jpg", "rb")}
+            post = requests.post(url, headers=headers, params=params, files=files)
+            print(post.status_code)  # ステータスコード取得
+            # １時間ごとに取得
+            time.sleep(3600)
+            return post.status_code
+
+
 if __name__ == "__main__":  # テスト用に追加
     #print(LINE.registration('test','0001'))
     print(LINE.search_apykey('test'))
