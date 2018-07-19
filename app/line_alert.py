@@ -42,21 +42,6 @@ class LINE_ALERT:
             time.sleep(3600)
             return post.status_code
 
-    @staticmethod
-    def line_image():
-        """Lineに画像を送るためのサンプル"""
-        while True:
-            url = "https://notify-api.line.me/api/notify"
-            token = 'LINE Notifyのアクセストークン'# DBから取得予定
-            headers = {"Authorization": "Bearer " + token}
-            message = ("今から画像を送ります。")
-            params = {"message": message}
-            files = {"imageFile": open("../img/sample.jpg", "rb")}
-            post = requests.post(url, headers=headers, params=params, files=files)
-            print(post.status_code)  # ステータスコード取得
-            # １時間ごとに取得
-            time.sleep(3600)
-            return post.status_code
 
 print(LINE_ALERT.line())
 
