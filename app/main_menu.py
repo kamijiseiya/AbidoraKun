@@ -8,8 +8,8 @@ from tkinter import ttk
 import time #価格取得を繰り返す為
 import sqlite3 #DBへの追加時のエラーを取得する為
 
-#from app.module.exchangess import bitbank
-#from app.module.exchangess import binance
+from app.module.exchangess import bitbank
+from app.module.exchangess import binance
 #from app.module.sns import line
 
 import matplotlib
@@ -50,9 +50,9 @@ def main() -> None:
     PointFont2 = ("", 11)
 
     class Helmholtz_App(tkinter.Tk):
-        def __init__(self, *args, **kwargs):
-            tkinter.Tk.__init__(self, *args, **kwargs)
-            tkinter.Tk.wm_title(self, "Helmholtz Coils Data")
+        def __init__(self):
+            #tkinter.Tk.__init__(self, *args, **kwargs) 新タブ作成
+            #tkinter.Tk.wm_title(self, "Helmholtz Coils Data")　
 
             container = tkinter.Frame(tablePage)
             container.pack(side="top", fill="both", expand=True)
@@ -78,15 +78,16 @@ def main() -> None:
         def __init__(self, parent, controller):
             tkinter.Frame.__init__(self, parent)
 
-            fig1 = Figure(figsize=(5, 5), dpi=100)
+            fig1 = Figure(figsize=(5, 5), dpi=190)
             a = fig1.add_subplot(111)
 
             def callback():
-                volt = [[0, 1, 2, 3, 4], [0, 1, 2, 3, 4]]
+                x =+ 5
+                volt = [[0, 1, 2, 3, 4, x], [0, 1, 2, 3, 4, x]]
                 a.plot(volt[1], volt[0], 'bo')
 
                 canvas = FigureCanvasTkAgg(fig1, self)
-                canvas.show()
+                canvas.draw()
                 canvas.get_tk_widget().pack(side=tkinter.BOTTOM, fill=tkinter.BOTH, expand=True)
 
                 toolbar = NavigationToolbar2TkAgg(canvas, self)
@@ -97,7 +98,7 @@ def main() -> None:
                     # problem line
                     # ~~~~~~~~~~~
                     fig1.clf()
-                    # ~~~~~~~~~~
+                    # ~~~~~~~~~~~
 
                     clearbutton.destroy()
 
@@ -107,12 +108,26 @@ def main() -> None:
             b = ttk.Button(tablePage, text="Plot Data", command=callback)
             b.pack()
 
+
+            def uge():
+                callback()
+                window.after(1000, uge())
+
+            uge()
+
+
     class PageTwo(tkinter.Frame):
         def __init__(self, parent, controller):
             tkinter.Frame.__init__(self, parent)
 
     app = Helmholtz_App()
 
+    def hoge():
+        print ('func() is called')
+
+    def show_time():
+        hoge()
+        window.after(1000, PageOne)
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -147,7 +162,7 @@ def main() -> None:
     exchangeB.place(relx=0.1, rely=0.3)
 
 
-    """
+
     # bitbankから価格の取得
     exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
     print(exchange, ask, bid)
@@ -156,7 +171,7 @@ def main() -> None:
     bitbank_bid = ttk.Label(backPage, text=bid, foreground='white', background='black', font=PointFont)
     bitbank_bid.place(relx=0.7, rely=0.2)
 
-
+    """
     # binanceから価格の取得
     exchange2, ask2, bid2 = binance.BINANCE.xrp(0)
     print(exchange2, ask2, bid2)
@@ -318,6 +333,21 @@ def main() -> None:
     # StartPageを上位層にする
     startPage.tkraise()
 
+
+    def get_bitbank():
+        tes = 'hoge'
+        tess= 'uge'
+        bit_test = ttk.Label(backPage, text=u'tes')
+        bit_test.place(relx=0.41, rely=0.21)
+        bit2_test= ttk.Label(backPage, text=u'tess')
+        bit2_test.place(relx=0.71, rely=0.21)
+
+    def bitbank_time():
+        get_bitbank()
+        window.after(10000, bitbank_time())
+
+    #価格取得の繰り返し
+    #bitbank_time()
 
     # プログラムを始める
     window.mainloop()
