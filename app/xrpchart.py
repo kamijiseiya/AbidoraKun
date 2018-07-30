@@ -73,8 +73,8 @@ def candlechart():
         mpf.candlestick2_ohlc(ax=ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high,\
                 lows=bitbank_xrp_ohlc.low, closes=bitbank_xrp_ohlc.close, width=1)
         # 取引高
-        ax_ticker.set_ylim(bottom=20400000, top=20500000)
-        tickers_resampled.plot(kind='bar', ax=ax_ticker)
+        ax_ticker.set_ylim(bottom=min(tickers_resampled) - 10000, top=max(tickers_resampled) + 10000)
+        tickers_resampled.plot(kind='bar', ax=ax_ticker, color='black')
         # 横軸を日付にする
         xdate = bitbank_xrp_ohlc.index
         ax_bitbank.xaxis.set_major_locator(ticker.AutoLocator())
