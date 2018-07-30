@@ -4,7 +4,9 @@
 import sqlite3
 import requests
 import time
-
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import numpy as np
 # データベースファイルのパス
 DBPATH = 'cash_cow_db.sqlite'
 
@@ -73,6 +75,32 @@ class LINE:
             return post.status_code
 
 
+    @staticmethod
+    def line_pie_chart():
+        """円グラフを画像として作成するためのメソッド"""
+        data = [1011, 530, 355, 200, 40, 11]
+        label = ['hoge('+str(1011)+')', 'fuga('+str(530)+')', 'piyo('+str(355)+')',
+                 'pugya('+str(200)+')', 'dododododododo('+str(40)+')', 'ga('+str(11)+')']
+
+        ###綺麗に書くためのおまじない###
+        plt.style.use('ggplot')
+        plt.rcParams.update({'font.size': 15})
+
+        ###各種パラメータ###
+        size = (9, 5)  # 凡例を配置する関係でsizeは横長にしておきます。(横9、縦5)
+        col = cm.Spectral(np.arange(len(data)) / float(len(data)))  # color指定はcolormapから好みのものを。
+
+        ###pie###
+        plt.figure(figsize=size, dpi=100)
+        plt.pie(data, colors=col, counterclock=False, startangle=90,
+                autopct=lambda p: '{:.1f}%'.format(p) if p >= 5 else '')
+        plt.subplots_adjust(left=0, right=0.7)
+        plt.legend(label, fancybox=True, loc='center left', bbox_to_anchor=(0.9, 0.5))
+        plt.axis('equal')
+        plt.savefig('figure.png', bbox_inches='tight', pad_inches=0.05)
+
+
 if __name__ == "__main__":  # テスト用に追加
     #print(LINE.registration('test','0001'))
-    print(LINE.search_apykey('test'))
+    #print(LINE.search_apykey('test'))
+    print(LINE.line_pie_chart())
