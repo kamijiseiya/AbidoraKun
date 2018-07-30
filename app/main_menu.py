@@ -6,10 +6,12 @@ sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールの
 import tkinter
 from tkinter import ttk
 import time #価格取得を繰り返す為
+import sqlite3 #DBへの追加時のエラーを取得する為
 
 from app.module.exchangess import bitbank
 #from app.module.exchangess import binance
-from app import xrpchart
+from app.module.sns import line
+
 
 # startボタンを押したときの処理
 def changePage(page):
@@ -41,8 +43,6 @@ def main() -> None:
 
     PointFont = ("Helevetice", 14)
     PointFont2 = ("", 11)
-
-    chart = xrpchart.candlechart()
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -140,7 +140,7 @@ def main() -> None:
 
     BANK = tkinter.Label(MainPage, text=u'  bitbank   ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     BANK.place(relx=0.01, rely=0.2)
-    BINA = tkinter.Label(MainPage, text=u'   binace   ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
+    BINA = tkinter.Label(MainPage, text=u'  binance  ', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     BINA.place(relx=0.01, rely=0.4)
 
     # エントリー　（APIキーの値を入れる)
@@ -152,17 +152,16 @@ def main() -> None:
 
     # エントリー２ (トークンの値を入れる)
     BITBANK_TOKEN = tkinter.Entry(MainPage, width=29, bd=25, font=("",20), relief="flat")
-    BITBANK_TOKEN.insert(tkinter.END, "トークンの値")
     BITBANK_TOKEN.place(relx=0.55, rely=0.2)
 
     BINACE_TOKEN = tkinter.Entry(MainPage, width=29, bd=25, font=("",20), relief="flat")
-    BINACE_TOKEN.insert(tkinter.END, "トークンの値")
     BINACE_TOKEN.place(relx=0.55, rely=0.4)
 
     def bitbank_entry(self):
         API_value = BITBANK_API.get()
         TOKEN_value = BITBANK_TOKEN.get()
         bitbank.BITBANK.registration("BITBANK", API_value, TOKEN_value)
+
 
     BUTTON_BITBANK = tkinter.Button(MainPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_BITBANK.place(relx=0.9, rely=0.2)
@@ -171,7 +170,7 @@ def main() -> None:
     def binance_entry(self):
         API_value = BINACE_API.get()
         TOKEN_value = BINACE_TOKEN.get()
-        bitbank.BITBANK.registration("BINANCE", API_value, TOKEN_value)
+        #binance.BINANCE.registration("BINANCE", API_value, TOKEN_value)
 
     BUTTON_BINANCE = tkinter.Button(MainPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_BINANCE.place(relx=0.9, rely=0.4)
@@ -214,27 +213,21 @@ def main() -> None:
     APIK = tkinter.Label(SnsPage, text=u'APIキー', foreground='white', background='gray', font=side)
     APIK.place(relx=0.3, rely=0.01)
 
-    SNS = tkinter.Label(SnsPage, text=u'LINE', foreground='white', background='gray', font=side)
+    SNS = tkinter.Label(SnsPage, text=u'LINE', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     SNS.place(relx=0.01, rely=0.2)
-    PLANS = tkinter.Label(SnsPage, text=u'予定', foreground='white', background='gray', font=side)
+    PLANS = tkinter.Label(SnsPage, text=u'予定', foreground='white', background='gray', font=side, bd=25, relief="ridge")
     PLANS.place(relx=0.01, rely=0.4)
 
     # エントリー２ (トークンの値を入れる)
     LINE_TOKEN = tkinter.Entry(SnsPage, width=29, bd=25, font=("",20), relief="flat")
-    LINE_TOKEN.place(relx=0.55, rely=0.2)
+    LINE_TOKEN.place(relx=0.3, rely=0.2)
 
     PLANS_TOKEN = tkinter.Entry(SnsPage, width=29, bd=25, font=("",20), relief="flat")
-    PLANS_TOKEN.place(relx=0.55, rely=0.4)
+    PLANS_TOKEN.place(relx=0.3, rely=0.4)
 
     def line_entry(self):
-        try:
-            line_value = LINE_TOKEN.get()
-            line.LINE.registration("LINE", line_value)
-            ENTRY = tkinter.Label(SnsPage, text=u'lineのAPIキーを登録しました。', font=side)
-            ENTRY.place(relx=0.3, rely=0.2)
-        except 'nore':
-            error = tkinter.Label(SnsPage, text=u'登録する際にエラーが発生しました。')
-            error.place(relx=0.3, rely=0.2)
+        line_value = LINE_TOKEN.get()
+        line.LINE.registration("LINE", line_value)
 
     BUTTON_LINE = tkinter.Button(SnsPage, text=u'登録', foreground='white', background='gray', font=side)
     BUTTON_LINE.place(relx=0.9, rely=0.2)
@@ -256,17 +249,10 @@ def main() -> None:
     startPage.tkraise()
 
 
-    def return_value(self):
-        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
-        print(exchange, ask, bid)
-
-
-    return_Button = tkinter.Button(backPage, text=u"繰り返し")
-    return_Button.place(relx=0.5, rely=0.5)
-
     # プログラムを始める
     window.mainloop()
 
-# 本体処理
-if __name__ == "__main__":
+
+# メイン
+if __name__ == '__main__':
     main()

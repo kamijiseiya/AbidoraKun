@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt  # インストールが必要
 from matplotlib import ticker
 import mpl_finance as mpf  #インストールが必要
 from module.exchangess.bitbank import BITBANK
-from module.exchangess.binance import BINANCE
 sys.path.append(os.path.abspath(os.path.join('..')))
 # 参考
 # http://okuribitoni.hatenablog.com/entry/2018/01/11/211204

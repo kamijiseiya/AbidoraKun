@@ -1,0 +1,4 @@
+ccxt<=1.13.105
+pylint>=
+nose>=
+
