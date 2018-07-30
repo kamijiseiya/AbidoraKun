@@ -35,6 +35,7 @@ def candlechart():
         bitbank_ticker_json = BITBANK.tickers('XRP')
         print(bitbank_ticker_json['baseVolume'])
         bitbank_ticker = bitbank_ticker_json['baseVolume']
+        print(bitbank_ticker)
         # 現在の時刻を取得
         now = datetime.datetime.now()
 
@@ -72,6 +73,7 @@ def candlechart():
         mpf.candlestick2_ohlc(ax=ax_bitbank, opens=bitbank_xrp_ohlc.open, highs=bitbank_xrp_ohlc.high,\
                 lows=bitbank_xrp_ohlc.low, closes=bitbank_xrp_ohlc.close, width=1)
         # 取引高
+        ax_ticker.set_ylim(bottom=20400000, top=20500000)
         tickers_resampled.plot(kind='bar', ax=ax_ticker)
         # 横軸を日付にする
         xdate = bitbank_xrp_ohlc.index
@@ -93,5 +95,6 @@ def candlechart():
         plt.pause(FREQUENCY)  # チャート画面を表示
 
 
+# テスト用
 if __name__ == "__main__":
     candlechart()
