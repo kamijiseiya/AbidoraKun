@@ -4,6 +4,7 @@
 import sqlite3
 import time
 import requests
+import os
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
@@ -59,20 +60,39 @@ class LINE:
 
 
     @staticmethod
-    def line_image():
+    def line_image(self):
         """Lineに画像を送るためのサンプル"""
         while True:
-            url = "https://notify-api.line.me/api/notify"
-            token = 'LINE Notifyのアクセストークン'  # DBから取得予定
-            headers = {"Authorization": "Bearer " + token}
-            message = ("今から画像を送ります。")
-            params = {"message": message}
-            files = {"imageFile": open("../../../app/config/img/figure.png", "rb")}
-            post = requests.post(url, headers=headers, params=params, files=files)
-            print(post.status_code)  # ステータスコード取得
-            # １時間ごとに取得
-            time.sleep(3600)
-            return post.status_code
+            try:
+                path = "../../../app/config/img/" + self
+
+                if os.path.isfile(path) == True:
+                    url = "https://notify-api.line.me/api/notify"
+                    token = 'LINE Notifyのアクセストークン'  # DBから取得予定
+                    headers = {"Authorization": "Bearer " + token}
+                    message = ("今からグラフを送ります。")
+                    params = {"message": message}
+                    files = {"imageFile": open("../../../app/config/img/" + self, "rb")}
+                    post = requests.post(url, headers=headers, params=params, files=files)
+                    print(post.status_code)  # ステータスコード取得
+                    # １時間ごとに取得
+                    # time.sleep(3600)
+                    return post.status_code
+                else:
+                    url = "https://notify-api.line.me/api/notify"
+                    token = 'LINE Notifyのアクセストークン'  # DBから取得予定
+                    headers = {"Authorization": "Bearer " + token}
+                    message = ("グラフが存在しませんでした")
+                    params = {"message": message}
+                    post = requests.post(url, headers=headers, params=params)
+                    print(post.status_code)  # ステータスコード取得
+                    # １時間ごとに取得
+                    # time.sleep(3600)
+                    return post.status_code
+
+            except Exception as e:
+                print(e, 'error occurred')
+                time.sleep(30)
 
 
     @staticmethod
@@ -103,4 +123,8 @@ class LINE:
 if __name__ == "__main__":  # テスト用に追加
     #print(LINE.registration('test','0001'))
     #print(LINE.search_apykey('test'))
+    #LINE Notifyのアクセストークンが取得できていないのでエラーになる。
+    #print(LINE.line_image("figure.png"))
+    #LINE Notifyのアクセストークンが取得できていないのでエラーになる。
+    #print(LINE.line_image("sample1.png"))
     print(LINE.line_pie_chart())
