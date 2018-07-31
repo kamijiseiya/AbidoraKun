@@ -2,8 +2,8 @@
 # Python 3.5.2 にて動作を確認
 # sqlite3 標準モジュールをインポート
 import sqlite3
-import requests
 import time
+import requests
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
@@ -97,7 +97,7 @@ class LINE:
         plt.subplots_adjust(left=0, right=0.7)
         plt.legend(label, fancybox=True, loc='center left', bbox_to_anchor=(0.9, 0.5))
         plt.axis('equal')
-        plt.savefig('figure.png', bbox_inches='tight', pad_inches=0.05)
+        plt.savefig('../../config/img/figure.png', bbox_inches='tight', pad_inches=0.05)
 
 
 if __name__ == "__main__":  # テスト用に追加
