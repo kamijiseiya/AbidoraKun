@@ -9,10 +9,8 @@ from app.module.exchangess import binance
 EXHANGES, ASK, BID = binance.BINANCE.currencyinformation('XRP')
 
 
-
 class TestBitbank(unittest.TestCase):
     """bainasu.pyのテストクラス"""
-
     def test_returnbinancedata_id(self):
         """bainasuから値がとってこれているかどうか"""
 
@@ -60,15 +58,18 @@ class TestBitbank(unittest.TestCase):
 
     def test_add_api(self):
         """APIキーが保存されたかどうか"""
-        type = binance.BINANCE.add_api('test', '01', '02')
+        none = binance.BINANCE.add_api('test', '01', '02')
         """同じAPIキーが保存された場合例外処理が発生したかどうか"""
-        self.assertIsNone(type)
+        self.assertIsNone(none)
 
     def test_get_api(self):
         """APIキーが検索できるかどうか"""
-        apikey, secret = binance.BINANCE.get_api('test')
-        self.assertEqual('01', apikey)
-
+        apikey, secret = binance.BINANCE.get_api(1)
+        print(apikey)
+        self.assertEqual('zeJ2xO6LKOkWCX6Eb6E7b84P17oKUNrbhDYuZjWKWlEzrWLQAgv7mcjghQO5TbwG', apikey)
+        """APIキーが保存されてない場合の処理"""
+        none = binance.BINANCE.get_api(99)
+        self.assertIsNone(none)
 
 if __name__ == "__main__":
-        unittest.main()
+    unittest.main()
