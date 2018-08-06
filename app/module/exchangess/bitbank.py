@@ -2,17 +2,6 @@
 # coding: UTF-8 文字コード指定
 import time
 import ccxt  # 取引所ライブラリをインポート
-# sqlite3 標準モジュールをインポート
-import sqlite3
-
-# データベースファイルのパス
-DBPATH = '../../config/cash_cow_db.sqlite'
-
-# データベース接続とカーソル生成
-CONNECTION = sqlite3.connect(DBPATH)
-# 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
-# connection.isolation_level = None
-CURSOR = CONNECTION.cursor()
 
 # エラー処理（例外処理）
 bitbank = ccxt.bitbank()
