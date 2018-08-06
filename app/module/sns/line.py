@@ -64,7 +64,7 @@ class LINE:
         """Lineに画像を送るためのサンプル"""
         while True:
             try:
-                path = "../../../app/config/img/" + self
+                path = self
 
                 if os.path.isfile(path) == True:
                     url = "https://notify-api.line.me/api/notify"
@@ -72,7 +72,7 @@ class LINE:
                     headers = {"Authorization": "Bearer " + token}
                     message = ("今からグラフを送ります。")
                     params = {"message": message}
-                    files = {"imageFile": open("../../../app/config/img/" + self, "rb")}
+                    files = {"imageFile": open(self, "rb")}
                     post = requests.post(url, headers=headers, params=params, files=files)
                     print(post.status_code)  # ステータスコード取得
                     # １時間ごとに取得
@@ -124,7 +124,7 @@ if __name__ == "__main__":  # テスト用に追加
     #print(LINE.registration('test','0001'))
     #print(LINE.search_apykey('test'))
     #LINE Notifyのアクセストークンが取得できていないのでエラーになる。
-    #print(LINE.line_image("figure.png"))
+    #print(LINE.line_image("../../../app/config/img/figure.png"))
     #LINE Notifyのアクセストークンが取得できていないのでエラーになる。
     #print(LINE.line_image("sample1.png"))
     print(LINE.line_pie_chart())
