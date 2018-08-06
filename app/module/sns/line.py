@@ -3,8 +3,8 @@
 # sqlite3 標準モジュールをインポート
 import sqlite3
 import time
-import requests
 import os
+import requests
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
@@ -59,7 +59,7 @@ class LINE:
         return 'none'
 
 
-    @staticmethod
+
     def line_image(self):
         """Lineに画像を送るためのサンプル"""
         while True:
@@ -77,21 +77,21 @@ class LINE:
                     print(post.status_code)  # ステータスコード取得
                     # １時間ごとに取得
                     # time.sleep(3600)
-                    return post.status_code
+                    return message
                 else:
                     url = "https://notify-api.line.me/api/notify"
                     token = 'LINE Notifyのアクセストークン'  # DBから取得予定
                     headers = {"Authorization": "Bearer " + token}
-                    message = ("グラフが存在しませんでした")
+                    message = ("グラフが存在しません。")
                     params = {"message": message}
                     post = requests.post(url, headers=headers, params=params)
                     print(post.status_code)  # ステータスコード取得
                     # １時間ごとに取得
                     # time.sleep(3600)
-                    return post.status_code
+                    return message
 
-            except Exception as e:
-                print(e, 'error occurred')
+            except Exception as error:
+                print(error, 'error occurred')
                 time.sleep(30)
 
 
