@@ -1,35 +1,28 @@
 """取引所（バイナンス）から通貨情報を取得する"""
 # coding: UTF-8 文字コード指定
 import time
-import ccxt  # 取引所ライブラリをインポート
 import os  # パスを操作するモジュール
 import sys  # パスを読み込むモジュール
+import ccxt  # 取引所ライブラリをインポート
+
+
 sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールのパス指定
 # sqlite3 標準モジュールをインポート
-import sqlite3
-import re  # 正規表現を使用するため
+from sqlalchemy import exc
 from app.module.money_exchange import btc_to_jpy
-from app.config.setting import  session
-from app.config.exchanges import *
-
-# データベースファイルのパス
-DBPATH = '../../module/config'
-
-# データベース接続とカーソル生成
-CONNECTION = sqlite3.connect(DBPATH)
-# 自動コミットにする場合は下記を指定（コメントアウトを解除のこと）
-# connection.isolation_level = None
-CURSOR = CONNECTION.cursor()
+from app.module.exchangess.setting import session
+from app.module.exchangess.exchangesdb import main, Exchanges
 
 
 class BINANCE:
     """binanceからの取引データを処理するクラス"""
 
     @classmethod
-    def private_binance(self):
+    def private_binance(cls):
+        """privateキーの処理"""
 
         try:
-            api, secret = BINANCE.get_api('BINANCE')
+            api, secret = BINANCE.get_api(1)
             binances = ccxt.binance({
                 'apiKey': api,
                 'secret': secret
@@ -41,7 +34,8 @@ class BINANCE:
             time.sleep(10)
 
     @classmethod
-    def public_binance(self):
+    def public_binance(cls):
+        """publicキーの処理"""
         binances = ccxt.binance()
         return binances
 
@@ -78,13 +72,17 @@ class BINANCE:
     @staticmethod
     def buy(currency, amount, price, ):
         """買い注文をするメソッド"""
-        result = BINANCE.private_binance().create_limit_buy_order(currency, amount, price)  # xrpを購入
+        result = BINANCE.private_binance().\
+            create_limit_buy_order\
+            (currency, amount, price)  # xrpを購入
         print(result)
 
     @staticmethod
     def sell(currency, amount, price, ):
         """売り注文をするメソッド"""
-        result = BINANCE.private_binance().create_limit_sell_order(currency, amount, price)  # xrpを売却　
+        result = BINANCE.private_binance().\
+            create_limit_sell_order\
+            (currency, amount, price)  # xrpを売却　
         print(result)
 
     def get_address(self):
@@ -104,31 +102,28 @@ class BINANCE:
     def add_api(name, api, secret):
         """APIkキーを登録するメソッド"""
         try:
-            excanges = Exchanges
+            # dbを作成する
+            main(sys.argv)
+            excanges = Exchanges()
+            # binanceのIDは１
+            excanges.id = 1
             excanges.name = name
             excanges.api = api
             excanges.secret = secret
-            print(name+'で追加されました')
+            session.add(excanges)
+            session.commit()
+            print(name + 'で追加されました')
             return name, api, secret
-        except sqlite3.Error as error:
-            print('sqlite3.Error occurred:', error.args[0])
+        except exc.IntegrityError:
+            session.rollback()
             print('すでに追加されています。')
             return None
 
-    def get_api(name):
+    def get_api(self):
         """apiキーを取得するメソッド"""
         try:
-            CURSOR.execute("SELECT api,secret FROM exchanges where  name like" + "'" + name + "'")
-            """正規表現で形を整える"""
-            token = re.sub('\)|\(|\,|\\)|}|{|\'', '', str(CURSOR.fetchall()))
-            # 配列に変換する
-            apikey = re.sub('[[]|[]]', "", token)
-            CONNECTION.close()
-            return apikey.split()
-        except sqlite3.Error as error:
-            print('sqlite3.Error occurred:', error.args[0])
-        return None
-
-
-if __name__ == "__main__":  # テスト用に追加
-    print(BINANCE.add_api('BINANCE', 'zeJ2xO6LKOkWCX6Eb6E7b84P17oKUNrbhDYuZjWKWlEzrWLQAgv7mcjghQO5TbwG', 'yhiEdfHFn5VYTGFCRM3mvwuH4T2qty4LlBA1GbVSVEi6bwPkYRd86f05SpFWcAOB'))
+            excanges = session.query(Exchanges).get(self)
+            return excanges.api, excanges.secret
+        except AttributeError:
+            print('登録されていません')
+            return None
