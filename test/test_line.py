@@ -25,3 +25,11 @@ class Testline(unittest.TestCase):
         decision = line.LINE.line_image("../app/config/img/figure.png")
         print(decision)
         self.assertEqual("今からグラフを送ります。", decision)
+
+
+    def  test_line_image_not_exist(self):
+        """line.pyのline_imageメソッドのテスト(存在しないファイルを指定した場合グラフが存在しません。と返却するか)"""
+
+        decision = line.LINE.line_image("../app/config/img/kakakak.png")
+        print(decision)
+        self.assertEqual("グラフが存在しません。", decision)
