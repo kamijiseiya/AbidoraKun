@@ -8,6 +8,7 @@ import requests
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
+
 # データベースファイルのパス
 DBPATH = 'cash_cow_db.sqlite'
 
@@ -33,8 +34,6 @@ class LINE:
             # INSERT
             CURSOR.execute("INSERT INTO sns VALUES (:name, :api)",
                            {'name': name, 'api': api})
-            CURSOR.execute('SELECT * FROM sns ORDER BY name')
-            res = CURSOR.fetchall()
 
             # 保存を実行（忘れると保存されないので注意）
             CONNECTION.commit()
@@ -44,18 +43,19 @@ class LINE:
             return api, name
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
-            return 'none'
+            return None
 
     def search_apykey(name):
         try:
             CURSOR.execute("SELECT api FROM sns where  name like" + "'"+name+"'")
-
-            res = CURSOR.fetchall()
-            print(res)
+            """正規表現で形を整える"""
+            TOKEN_REWORK = re.sub('\)|\(|\,|\'', '', str(CURSOR.fetchall()))
+            print(TOKEN_REWORK)
             CONNECTION.close()
-            return res
+            return TOKEN_REWORK
         except sqlite3.Error as error:
             print('sqlite3.Error occurred:', error.args[0])
+
         return 'none'
 
 
@@ -128,3 +128,4 @@ if __name__ == "__main__":  # テスト用に追加
     #LINE Notifyのアクセストークンが取得できていないのでエラーになる。
     #print(LINE.line_image("sample1.png"))
     print(LINE.line_pie_chart())
+

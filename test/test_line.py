@@ -12,12 +12,17 @@ class Testline(unittest.TestCase):
 
     def test_registration(self):
         """入力された値が保存されたかどうか"""
+        type = line.LINE.registration('test', 'jojnvsidvnpsd')
+        """すでに登録された値が登録された場合の例外処理のテスト"""
+        print(type)
+        self.assertIsNone(type)
 
-        name, api, = line.LINE.registration('test', 'jojnvsidvnpsd')
-        self.assertEqual(name == 'test', api == 'jojnvsidvnpsd')
-
-        """例外処理が発生したかどうか"""
-        self.assertEqual('none' ,line.LINE.registration('test', 'jojnvsidvnpsd2222'))
+    def test_search_apykey(self):
+     """値が取り出せるかどうか"""
+     type = line.LINE.search_apykey('test')
+     """すでに登録された値が登録された場合の例外処理のテスト"""
+     print(type)
+     self.assertEqual('[jojnvsidvnpsd]', type)
 
     def test_line_image(self):
         """line.pyのline_imageメソッドのテスト(LINE Notifyのアクセストークンがないので動かない)"""
@@ -33,3 +38,4 @@ class Testline(unittest.TestCase):
         decision = line.LINE.line_image("../app/config/img/kakakak.png")
         print(decision)
         self.assertEqual("グラフが存在しません。", decision)
+

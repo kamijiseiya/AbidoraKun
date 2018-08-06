@@ -21,13 +21,21 @@ class TestBitbank(unittest.TestCase):
         print(exhanges, ask, bid)
         self.assertEqual('BTC/JPY', bitbank.BITBANK.currency_pair_creation('BTC'))
 
-    def test_registration(self):
+    def test_add_api(self):
         """APIキーが保存されたかどうか"""
-        name, api, secret = bitbank.BITBANK.registration('test', '01', '02')
-        print(name, api, secret)
-        self.assertEqual(name == 'test', api == '01', secret == '02')
-        """同じAPIキーが保存された場合例外処理がハッセしたかどうか"""
-        self.assertEqual('none', bitbank.BITBANK.registration('test', '01', '02'))
+        none = bitbank.BITBANK.add_api('test', '01', '02')
+        """同じAPIキーが保存された場合例外処理が発生したかどうか"""
+        self.assertIsNone(none)
+
+    def test_get_api(self):
+        """APIキーが検索できるかどうか"""
+        apikey, secret = bitbank.BITBANK.get_api(2)
+        print(apikey)
+        self.assertEqual('01', apikey)
+        """APIキーが保存されてない場合の処理"""
+        none = bitbank.BITBANK.get_api(99)
+        self.assertIsNone(none)
+
 
 if __name__ == "__main__":
     unittest.main()
