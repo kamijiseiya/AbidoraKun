@@ -1,6 +1,7 @@
 """メイン画面"""
 import os  # パスを操作するモジュール
 import sys  # パスを読み込むモジュール
+import subprocess
 
 sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールのパス指定
 # ライブラリ
@@ -9,8 +10,8 @@ from tkinter import ttk
 import time  # 価格取得を繰り返す為
 import sqlite3  # DBへの追加時のエラーを取得する為
 
-from app.module.exchangess import bitbank
-from app.module.exchangess import binance
+#from app.module.exchangess import bitbank
+#from app.module.exchangess import binance
 # from app.module.sns import line
 from app import xrpchart
 
@@ -21,7 +22,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 from time import sleep
-
 
 # startボタンを押したときの処理
 def changePage(page):
@@ -82,11 +82,12 @@ def main() -> None:
         def __init__(self, parent, controller):
             tkinter.Frame.__init__(self, parent)
 
-            fig1 = Figure(figsize=(4, 4), dpi=190)
+            fig1 = Figure(figsize=(4, 4), dpi=170)
             a = fig1.add_subplot(111)
 
             # 表を作る
             def callback():
+                xrpchart.candlechart()
 
                 canvas = FigureCanvasTkAgg(fig1, self)
                 canvas.draw()
@@ -118,8 +119,16 @@ def main() -> None:
             tkinter.Frame.__init__(self, parent)
 
     app = Helmholtz_App()
+    #xrpchart.candlechart()
 
+    def Chart() :
+        subprocess.check_call({"python","app.xrpchart.py"})
+        #os.system("start python app\\xrpchart.py")
+        #os.system("start notepad.exe")
 
+    cart = chartbutton = \
+        tkinter.Button(tablepage, text="CHART", command=Chart)
+    cart.pack()
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -307,9 +316,9 @@ def main() -> None:
     startpage.tkraise()
 
     # 無限ループ(価格取得の為)
-
+    """
     while True:
-        time.sleep(1)
+        #time.sleep(1)
         #bitbankから現在価格取得
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
         bitbank_ask = ttk.Label(backpage, text=ask, foreground='white', background='black', font=PointFont)
@@ -326,11 +335,9 @@ def main() -> None:
         binance_bid = ttk.Label(backpage, text=bid2, foreground='white', background='black', font=PointFont)
         binance_bid.place(relx=0.7, rely=0.3)
         binance_bid.update()
-
-
+    """
     # プログラムを始める
     window.mainloop()
-
 
 # メイン
 if __name__ == '__main__':
