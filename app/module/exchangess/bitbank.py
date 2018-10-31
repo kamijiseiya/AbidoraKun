@@ -3,11 +3,13 @@
 import sys
 import time
 import ccxt  # 取引所ライブラリをインポート
+
 # sqlite3 標準モジュールをインポート
 
 from sqlalchemy import exc
 from app.module.exchangess.setting import session
 from app.module.exchangess.exchangesdb import main, Exchanges
+
 
 
 class BITBANK:

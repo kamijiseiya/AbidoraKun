@@ -1,5 +1,8 @@
 """取引所（バイナンス）から通貨情報を取得する"""
 # coding: UTF-8 文字コード指定
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join('..')))
 import time
 import os  # パスを操作するモジュール
 import sys  # パスを読み込むモジュール
