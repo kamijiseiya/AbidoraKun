@@ -1,4 +1,5 @@
-# cash-cow
+![logo_transparent](https://user-images.githubusercontent.com/24240541/47832655-f7cf4d80-ddd9-11e8-82a1-d15b9a0a8c71.png)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/49c8e3aa5577463a29a9/maintainability)](https://codeclimate.com/github/kamijiseiya/cash-cow/maintainability)
 [![Build Status](https://travis-ci.org/kamijiseiya/travis-broken-example.svg?branch=master)](https://travis-ci.org/kamijiseiya/travis-broken-example)
 [![codecov](https://codecov.io/gh/kamijiseiya/cash-cow/branch/master/graph/badge.svg)](https://codecov.io/gh/kamijiseiya/cash-cow)
