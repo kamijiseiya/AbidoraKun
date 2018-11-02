@@ -10,8 +10,8 @@ from tkinter import ttk
 import time  # 価格取得を繰り返す為
 import sqlite3  # DBへの追加時のエラーを取得する為
 
-#from app.module.exchangess import bitbank
-#from app.module.exchangess import binance
+from app.module.exchangess import bitbank
+from app.module.exchangess import binance
 # from app.module.sns import line
 from app import xrpchart
 
@@ -46,7 +46,8 @@ def main() -> None:
     # -----------------------------------StartPage---------------------------------
     ### StartPage用のFrameを生成
     startpage = ttk.Frame(window)
-    starttest = tkinter.Frame(startpage, bg='black', width=300, height=200, bd=30, relief="groove")
+    starttest = tkinter.Frame(startpage, height=200, width=300, relief="groove")
+    #starttest = tkinter.Frame(startpage, bg='black', width=300, height=200, bd=30, relief="groove")
     backpage = tkinter.Frame(startpage, bg='black', height=400, width=330, bd=10, relief="ridge")
     bidpage = tkinter.Frame(startpage, bg='black', height=175, width=330, bd=10, relief="ridge")
     askpage = tkinter.Frame(startpage, bg='black', height=175, width=330, bd=10, relief="ridge")
@@ -133,23 +134,88 @@ def main() -> None:
     ### ボタン表示
     # APIキー登録ボタン生成
     startbutton = \
-        tkinter.Button(starttest, width=31, height=3, text="取引所APIキー登録画面", font=PointFont,
-                       command=lambda: changePage(mainPage))
+        tkinter.Button(starttest, width=19, height=3, text="取引所設定", font=("Helevetice", 25),
+                       command=lambda: changePage(mainPage), bg="gray59")
 
     # expand 親に合わせて変化　fill frameの空きスペースを埋めるか
     startbutton.pack(side="left", expand=1, fill="both")
 
     # SNSボタン生成
     linebutton = \
-        tkinter.Button(starttest, width=31, height=3, text="SNS登録", font=PointFont, command=lambda: changePage(snspage))
+        tkinter.Button(starttest, width=19, height=3, text="通知設定", font=("Helevetice",25), command=lambda: changePage(snspage), bg="gray59")
 
     linebutton.pack(side="left", expand=1, fill="both")
 
     # 設定ボタン生成
     configbutton = \
-        tkinter.Button(starttest, width=31, height=3, text="設定", font=PointFont, command=lambda: changePage(configPage))
+        tkinter.Button(starttest, width=19, height=3, text="詳細設定", font=("Helevetice",25), command=lambda: changePage(configPage), bg="gray59")
 
     configbutton.pack(side="left", expand=1, fill="both")
+
+    def Getxrp() :
+        # bitbankから現在価格取得
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
+        bitbank_ask = ttk.Label(backpage, text=ask, foreground='white', background='black', font=PointFont)
+        bitbank_ask.place(relx=0.4, rely=0.2)
+        bitbank_ask.update()
+        bitbank_bid = ttk.Label(backpage, text=bid, foreground='white', background='black', font=PointFont)
+        bitbank_bid.place(relx=0.7, rely=0.2)
+        bitbank_bid.update()
+        # binanseから現在価格取得
+        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('XRP')
+        binance_ask = ttk.Label(backpage, text=ask2, foreground='white', background='black', font=PointFont)
+        binance_ask.place(relx=0.4, rely=0.3)
+        binance_ask.update()
+        binance_bid = ttk.Label(backpage, text=bid2, foreground='white', background='black', font=PointFont)
+        binance_bid.place(relx=0.7, rely=0.3)
+        binance_bid.update()
+
+    xrp = tkinter.Button(backpage, text="XRP", width=7, font=PointFont, command=Getxrp)
+    xrp.place(relx=0.0, rely=0.0)
+
+    def Getbtc() :
+        # bitbankから現在価格取得
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('BTC')
+        bitbank_ask = ttk.Label(backpage, text=ask, foreground='white', background='black', font=PointFont)
+        bitbank_ask.place(relx=0.4, rely=0.2)
+        bitbank_ask.update()
+        bitbank_bid = ttk.Label(backpage, text=bid, foreground='white', background='black', font=PointFont)
+        bitbank_bid.place(relx=0.7, rely=0.2)
+        bitbank_bid.update()
+        # binanseから現在価格取得
+        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('BTC')
+        binance_ask = ttk.Label(backpage, text=ask2, foreground='white', background='black', font=PointFont)
+        binance_ask.place(relx=0.4, rely=0.3)
+        binance_ask.update()
+        binance_bid = ttk.Label(backpage, text=bid2, foreground='white', background='black', font=PointFont)
+        binance_bid.place(relx=0.7, rely=0.3)
+        binance_bid.update()
+
+    bitbankbutton = tkinter.Button(backpage, text="BTC", font=PointFont, width=7, command=Getbtc)
+    bitbankbutton.place(relx=0.25, rely=0.0)
+
+    def Geteth() :
+        # bitbankから現在価格取得
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('ETH')
+        bitbank_ask = ttk.Label(backpage, text=ask, foreground='white', background='black', font=PointFont)
+        bitbank_ask.place(relx=0.4, rely=0.2)
+        bitbank_ask.update()
+        bitbank_bid = ttk.Label(backpage, text=bid, foreground='white', background='black', font=PointFont)
+        bitbank_bid.place(relx=0.7, rely=0.2)
+        bitbank_bid.update()
+        # binanseから現在価格取得
+        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('ETH')
+        binance_ask = ttk.Label(backpage, text=ask2, foreground='white', background='black', font=PointFont)
+        binance_ask.place(relx=0.4, rely=0.3)
+        binance_ask.update()
+        binance_bid = ttk.Label(backpage, text=bid2, foreground='white', background='black', font=PointFont)
+        binance_bid.place(relx=0.7, rely=0.3)
+        binance_bid.update()
+
+    eth = tkinter.Button(backpage, text="ETH", font=PointFont, width=7, command=Geteth)
+    eth.place(relx=0.5, rely=0.0)
+    ltc = tkinter.Button(backpage, text="LTC", font=PointFont, width=7)
+    ltc.place(relx=0.75, rely=0.0)
 
     exchange = ttk.Label(backpage, text=u"取引所", foreground='white', background='black', font=PointFont)
     exchange.place(relx=0.1, rely=0.1)
@@ -166,6 +232,10 @@ def main() -> None:
     buy_order.place(relx=0.4, rely=0.1)
     sell_order = ttk.Label(askpage, text=u"売り注文", foreground='white', background='black', font=PointFont)
     sell_order.place(relx=0.4, rely=0.1)
+
+    #orderexchange = ttk.Label(bidpage, text=u'取引所', foreground='white', background='black', font=PointFont)
+    # orderstatus = ttk.Label(bidpage, text=u'注文状態', foreground='white', background='black', font=PointFont)
+    # orderprice = ttk.Label(bidpage, text=u'注文価格', foreground='white', background='black', font=PointFont)
 
     # フレームを配置
     startpage.grid(row=0, column=0, sticky="nsew")
@@ -315,27 +385,7 @@ def main() -> None:
     # StartPageを上位層にする
     startpage.tkraise()
 
-    # 無限ループ(価格取得の為)
-    """
-    while True:
-        #time.sleep(1)
-        #bitbankから現在価格取得
-        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
-        bitbank_ask = ttk.Label(backpage, text=ask, foreground='white', background='black', font=PointFont)
-        bitbank_ask.place(relx=0.4, rely=0.2)
-        bitbank_ask.update()
-        bitbank_bid = ttk.Label(backpage, text=bid, foreground='white', background='black', font=PointFont)
-        bitbank_bid.place(relx=0.7, rely=0.2)
-        bitbank_bid.update()
-        #binanseから現在価格取得
-        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('XRP')
-        binance_ask = ttk.Label(backpage, text=ask2, foreground='white', background='black', font=PointFont)
-        binance_ask.place(relx=0.4, rely=0.3)
-        binance_ask.update()
-        binance_bid = ttk.Label(backpage, text=bid2, foreground='white', background='black', font=PointFont)
-        binance_bid.place(relx=0.7, rely=0.3)
-        binance_bid.update()
-    """
+
     # プログラムを始める
     window.mainloop()
 
