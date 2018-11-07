@@ -104,8 +104,24 @@ class BINANCE:
         else:
             return None
 
+
+    # 注文パラメータを取得するメソッド（bay,sel）
+    def fet_orders_paramentrs(self.params):
+        result[]
+        orades = BINANCE.private_binance(
+        symno = self,
+        paramas + {paramas}
+        ):
+        for o in orades:
+            if(o[side]= sell)
+            result.append(o["id"]+"買い注文"+o["price"])
+            else
+            result.append(o["id"]+"売り注文"+["price"])
+
+        return result
+
     # 注文数を取得するメソッド
-    def getOrdersCount(self, Symbol):
+    def get_orders_count(self, Symbol):
 
         try:
             # josnデータをいてる配列の作成
@@ -123,7 +139,7 @@ class BINANCE:
         except Exchanges as e:
             print("Exception => Get Pending Orders Count", str(e))
             return None
-        
+
         # jsonの取得（Orders のレスポンスの取得）
         orders = BINANCE.private_binance().fetch_open_orders()
         # 引数にjosnと価格のペアを指定して要素情報の取得
