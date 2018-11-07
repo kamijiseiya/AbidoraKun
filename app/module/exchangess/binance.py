@@ -2,12 +2,12 @@
 # coding: UTF-8 文字コード指定
 import os
 import sys
+
 sys.path.append(os.path.abspath(os.path.join('..')))
 import time
 import os  # パスを操作するモジュール
 import sys  # パスを読み込むモジュール
 import ccxt  # 取引所ライブラリをインポート
-
 
 sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールのパス指定
 # sqlite3 標準モジュールをインポート
@@ -25,6 +25,7 @@ class BINANCE:
         """privateキーの処理"""
 
         try:
+            print(BINANCE.get_api(1))
             api, secret = BINANCE.get_api(1)
             binances = ccxt.binance({
                 'apiKey': api,
@@ -61,6 +62,7 @@ class BINANCE:
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
                 print("10秒待機してやり直します")
+                return messege == ['取引所から取引データを取得できません。']
                 time.sleep(10)
 
     def currency_pair_creation(self):
@@ -75,16 +77,16 @@ class BINANCE:
     @staticmethod
     def buy(currency, amount, price, ):
         """買い注文をするメソッド"""
-        result = BINANCE.private_binance().\
-            create_limit_buy_order\
+        result = BINANCE.private_binance(). \
+            create_limit_buy_order \
             (currency, amount, price)  # xrpを購入
         print(result)
 
     @staticmethod
     def sell(currency, amount, price, ):
         """売り注文をするメソッド"""
-        result = BINANCE.private_binance().\
-            create_limit_sell_order\
+        result = BINANCE.private_binance(). \
+            create_limit_sell_order \
             (currency, amount, price)  # xrpを売却　
         print(result)
 
@@ -101,6 +103,32 @@ class BINANCE:
             time.sleep(10)
         else:
             return None
+
+    # 注文数を取得するメソッド
+    def getOrdersCount(self, Symbol):
+
+        try:
+            # josnデータをいてる配列の作成
+            orders = self
+            oLen = []
+
+            # for文で引数から指定された価格のペアの情報を検索
+            for i, o in enumerate(orders):
+                if (orders[i]['info']['sybol'] == Symbol):
+                    oLen.append(i)
+            Len = len(oLen)
+            oLen.clear()
+            return Len
+
+        except Exchanges as e:
+            print("Exception => Get Pending Orders Count", str(e))
+            return None
+        
+        # jsonの取得（Orders のレスポンスの取得）
+        orders = BINANCE.private_binance().fetch_open_orders()
+        # 引数にjosnと価格のペアを指定して要素情報の取得
+        orderCount = BINANCE.getOrdersCount(orders, 'XBTUSD')
+        print(orderCount)
 
     def add_api(name, api, secret):
         """APIkキーを登録するメソッド"""
@@ -130,3 +158,7 @@ class BINANCE:
         except AttributeError:
             print('登録されていません')
             return None
+
+
+if __name__ == "__main__":  # テスト用に追加
+    print(BINANCE.get_address('XRP'))
