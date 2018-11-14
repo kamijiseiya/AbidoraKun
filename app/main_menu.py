@@ -46,7 +46,8 @@ def main() -> None:
     # -----------------------------------StartPage---------------------------------
     ### StartPage用のFrameを生成
     startpage = ttk.Frame(window)
-    starttest = tkinter.Frame(startpage, height=200, width=300, relief="groove")
+    #starttest = tkinter.Frame(startpage, height=200, width=300, relief="groove")
+    starttest = tkinter.Frame(startpage, bg='black', width=300, height=200, bd=30, relief="groove")
     backpage = tkinter.Frame(startpage, bg='black', height=400, width=330, bd=10, relief="ridge")
     badpage = tkinter.Frame(backpage, height=320, width=330, bg='white')
     #canvass = tkinter.Canvas(backpage, height=100, width=50)
@@ -183,21 +184,21 @@ def main() -> None:
     ### ボタン表示
     # APIキー登録ボタン生成
     startbutton = \
-        tkinter.Button(starttest, width=19, height=3, text="取引所設定", font=("Helevetice", 25),
-                       command=lambda: changePage(mainPage), bg="gray59")
+        tkinter.Button(starttest, width=31, height=3, text="取引所設定", font=PointFont,
+                       command=lambda: changePage(mainPage))
 
     # expand 親に合わせて変化　fill frameの空きスペースを埋めるか
     startbutton.pack(side="left", expand=1, fill="both")
 
     # SNSボタン生成
     linebutton = \
-        tkinter.Button(starttest, width=19, height=3, text="通知設定", font=("Helevetice",25), command=lambda: changePage(snspage), bg="gray59")
+        tkinter.Button(starttest, width=31, height=3, text="通知設定", font=PointFont, command=lambda: changePage(snspage))
 
     linebutton.pack(side="left", expand=1, fill="both")
 
     # 設定ボタン生成
     configbutton = \
-        tkinter.Button(starttest, width=19, height=3, text="詳細設定", font=("Helevetice",25), command=lambda: changePage(configPage), bg="gray59")
+        tkinter.Button(starttest, width=31, height=3, text="詳細設定", font=PointFont, command=lambda: changePage(configPage))
 
     configbutton.pack(side="left", expand=1, fill="both")
 
