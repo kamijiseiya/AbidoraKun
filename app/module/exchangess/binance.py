@@ -176,5 +176,22 @@ class BINANCE:
             return None
 
 
+
+   def delete_transaction(self):
+       """注文を全てキャンセルするメソッド"""
+       #ロジックのみの作成なのでテスト未実装
+       try:
+           # 通貨ペアの指定
+           currencypair = BINANCE.currency_pair_creation(self)
+           params = {"product_code" : currencypair }
+
+           for o in orders:
+               binance.cancek_order(
+                        id = o["id"]
+                        params = {"product_code" : currencypair}
+               )
+       except AttributeError:
+           return None
+
 if __name__ == "__main__":  # テスト用に追加
     print(BINANCE.get_address('XRP'))
