@@ -10,11 +10,11 @@ from tkinter import ttk
 import time  # 価格取得を繰り返す為
 import sqlite3  # DBへの追加時のエラーを取得する為
 
-from app.module.exchangess import bitbank
-from app.module.exchangess import binance
-from app.module.exchangess import quoinex
+#from app.module.exchangess import bitbank
+#from app.module.exchangess import binance
+#from app.module.exchangess import quoinex
 #from app.module.sns import line
-#from app import xrpchart
+# from app import xrpchart
 
 import matplotlib
 
@@ -180,8 +180,7 @@ def main() -> None:
         #os.system("start python app\\xrpchart.py")
         #os.system("start notepad.exe")
 
-    cart = chartbutton = \
-        tkinter.Button(tablepage, text="CHART", command=Chart)
+    cart = tkinter.Button(tablepage, text="CHART", command=Chart)
     cart.pack()
 
     ### ボタン表示
@@ -201,7 +200,7 @@ def main() -> None:
 
     # SNSボタン生成
     linebutton = \
-        tkinter.Button(starttest, width=31, height=3, text="通知設定", font=PointFont, command=lambda: changePage(snspage))
+        tkinter.Button(starttest, width=31, height=3, text="通知設定", font=PointFont, command=lambda: changePage(snsPage))
 
     linebutton.pack(side="left", expand=1, fill="both")
 
@@ -349,10 +348,6 @@ def main() -> None:
     bid.place(relx=0.4, rely=0.12)
     ask = ttk.Label(backpage, text=u'売値', font=PointFont)
     ask.place(relx=0.7, rely=0.12)
-    #exchangeA = ttk.Label(backpage, text=u"bitbank", font=PointFont)
-    #exchangeA.place(relx=0.1, rely=0.2)
-    #exchangeB = ttk.Label(backpage, text=u"binance", font=PointFont)
-    #exchangeB.place(relx=0.1, rely=0.3)
 
     orderexchange = ttk.Label(bidpage, text=u'取引所', font=PointFont)
     orderexchange.place(relx=0.1, rely=0.1)
@@ -376,19 +371,16 @@ def main() -> None:
     #scrollframe.place(relx=0.01, rely=0.01)
 
     #window.columnconfigure(0, weight=1)
+    #window.master.columnconfigure(0, weight=1)
+    #window.master.rowconfigure(0, weight=1)
 
     # -----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
     mainPage = tkinter.Frame(window)
 
-    # 別ファイルから読み込み実行
-    # exec(open("./entry.py",'r',encoding="utf-8").read())
     side = ("", 32)
 
     full = tkinter.Frame(mainPage, width=1300, height=900)
-
-    #titlepage = tkinter.Frame(mainPage, bg='gray', width=1300, height=250, bd=10)
-    #mainpage = tkinter.Frame(mainPage, bg='gray', width=1300, height=450, bd=10)
 
     allbar = tkinter.Canvas(full, width=1330, height=900)
 
@@ -409,8 +401,6 @@ def main() -> None:
         btb = tkinter.Label(allframe, text="")
         alf.append(btb)
         btb.pack(fill=tkinter.X)
-
-    # Page = tkinter.Frame(startPage, bg='black', width=1010, height=400, bd=15, relief="sunken")
 
     titlepage = tkinter.Frame(allframe, bg='gray', width=1300, height=250, bd=10)
     mainpage = tkinter.Frame(allframe, bg='gray', width=1300, height=450, bd=10)
@@ -487,59 +477,94 @@ def main() -> None:
     # ----snsPage------------------------------------
 
     # SNS登録のフレーム
-    snspage = ttk.Frame(window)
+    snsPage = ttk.Frame(window)
 
-    titlepage = tkinter.Frame(snspage, bg='gray', width=1340, height=250, bd=10)
-    snspage = tkinter.Frame(snspage, bg='gray', width=1340, height=450, bd=10)
+    all = tkinter.Frame(snsPage, width=1300, height=900)
+
+    allbar = tkinter.Canvas(all, width=1330, height=900)
+
+    abar = tkinter.Scrollbar(all, orient=tkinter.VERTICAL)
+    abar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+    abar.config(command=allbar.yview)
+
+    allbar.config(yscrollcommand=abar.set)
+    allbar.config(scrollregion=("0c", "0c", "40c", "40c"))
+    allbar.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
+
+    allframe = tkinter.Frame(allbar)
+
+    allbar.create_window((0, 0), window=allframe, anchor=tkinter.NW, width=allbar.cget('width'))
+
+    alf = []
+    for m in range(4000):
+        btb = tkinter.Label(allframe, text="")
+        alf.append(btb)
+        btb.pack(fill=tkinter.X)
+
+    titlepage = tkinter.Frame(allframe, width=1300, height=250, bd=30, relief="groove")
+    snspage = tkinter.Frame(allframe, width=1350, height=1000)
 
     side = ("", 32)
 
-    # 以下、line_screenから流用
-    head = tkinter.Label(titlepage, text=u'API KEYS', foreground='white', background='gray', font=("", 40))
-    head.place(relx=0.01, rely=0.01)
-    content = tkinter.Label(titlepage, text=u'各SNSからAPIキーを取得してください。', foreground='white', background='gray',
-                            font=("", 25))
-    content.place(relx=0.15, rely=0.3)
+    title = tkinter.Label(titlepage, text=u'')
+    title.pack(fill='both', ipadx=550, ipady=30, side='left')
 
-    exchange = tkinter.Label(snspage, text=u'SNS', foreground='white', background='gray', font=side)
-    exchange.place(relx=0.015, rely=0.01)
+    #service = tkinter.Label(snspage, text=u"通知サービス              APIキー", font=side, relief="groove")
+    #service.place(relx=0.1, rely=0.0, relheight=0.1, relwidth=0.8, anchor=tkinter.NW)
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="groove")
+    service.place(relx=0.1, rely=0.0, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="groove")
+    apikey.place(relx=0.4, rely=0.0, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"LINE", font=side, relief="groove")
+    line.place(relx=0.1, rely=0.07, relheight=0.1, relwidth=0.3)
 
-    apik = tkinter.Label(snspage, text=u'APIキー', foreground='white', background='gray', font=side)
-    apik.place(relx=0.3, rely=0.01)
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="groove")
+    service.place(relx=0.1, rely=0.2, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="groove")
+    apikey.place(relx=0.4, rely=0.2, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"Slack", font=side, relief="groove")
+    line.place(relx=0.1, rely=0.27, relheight=0.1, relwidth=0.3)
 
-    sns = tkinter.Label(snspage, text=u'LINE', foreground='white', background='gray', font=side, bd=25, relief="ridge")
-    sns.place(relx=0.01, rely=0.2)
-    plans = tkinter.Label(snspage, text=u'予定', foreground='white', background='gray', font=side, bd=25, relief="ridge")
-    plans.place(relx=0.01, rely=0.4)
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="ridge")
+    service.place(relx=0.1, rely=0.4, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="ridge")
+    apikey.place(relx=0.4, rely=0.4, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"Sample", font=side, relief="ridge")
+    line.place(relx=0.1, rely=0.47, relheight=0.1, relwidth=0.3)
 
-    # エントリー２ (トークンの値を入れる)
-    line_token = tkinter.Entry(snspage, width=29, bd=25, font=("", 20), relief="flat")
-    line_token.place(relx=0.3, rely=0.2)
 
-    plans_token = tkinter.Entry(snspage, width=29, bd=25, font=("", 20), relief="flat")
-    plans_token.place(relx=0.3, rely=0.4)
+    # エントリー (APIキーの入力)
+    line_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    line_token.place(relx=0.4, rely=0.075, relheight=0.1, relwidth=0.3)
+
+    plans = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    plans.place(relx=0.4, rely=0.27, relheight=0.1, relwidth=0.3)
 
     def line_entry(self):
         line_value = line_token.get()
         # line.LINE.registration("LINE", line_value)
 
-    button_line = tkinter.Button(snspage, text=u'登録',
-                                 foreground='white', background='gray', font=side)
-    button_line.place(relx=0.9, rely=0.2)
+    button_line = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_line.place(relx=0.7, rely=0.07)
     button_line.bind("<Button-1>", line_entry)
 
-    button_plans = tkinter.Button(snspage, text=u'登録',
-                                  foreground='white', background='gray', font=side)
-    button_plans.place(relx=0.9, rely=0.4)
+    button_slack = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_slack.place(relx=0.7, rely=0.27)
+    button_slack.bind("<Button-1>", line_entry)
+
+    button_sample = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_sample.place(relx=0.7, rely=0.47)
+    button_sample.bind("<Button-1>", line_entry)
 
     line_button = tkinter.Button(snspage, width=30, height=1, text="  戻る  ",
-                                 command=lambda: changePage(startpage), font=("", 24))
-    line_button.place(relx=0.3, rely=0.7)
+                                 command=lambda: changePage(startpage))
+    line_button.place(relx=0.5, rely=0.7)
 
     # snsPageを配置
-    snspage.grid(row=0, column=0, sticky="nsew")
-    titlepage.place(relx=0.01, rely=0.01)
-    snspage.place(relx=0.01, rely=0.3)
+    snsPage.grid(row=0, column=0, sticky="nsew")
+    all.place(relx=0.0, rely=0.0)
+    titlepage.place(relx=0.1, rely=0.0)
+    snspage.place(relx=0.01, rely=0.003)
 
     # StartPageを上位層にする
     startpage.tkraise()
@@ -548,7 +573,6 @@ def main() -> None:
     # 資産管理のフレーム
     managementpage = ttk.Frame(window)
 
-    #managementpage = tkinter.Frame(Managementpage, width=1340, height=450, bd=10)
     setpage = tkinter.Frame(managementpage, width=1300, height=250, bd=30, relief="groove")
     grafpage = tkinter.Frame(managementpage, width=750, height=750)
     valuepage = tkinter.Frame(managementpage, width=750, height=750)
@@ -602,7 +626,6 @@ def main() -> None:
 
     # managementPageを配置
     managementpage.grid(row=0, column=0, sticky="nsew")
-    #managementpage.place(relx=0.0, rely=0.0)
     setpage.place(relx=0.05, rely=0.01)
     grafpage.place(relx=0.0, rely=0.25)
     valuepage.place(relx=0.55, rely=0.25)
