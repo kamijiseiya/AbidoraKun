@@ -109,6 +109,7 @@ def main() -> None:
     ordertest =ttk.Label(orderframe, text=u'bitbank', font=PointFont)
     ordertest.place(relx=0.1, rely=0.02)
 
+    """
     class Helmholtz_App(tkinter.Tk):
         def __init__(self):
 
@@ -182,6 +183,7 @@ def main() -> None:
 
     cart = tkinter.Button(tablepage, text="CHART", command=Chart)
     cart.pack()
+    """
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -356,6 +358,11 @@ def main() -> None:
     orderprice = ttk.Label(bidpage, text=u'注文価格', font=PointFont)
     orderprice.place(relx=0.7, rely=0.1)
 
+    fill = tkinter.PhotoImage(file='config/img/figure_3.png')
+    can = tkinter.Canvas(tablepage, width=1000, height=1000)
+    can.place(x=0, y=0)
+    can.create_image(0, 0, image=fill, anchor=tkinter.NW)
+
     # フレームを配置
     startpage.grid(row=0, column=0, sticky="nsew")
     starttest.place(relx=0.01, rely=0.01)
@@ -504,8 +511,6 @@ def main() -> None:
     titlepage = tkinter.Frame(allframe, width=1300, height=250, bd=30, relief="groove")
     snspage = tkinter.Frame(allframe, width=1350, height=1000)
 
-    side = ("", 32)
-
     title = tkinter.Label(titlepage, text=u'')
     title.pack(fill='both', ipadx=550, ipady=30, side='left')
 
@@ -540,25 +545,28 @@ def main() -> None:
     plans = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
     plans.place(relx=0.4, rely=0.27, relheight=0.1, relwidth=0.3)
 
+    slack_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    slack_token.place(relx=0.4, rely=0.47, relheight=0.1, relwidth=0.3)
+
     def line_entry(self):
         line_value = line_token.get()
         # line.LINE.registration("LINE", line_value)
 
-    button_line = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_line = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
     button_line.place(relx=0.7, rely=0.07)
     button_line.bind("<Button-1>", line_entry)
 
-    button_slack = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_slack = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
     button_slack.place(relx=0.7, rely=0.27)
     button_slack.bind("<Button-1>", line_entry)
 
-    button_sample = tkinter.Button(snspage, text=u'登録', width=30, height=5)
+    button_sample = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
     button_sample.place(relx=0.7, rely=0.47)
     button_sample.bind("<Button-1>", line_entry)
 
     line_button = tkinter.Button(snspage, width=30, height=1, text="  戻る  ",
                                  command=lambda: changePage(startpage))
-    line_button.place(relx=0.5, rely=0.7)
+    line_button.place(relx=0.4, rely=0.7)
 
     # snsPageを配置
     snsPage.grid(row=0, column=0, sticky="nsew")
