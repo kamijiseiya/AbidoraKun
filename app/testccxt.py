@@ -75,6 +75,6 @@ ax1.spines["top"].set_color("slategray") #ax0とax1の境界線
 ax1.bar(df.index,df["volume"], color="orange", width=get_periods*0.94)
 
 
-plt.savefig('png/candlestick_week.png')
+plt.savefig('./config/img/candlestick_week.png')
 
 plt.show()
