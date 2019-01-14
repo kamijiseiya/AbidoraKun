@@ -52,8 +52,9 @@ print(df.iloc[len(df_1) - 1])
 # matplotlib -------------------
 plt.style.use("ggplot") # matplotlib ggplot style読込
 
-gs = GridSpec(4, 1, height_ratios=[3, 0.8, 1.2, 1]) #縦４個、横１個のグリッドとその表示比率
-gs.update(left=0.1,bottom=0, right=0.95, top=0.95, hspace=0) #全体の余白
+plt.rcParams['figure.figsize'] = 9.7,3.7# 横970px、縦370px
+gs = GridSpec(4, 1, height_ratios=[6, 3, 0.2, 1]) #縦４個、横１個のグリッドとその表示比率
+gs.update(left=0.1,bottom=0, right=0.95, top=0.95, hspace=0,) #全体の余白
 
 # 表示する線の描画
 
