@@ -27,7 +27,7 @@ class GRAPHCREATION:
         # Cryptowatch API History Data   ------------------------
         now = datetime.now()
         now = int(now.timestamp())  # 現在時刻のUnixtime(秒単位)
-        market = "kraken/btcjpy"  # 取引所と通貨ペアの取得（krakenを指定すれば大体の通貨ペアを習得できる。）
+        market = "kraken/"+ self  # 取引所と通貨ペアの取得（krakenを指定すれば大体の通貨ペアを習得できる。）
         get_periods = GET_PERIODS
         get_after = now - get_periods * GET_AFTER
         # HTTPライブラリ Requestsによる価格履歴取得
@@ -73,6 +73,9 @@ class GRAPHCREATION:
         ax1.spines["top"].set_color("slategray")  # ax0とax1の境界線
         ax1.bar(df.index, df["volume"], color="orange", width=get_periods * 0.94)
 
-        plt.savefig('./config/img/candlestick_week.png')
+        plt.savefig('./config/img/'+self +'candlestick_week.png')
 
         plt.show()
+
+if __name__ == "__main__":  # テスト用に追加
+    print(GRAPHCREATION.create_graph_png("btcjpy"))
