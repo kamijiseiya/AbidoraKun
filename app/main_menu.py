@@ -14,7 +14,8 @@ import sqlite3  # DBへの追加時のエラーを取得する為
 #from app.module.exchangess import binance
 #from app.module.exchangess import quoinex
 #from app.module.sns import line
-# from app import xrpchart
+#from app import xrpchart
+from app import graphcreation
 
 import matplotlib
 
@@ -206,7 +207,21 @@ def main() -> None:
 
     linebutton.pack(side="left", expand=1, fill="both")
 
+    #チャート用の画像読み込み
+    xrpf = tkinter.PhotoImage(file='config/img/Figure_xrpjpy.png')
+    btcf = tkinter.PhotoImage(file='config/img/Figure_btcjpy.png')
+    ethf = tkinter.PhotoImage(file='config/img/Figure_ethjpy.png')
+    ltcf = tkinter.PhotoImage(file='config/img/Figure_ltcbtc.png')
+
     def Getxrp() :
+        graphcreation.GRAPHCREATION.create_graph_png("xrpjpy")
+        xrpjpy = tkinter.PhotoImage(file='config/img/xrpjpycandlestick_week.png')
+        #画像更新
+        figure = tkinter.Canvas(tablepage, width=950, height=370)
+        figure.place(x=0, y=0)
+        figure.create_image(0, 0, image=xrpjpy, anchor=tkinter.NW)
+        figure.update()
+
         exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
         exchangeA.place(relx=0.1, rely=0.15)
         exchangeA.update()
@@ -241,10 +256,19 @@ def main() -> None:
         quoinex_bid.place(relx=0.7, rely=0.25)
         quoinex_bid.update()
 
+
     xrp = tkinter.Button(backpage, text="XRP", width=7, font=PointFont, command=Getxrp)
     xrp.place(relx=0.0, rely=0.0)
 
     def Getbtc() :
+        graphcreation.GRAPHCREATION.create_graph_png("btcjpy")
+        btcjpy = tkinter.PhotoImage(file='config/img/btcjpycandlestick_week.png')
+        # 画像更新
+        figure = tkinter.Canvas(tablepage, width=970, height=370)
+        figure.place(x=0, y=0)
+        figure.create_image(0, 0, image=btcjpy, anchor=tkinter.NW)
+        figure.update()
+
         exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
         exchangeA.place(relx=0.1, rely=0.15)
         exchangeA.update()
@@ -285,6 +309,14 @@ def main() -> None:
     bitbankbutton.place(relx=0.25, rely=0.0)
 
     def Geteth() :
+        graphcreation.GRAPHCREATION.create_graph_png("ethjpy")
+        ethjpy = tkinter.PhotoImage(file='config/img/ethjpycandlestick_week.png')
+        # 画像更新
+        figure = tkinter.Canvas(tablepage, width=980, height=370)
+        figure.place(x=0, y=0)
+        figure.create_image(0, 0, image=ethjpy, anchor=tkinter.NW)
+        figure.update()
+
         exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
         exchangeA.place(relx=0.1, rely=0.15)
         exchangeA.update()
@@ -307,6 +339,14 @@ def main() -> None:
     eth.place(relx=0.5, rely=0.0)
 
     def Getltc() :
+        #グラフ生成、保存、表示
+        graphcreation.GRAPHCREATION.create_graph_png("ltcbtc")
+        ltcjpy = tkinter.PhotoImage(file='config/img/ltcbtccandlestick_week.png')
+        figure = tkinter.Canvas(tablepage, width=980, height=370)
+        figure.place(x=0, y=0)
+        figure.create_image(0, 0, image=ltcjpy, anchor=tkinter.NW)
+        figure.update()
+
         exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
         exchangeA.place(relx=0.1, rely=0.15)
         exchangeA.update()
@@ -340,7 +380,6 @@ def main() -> None:
         quoinex_bid = ttk.Label(scrollframe, text=u"          ", font=PointFont)
         quoinex_bid.place(relx=0.7, rely=0.25)
 
-
     ltc = tkinter.Button(backpage, text="LTC", font=PointFont, width=7, command=Getltc)
     ltc.place(relx=0.75, rely=0.0)
 
@@ -358,10 +397,27 @@ def main() -> None:
     orderprice = ttk.Label(bidpage, text=u'注文価格', font=PointFont)
     orderprice.place(relx=0.7, rely=0.1)
 
-    fill = tkinter.PhotoImage(file='config/img/figure_3.png')
-    can = tkinter.Canvas(tablepage, width=1000, height=1000)
+    btcjpy = tkinter.PhotoImage(file='config/img/btcjpycandlestick_week.png')
+
+    ffff = tkinter.PhotoImage(file='config/img/figure_btcjpy.png')
+    # チャート表示切替用
+    def Canvas_image() :
+        #fills = tkinter.PhotoImage(file='config/img/figure.png')
+        canv = tkinter.Canvas(tablepage, width=980, height=370)
+        canv.place(x=0, y=0)
+        #canv.create_image(0, 0, image=fills, anchor=tkinter.NW)
+        canv.create_image(0, 0, image=ffff, anchor=tkinter.NW)
+        canv.update()
+
+    #cartt = tkinter.Button(orderpage, text="CHANGE", command=Canvas_image)
+    #cartt.pack()
+
+    fill = tkinter.PhotoImage(file='config/img/Figure_btcjpy.png')
+    can = tkinter.Canvas(tablepage, width=980, height=370)
     can.place(x=0, y=0)
     can.create_image(0, 0, image=fill, anchor=tkinter.NW)
+    can.update()
+
 
     # フレームを配置
     startpage.grid(row=0, column=0, sticky="nsew")
