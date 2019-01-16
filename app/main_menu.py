@@ -10,10 +10,11 @@ from tkinter import ttk
 import time  # 価格取得を繰り返す為
 import sqlite3  # DBへの追加時のエラーを取得する為
 
-from app.module.exchangess import bitbank
-from app.module.exchangess import binance
-# from app.module.sns import line
-from app import xrpchart
+#from app.module.exchangess import bitbank
+#from app.module.exchangess import binance
+#from app.module.exchangess import quoinex
+#from app.module.sns import line
+# from app import xrpchart
 
 import matplotlib
 
@@ -53,6 +54,7 @@ def main() -> None:
     #canvass = tkinter.Canvas(backpage, height=100, width=50)
     canvass = tkinter.Canvas(backpage, height=350, width=290, bg='gray')
 
+    #スクロールバー生成
     bar = tkinter.Scrollbar(backpage, orient=tkinter.VERTICAL)
     bar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
     bar.config(command=canvass.yview)
@@ -96,16 +98,18 @@ def main() -> None:
         tes.pack(fill=tkinter.X)
 
     PointFont = ("Helevetice", 14)
-    PointFont2 = ("", 11)
 
     exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
     exchangeA.place(relx=0.1, rely=0.15)
     exchangeC = ttk.Label(scrollframe, text=u"binance", font=PointFont)
     exchangeC.place(relx=0.1, rely=0.2)
+    exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
+    exchangeD.place(relx=0.1, rely=0.25)
 
     ordertest =ttk.Label(orderframe, text=u'bitbank', font=PointFont)
     ordertest.place(relx=0.1, rely=0.02)
 
+    """
     class Helmholtz_App(tkinter.Tk):
         def __init__(self):
 
@@ -177,32 +181,41 @@ def main() -> None:
         #os.system("start python app\\xrpchart.py")
         #os.system("start notepad.exe")
 
-    cart = chartbutton = \
-        tkinter.Button(tablepage, text="CHART", command=Chart)
+    cart = tkinter.Button(tablepage, text="CHART", command=Chart)
     cart.pack()
+    """
 
     ### ボタン表示
     # APIキー登録ボタン生成
     startbutton = \
-        tkinter.Button(starttest, width=31, height=3, text="取引所設定", font=PointFont,
-                       command=lambda: changePage(mainPage))
+        tkinter.Button(starttest, width=31, height=3, text="取引所設定", font=PointFont, command=lambda: changePage(mainPage))
 
     # expand 親に合わせて変化　fill frameの空きスペースを埋めるか
     startbutton.pack(side="left", expand=1, fill="both")
 
+    # 管理画面ボタン生成
+    managementbutton = \
+        tkinter.Button(starttest, width=31, height=3, text=u'管理画面', font=PointFont,
+                       command=lambda: changePage(managementpage))
+
+    managementbutton.pack(side='left', expand=1, fill="both")
+
     # SNSボタン生成
     linebutton = \
-        tkinter.Button(starttest, width=31, height=3, text="通知設定", font=PointFont, command=lambda: changePage(snspage))
+        tkinter.Button(starttest, width=31, height=3, text="通知設定", font=PointFont, command=lambda: changePage(snsPage))
 
     linebutton.pack(side="left", expand=1, fill="both")
 
-    # 設定ボタン生成
-    configbutton = \
-        tkinter.Button(starttest, width=31, height=3, text="詳細設定", font=PointFont, command=lambda: changePage(configPage))
-
-    configbutton.pack(side="left", expand=1, fill="both")
-
     def Getxrp() :
+        exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
+        exchangeA.place(relx=0.1, rely=0.15)
+        exchangeA.update()
+        exchangeC = ttk.Label(scrollframe, text=u"binance", font=PointFont)
+        exchangeC.place(relx=0.1, rely=0.2)
+        exchangeC.update()
+        exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
+        exchangeD.place(relx=0.1, rely=0.25)
+        exchangeD.update()
         # bitbankから現在価格取得
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
         bitbank_ask = ttk.Label(scrollframe, text=ask, font=PointFont)
@@ -219,11 +232,28 @@ def main() -> None:
         binance_bid = ttk.Label(scrollframe, text=bid2, font=PointFont)
         binance_bid.place(relx=0.7, rely=0.2)
         binance_bid.update()
+        # quoinexから価格取得
+        exchange2, ask2, bid2 = quoinex.Quoinex.currencyinformation('XRP')
+        quoinex_ask = ttk.Label(scrollframe, text=ask2, font=PointFont)
+        quoinex_ask.place(relx=0.4, rely=0.25)
+        quoinex_ask.update()
+        quoinex_bid = ttk.Label(scrollframe, text=bid2, font=PointFont)
+        quoinex_bid.place(relx=0.7, rely=0.25)
+        quoinex_bid.update()
 
     xrp = tkinter.Button(backpage, text="XRP", width=7, font=PointFont, command=Getxrp)
     xrp.place(relx=0.0, rely=0.0)
 
     def Getbtc() :
+        exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
+        exchangeA.place(relx=0.1, rely=0.15)
+        exchangeA.update()
+        exchangeC = ttk.Label(scrollframe, text=u"binance", font=PointFont)
+        exchangeC.place(relx=0.1, rely=0.2)
+        exchangeC.update()
+        exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
+        exchangeD.place(relx=0.1, rely=0.25)
+        exchangeD.update()
         # bitbankから現在価格取得
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('BTC')
         bitbank_ask = ttk.Label(scrollframe, text=ask, font=PointFont)
@@ -232,6 +262,7 @@ def main() -> None:
         bitbank_bid = ttk.Label(scrollframe, text=bid, font=PointFont)
         bitbank_bid.place(relx=0.7, rely=0.15)
         bitbank_bid.update()
+        """
         # binanseから現在価格取得
         exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('BTC')
         binance_ask = ttk.Label(scrollframe, text=ask2, font=PointFont)
@@ -240,31 +271,77 @@ def main() -> None:
         binance_bid = ttk.Label(scrollframe, text=bid2, font=PointFont)
         binance_bid.place(relx=0.7, rely=0.2)
         binance_bid.update()
+        """
+        # quoinexから価格取得
+        exchange3, ask3, bid3 = quoinex.Quoinex.currencyinformation('BTC')
+        quoinex_ask = ttk.Label(scrollframe, text=ask3, font=PointFont)
+        quoinex_ask.place(relx=0.4, rely=0.25)
+        quoinex_ask.update()
+        quoinex_bid = ttk.Label(scrollframe, text=bid3, font=PointFont)
+        quoinex_bid.place(relx=0.7, rely=0.25)
+        quoinex_bid.update()
 
     bitbankbutton = tkinter.Button(backpage, text="BTC", font=PointFont, width=7, command=Getbtc)
     bitbankbutton.place(relx=0.25, rely=0.0)
 
     def Geteth() :
+        exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
+        exchangeA.place(relx=0.1, rely=0.15)
+        exchangeA.update()
+        exchangeC = ttk.Label(scrollframe, text=u"          ", font=PointFont)
+        exchangeC.place(relx=0.1, rely=0.2)
+        exchangeC.update()
+        exchangeD = ttk.Label(scrollframe, text=u"          ", font=PointFont)
+        exchangeD.place(relx=0.1, rely=0.25)
+        exchangeD.update()
         # bitbankから現在価格取得
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('ETH')
-        bitbank_ask = ttk.Label(scrollframe, text=ask, foreground='white', background='black', font=PointFont)
-        bitbank_ask.place(relx=0.4, rely=0.2)
+        bitbank_ask = ttk.Label(scrollframe, text=ask, font=PointFont)
+        bitbank_ask.place(relx=0.4, rely=0.15)
         bitbank_ask.update()
-        bitbank_bid = ttk.Label(scrollframe, text=bid, foreground='white', background='black', font=PointFont)
-        bitbank_bid.place(relx=0.7, rely=0.2)
+        bitbank_bid = ttk.Label(scrollframe, text=bid, font=PointFont)
+        bitbank_bid.place(relx=0.7, rely=0.15)
         bitbank_bid.update()
-        # binanseから現在価格取得
-        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('ETH')
-        binance_ask = ttk.Label(scrollframe, text=ask2, foreground='white', background='black', font=PointFont)
-        binance_ask.place(relx=0.4, rely=0.3)
-        binance_ask.update()
-        binance_bid = ttk.Label(scrollframe, text=bid2, foreground='white', background='black', font=PointFont)
-        binance_bid.place(relx=0.7, rely=0.3)
-        binance_bid.update()
 
     eth = tkinter.Button(backpage, text="ETH", font=PointFont, width=7, command=Geteth)
     eth.place(relx=0.5, rely=0.0)
-    ltc = tkinter.Button(backpage, text="LTC", font=PointFont, width=7)
+
+    def Getltc() :
+        exchangeA = ttk.Label(scrollframe, text=u"bitbank", font=PointFont)
+        exchangeA.place(relx=0.1, rely=0.15)
+        exchangeA.update()
+        exchangeC = ttk.Label(scrollframe, text=u"binance", font=PointFont)
+        exchangeC.place(relx=0.1, rely=0.2)
+        exchangeC.update()
+        exchangeD = ttk.Label(scrollframe, text=u"          ", font=PointFont)
+        exchangeD.place(relx=0.1, rely=0.25)
+        exchangeD.update()
+        """
+        # bitbankから現在価格取得
+        exhanges, ask, bid = bitbank.BITBANK.currencyinformation('LTC')
+        bitbank_ask = ttk.Label(scrollframe, text=ask, font=PointFont)
+        bitbank_ask.place(relx=0.4, rely=0.15)
+        bitbank_ask.update()
+        bitbank_bid = ttk.Label(scrollframe, text=bid, font=PointFont)
+        bitbank_bid.place(relx=0.7, rely=0.15)
+        bitbank_bid.update()
+        """
+        # binanseから現在価格取得
+        exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('LTC')
+        binance_ask = ttk.Label(scrollframe, text=ask2, font=PointFont)
+        binance_ask.place(relx=0.4, rely=0.2)
+        binance_ask.update()
+        binance_bid = ttk.Label(scrollframe, text=bid2, font=PointFont)
+        binance_bid.place(relx=0.7, rely=0.2)
+        binance_bid.update()
+        # quoinexの値を空白に
+        quoinex_ask = ttk.Label(scrollframe, text=u"          ", font=PointFont)
+        quoinex_ask.place(relx=0.4, rely=0.25)
+        quoinex_bid = ttk.Label(scrollframe, text=u"          ", font=PointFont)
+        quoinex_bid.place(relx=0.7, rely=0.25)
+
+
+    ltc = tkinter.Button(backpage, text="LTC", font=PointFont, width=7, command=Getltc)
     ltc.place(relx=0.75, rely=0.0)
 
     exchange = ttk.Label(backpage, text=u"取引所", font=PointFont)
@@ -273,15 +350,6 @@ def main() -> None:
     bid.place(relx=0.4, rely=0.12)
     ask = ttk.Label(backpage, text=u'売値', font=PointFont)
     ask.place(relx=0.7, rely=0.12)
-    #exchangeA = ttk.Label(backpage, text=u"bitbank", font=PointFont)
-    #exchangeA.place(relx=0.1, rely=0.2)
-    #exchangeB = ttk.Label(backpage, text=u"binance", font=PointFont)
-    #exchangeB.place(relx=0.1, rely=0.3)
-
-    #buy_order = ttk.Label(bidpage, text=u"買い注文", foreground='white', background='black', font=PointFont)
-    #buy_order.place(relx=0.4, rely=0.1)
-    #sell_order = ttk.Label(askpage, text=u"売り注文", foreground='white', background='black', font=PointFont)
-    #sell_order.place(relx=0.4, rely=0.1)
 
     orderexchange = ttk.Label(bidpage, text=u'取引所', font=PointFont)
     orderexchange.place(relx=0.1, rely=0.1)
@@ -289,6 +357,11 @@ def main() -> None:
     orderstatus.place(relx=0.4, rely=0.1)
     orderprice = ttk.Label(bidpage, text=u'注文価格', font=PointFont)
     orderprice.place(relx=0.7, rely=0.1)
+
+    fill = tkinter.PhotoImage(file='config/img/figure_3.png')
+    can = tkinter.Canvas(tablepage, width=1000, height=1000)
+    can.place(x=0, y=0)
+    can.create_image(0, 0, image=fill, anchor=tkinter.NW)
 
     # フレームを配置
     startpage.grid(row=0, column=0, sticky="nsew")
@@ -304,17 +377,40 @@ def main() -> None:
     ordercanvas.pack()
     #scrollframe.place(relx=0.01, rely=0.01)
 
+    #window.columnconfigure(0, weight=1)
+    #window.master.columnconfigure(0, weight=1)
+    #window.master.rowconfigure(0, weight=1)
+
     # -----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
     mainPage = tkinter.Frame(window)
 
-    # 別ファイルから読み込み実行
-    # exec(open("./entry.py",'r',encoding="utf-8").read())
     side = ("", 32)
 
-    titlepage = tkinter.Frame(mainPage, bg='gray', width=1340, height=250, bd=10)
-    mainpage = tkinter.Frame(mainPage, bg='gray', width=1340, height=450, bd=10)
-    # Page = tkinter.Frame(startPage, bg='black', width=1010, height=400, bd=15, relief="sunken")
+    full = tkinter.Frame(mainPage, width=1300, height=900)
+
+    allbar = tkinter.Canvas(full, width=1330, height=900)
+
+    abar = tkinter.Scrollbar(full, orient=tkinter.VERTICAL)
+    abar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+    abar.config(command=allbar.yview)
+
+    allbar.config(yscrollcommand=abar.set)
+    allbar.config(scrollregion=("0c","0c","40c","40c"))
+    allbar.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
+
+    allframe = tkinter.Frame(allbar)
+
+    allbar.create_window((0,0), window=allframe, anchor=tkinter.NW, width=allbar.cget('width'))
+
+    alf=[]
+    for m in range(4000):
+        btb = tkinter.Label(allframe, text="")
+        alf.append(btb)
+        btb.pack(fill=tkinter.X)
+
+    titlepage = tkinter.Frame(allframe, bg='gray', width=1300, height=250, bd=10)
+    mainpage = tkinter.Frame(allframe, bg='gray', width=1300, height=450, bd=10)
 
 
     # 以下、entry_screenを流用
@@ -372,14 +468,15 @@ def main() -> None:
     button_binance.place(relx=0.9, rely=0.4)
     button_binance.bind("<Button-1>", binance_entry)
 
-    main_menu = tkinter.Button(mainpage, width=30, height=1, text="  戻る  ", command=lambda: changePage(startPage),
+    main_menu = tkinter.Button(mainpage, width=30, height=1, text="  戻る  ", command=lambda: changePage(startpage),
                                font=("", 24))
     main_menu.place(relx=0.3, rely=0.7)
 
     # MainPageを配置
-    mainpage.grid(row=0, column=0, sticky="nsew")
-    titlepage.place(relx=0.01, rely=0.01)
-    mainpage.place(relx=0.01, rely=0.3)
+    mainPage.grid(row=0, column=0, sticky="nsew")
+    full.place(relx=0.0, rely=0.0)
+    titlepage.place(relx=0.01, rely=0.001)
+    mainpage.place(relx=0.01, rely=0.003)
 
     # StartPageを上位層にする
     startpage.tkraise()
@@ -387,61 +484,160 @@ def main() -> None:
     # ----snsPage------------------------------------
 
     # SNS登録のフレーム
-    snspage = ttk.Frame(window)
+    snsPage = ttk.Frame(window)
 
-    titlepage = tkinter.Frame(snspage, bg='gray', width=1340, height=250, bd=10)
-    snspage = tkinter.Frame(snspage, bg='gray', width=1340, height=450, bd=10)
+    all = tkinter.Frame(snsPage, width=1300, height=900)
 
-    side = ("", 32)
+    allbar = tkinter.Canvas(all, width=1330, height=900)
 
-    # 以下、line_screenから流用
-    head = tkinter.Label(titlepage, text=u'API KEYS', foreground='white', background='gray', font=("", 40))
-    head.place(relx=0.01, rely=0.01)
-    content = tkinter.Label(titlepage, text=u'各SNSからAPIキーを取得してください。', foreground='white', background='gray',
-                            font=("", 25))
-    content.place(relx=0.15, rely=0.3)
+    abar = tkinter.Scrollbar(all, orient=tkinter.VERTICAL)
+    abar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+    abar.config(command=allbar.yview)
 
-    exchange = tkinter.Label(snspage, text=u'SNS', foreground='white', background='gray', font=side)
-    exchange.place(relx=0.015, rely=0.01)
+    allbar.config(yscrollcommand=abar.set)
+    allbar.config(scrollregion=("0c", "0c", "40c", "40c"))
+    allbar.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 
-    apik = tkinter.Label(snspage, text=u'APIキー', foreground='white', background='gray', font=side)
-    apik.place(relx=0.3, rely=0.01)
+    allframe = tkinter.Frame(allbar)
 
-    sns = tkinter.Label(snspage, text=u'LINE', foreground='white', background='gray', font=side, bd=25, relief="ridge")
-    sns.place(relx=0.01, rely=0.2)
-    plans = tkinter.Label(snspage, text=u'予定', foreground='white', background='gray', font=side, bd=25, relief="ridge")
-    plans.place(relx=0.01, rely=0.4)
+    allbar.create_window((0, 0), window=allframe, anchor=tkinter.NW, width=allbar.cget('width'))
 
-    # エントリー２ (トークンの値を入れる)
-    line_token = tkinter.Entry(snspage, width=29, bd=25, font=("", 20), relief="flat")
-    line_token.place(relx=0.3, rely=0.2)
+    alf = []
+    for m in range(4000):
+        btb = tkinter.Label(allframe, text="")
+        alf.append(btb)
+        btb.pack(fill=tkinter.X)
 
-    plans_token = tkinter.Entry(snspage, width=29, bd=25, font=("", 20), relief="flat")
-    plans_token.place(relx=0.3, rely=0.4)
+    titlepage = tkinter.Frame(allframe, width=1300, height=250, bd=30, relief="groove")
+    snspage = tkinter.Frame(allframe, width=1350, height=1000)
+
+    title = tkinter.Label(titlepage, text=u'')
+    title.pack(fill='both', ipadx=550, ipady=30, side='left')
+
+    #service = tkinter.Label(snspage, text=u"通知サービス              APIキー", font=side, relief="groove")
+    #service.place(relx=0.1, rely=0.0, relheight=0.1, relwidth=0.8, anchor=tkinter.NW)
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="groove")
+    service.place(relx=0.1, rely=0.0, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="groove")
+    apikey.place(relx=0.4, rely=0.0, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"LINE", font=side, relief="groove")
+    line.place(relx=0.1, rely=0.07, relheight=0.1, relwidth=0.3)
+
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="groove")
+    service.place(relx=0.1, rely=0.2, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="groove")
+    apikey.place(relx=0.4, rely=0.2, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"Slack", font=side, relief="groove")
+    line.place(relx=0.1, rely=0.27, relheight=0.1, relwidth=0.3)
+
+    service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="ridge")
+    service.place(relx=0.1, rely=0.4, relheight=0.07, relwidth=0.3)
+    apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="ridge")
+    apikey.place(relx=0.4, rely=0.4, relheight=0.07, relwidth=0.3)
+    line = tkinter.Label(snspage, text=u"Sample", font=side, relief="ridge")
+    line.place(relx=0.1, rely=0.47, relheight=0.1, relwidth=0.3)
+
+
+    # エントリー (APIキーの入力)
+    line_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    line_token.place(relx=0.4, rely=0.075, relheight=0.1, relwidth=0.3)
+
+    plans = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    plans.place(relx=0.4, rely=0.27, relheight=0.1, relwidth=0.3)
+
+    slack_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    slack_token.place(relx=0.4, rely=0.47, relheight=0.1, relwidth=0.3)
 
     def line_entry(self):
         line_value = line_token.get()
         # line.LINE.registration("LINE", line_value)
 
-    button_line = tkinter.Button(snspage, text=u'登録',
-                                 foreground='white', background='gray', font=side)
-    button_line.place(relx=0.9, rely=0.2)
+    button_line = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
+    button_line.place(relx=0.7, rely=0.07)
     button_line.bind("<Button-1>", line_entry)
 
-    button_plans = tkinter.Button(snspage, text=u'登録',
-                                  foreground='white', background='gray', font=side)
-    button_plans.place(relx=0.9, rely=0.4)
+    button_slack = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
+    button_slack.place(relx=0.7, rely=0.27)
+    button_slack.bind("<Button-1>", line_entry)
+
+    button_sample = tkinter.Button(snspage, text=u'登録', font=side, height=2, width=6)
+    button_sample.place(relx=0.7, rely=0.47)
+    button_sample.bind("<Button-1>", line_entry)
 
     line_button = tkinter.Button(snspage, width=30, height=1, text="  戻る  ",
-                                 command=lambda: changePage(startPage), font=("", 24))
-    line_button.place(relx=0.3, rely=0.7)
+                                 command=lambda: changePage(startpage))
+    line_button.place(relx=0.4, rely=0.7)
 
-    # MainPageを配置
-    snspage.grid(row=0, column=0, sticky="nsew")
-    titlepage.place(relx=0.01, rely=0.01)
-    snspage.place(relx=0.01, rely=0.3)
+    # snsPageを配置
+    snsPage.grid(row=0, column=0, sticky="nsew")
+    all.place(relx=0.0, rely=0.0)
+    titlepage.place(relx=0.1, rely=0.0)
+    snspage.place(relx=0.01, rely=0.003)
 
     # StartPageを上位層にする
+    startpage.tkraise()
+
+    # ----managementPage------------------------------------
+    # 資産管理のフレーム
+    managementpage = ttk.Frame(window)
+
+    setpage = tkinter.Frame(managementpage, width=1300, height=250, bd=30, relief="groove")
+    grafpage = tkinter.Frame(managementpage, width=750, height=750)
+    valuepage = tkinter.Frame(managementpage, width=750, height=750)
+
+    Font = ("Helevetice", 28)
+
+    ffreme = ttk.Label(setpage, text=u'', font=Font)
+    ffreme.pack(fill='both', ipadx=550, ipady=30, side='left')
+
+    # 画像を表示する(jpegとpngは動作確認済)
+    sample = tkinter.PhotoImage(file='config/img/figure.png') # 画像ファイルのパス
+    canvas = tkinter.Canvas(grafpage, width=1000, height=1000)
+    canvas.place(x=0, y=0)
+    canvas.create_image(0, 0, image=sample, anchor=tkinter.NW)
+
+    totalasset = ttk.Label(valuepage, text=u'資産総額 ：', font=Font)
+    totalasset.place(relx=0.1, rely=0.1)
+    totalassetvalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font)
+    totalassetvalue.place(relx=0.35, rely=0.1)
+
+    assetitems = ttk.Label(valuepage, text=u'■資産の内訳', font=Font)
+    assetitems.place(relx=0.1, rely=0.15)
+
+    xrp = ttk.Label(valuepage, text=u'      XRP      ', font=Font, relief="ridge")
+    xrp.place(relx=0.1, rely=0.2)
+    xrpvalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    xrpvalue.place(relx=0.35, rely=0.2)
+    btc = ttk.Label(valuepage, text=u'      BTC      ', font=Font, relief="ridge")
+    btc.place(relx=0.1, rely=0.25)
+    btcvalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    btcvalue.place(relx=0.35, rely=0.25)
+    eth = ttk.Label(valuepage, text=u'      ETH      ', font=Font, relief="ridge")
+    eth.place(relx=0.1, rely=0.3)
+    ethvalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    ethvalue.place(relx=0.35, rely=0.3)
+    ltc = ttk.Label(valuepage, text=u'      LTC      ', font=Font, relief="ridge")
+    ltc.place(relx=0.1, rely=0.35)
+    ltcvalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    ltcvalue.place(relx=0.35, rely=0.35)
+    mona = ttk.Label(valuepage, text=u'    MONA    ', font=Font, relief="ridge")
+    mona.place(relx=0.1, rely=0.4)
+    monavalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    monavalue.place(relx=0.35, rely=0.4)
+    other = ttk.Label(valuepage, text=u'    その他    ', font=Font, relief="ridge")
+    other.place(relx=0.1, rely=0.45)
+    othervalue = ttk.Label(valuepage, text=u' 20,660,793円', font=Font, relief="ridge")
+    othervalue.place(relx=0.35, rely=0.45)
+
+    return_button = tkinter.Button(valuepage, text="  戻る  ", command=lambda: changePage(startpage))
+    return_button.place(relx=0.3, rely=0.55)
+
+    # managementPageを配置
+    managementpage.grid(row=0, column=0, sticky="nsew")
+    setpage.place(relx=0.05, rely=0.01)
+    grafpage.place(relx=0.0, rely=0.25)
+    valuepage.place(relx=0.55, rely=0.25)
+
     startpage.tkraise()
 
 
