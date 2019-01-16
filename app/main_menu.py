@@ -207,11 +207,6 @@ def main() -> None:
 
     linebutton.pack(side="left", expand=1, fill="both")
 
-    #チャート用の画像読み込み
-    xrpf = tkinter.PhotoImage(file='config/img/Figure_xrpjpy.png')
-    btcf = tkinter.PhotoImage(file='config/img/Figure_btcjpy.png')
-    ethf = tkinter.PhotoImage(file='config/img/Figure_ethjpy.png')
-    ltcf = tkinter.PhotoImage(file='config/img/Figure_ltcbtc.png')
 
     def Getxrp() :
         graphcreation.GRAPHCREATION.create_graph_png("xrpjpy")
@@ -397,22 +392,8 @@ def main() -> None:
     orderprice = ttk.Label(bidpage, text=u'注文価格', font=PointFont)
     orderprice.place(relx=0.7, rely=0.1)
 
-    btcjpy = tkinter.PhotoImage(file='config/img/btcjpycandlestick_week.png')
-
-    ffff = tkinter.PhotoImage(file='config/img/figure_btcjpy.png')
-    # チャート表示切替用
-    def Canvas_image() :
-        #fills = tkinter.PhotoImage(file='config/img/figure.png')
-        canv = tkinter.Canvas(tablepage, width=980, height=370)
-        canv.place(x=0, y=0)
-        #canv.create_image(0, 0, image=fills, anchor=tkinter.NW)
-        canv.create_image(0, 0, image=ffff, anchor=tkinter.NW)
-        canv.update()
-
-    #cartt = tkinter.Button(orderpage, text="CHANGE", command=Canvas_image)
-    #cartt.pack()
-
-    fill = tkinter.PhotoImage(file='config/img/Figure_btcjpy.png')
+    #起動時のグラフ表示
+    fill = tkinter.PhotoImage(file='config/img/xrpjpycandlestick_week.png')
     can = tkinter.Canvas(tablepage, width=980, height=370)
     can.place(x=0, y=0)
     can.create_image(0, 0, image=fill, anchor=tkinter.NW)
