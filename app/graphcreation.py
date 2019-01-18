@@ -60,18 +60,21 @@ class GRAPHCREATION:
 
         ax0 = plt.subplot(gs[0])
 
-        ax0.plot(df["close"], marker="o", markersize=1.5, linewidth=2, color="orange")
-        ax0.plot(df["high"], linewidth=2, color="red")
-        ax0.plot(df["low"], linewidth=0.7, color="orange")
-        l1, = ax0.plot(df_1, linewidth=2, color="red")
-        l2, = ax0.plot(df_2, linewidth=2, color="green")
+
+        ax0.plot(df["close"], marker="o", markersize=3, linewidth=2, color="orange", label="close")
+        ax0.plot(df["high"], marker="o", markersize=1.3, linewidth=1, color="red", label="high")
+        ax0.plot(df["low"], linewidth=0.5, color="green", label="low")
+        # l1, = ax0.plot(df_1, linewidth=2, color="red")
+        # l2, = ax0.plot(df_2, linewidth=2, color="green")
+        ax0.legend()
 
         ax0.tick_params(axis="x", bottom=False, labelbottom=False)  # x軸目盛とラベルの非表示
         # ax0.axhline(0, color="orange")
 
         ax1 = plt.subplot(gs[1], sharex=ax0)
         ax1.spines["top"].set_color("slategray")  # ax0とax1の境界線
-        ax1.bar(df.index, df["volume"], color="orange", width=get_periods * 0.94)
+        ax1.bar(df.index, df["volume"], color="orange", width=get_periods * 0.94, label="volume")
+        ax1.legend()
 
         plt.savefig('./config/img/'+self +'candlestick_week.png')
 
