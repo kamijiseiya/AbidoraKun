@@ -392,6 +392,8 @@ def main() -> None:
     orderprice = ttk.Label(bidpage, text=u'注文価格', font=PointFont)
     orderprice.place(relx=0.7, rely=0.1)
 
+    #起動時重くなる為今はグラフ生成省略
+    #graphcreation.GRAPHCREATION.create_graph_png("xrpjpy") #グラフ作成
     #起動時のグラフ表示
     fill = tkinter.PhotoImage(file='config/img/xrpjpycandlestick_week.png')
     can = tkinter.Canvas(tablepage, width=980, height=370)
@@ -446,54 +448,75 @@ def main() -> None:
         alf.append(btb)
         btb.pack(fill=tkinter.X)
 
-    titlepage = tkinter.Frame(allframe, bg='gray', width=1300, height=250, bd=10)
-    mainpage = tkinter.Frame(allframe, bg='gray', width=1300, height=450, bd=10)
+    titlepage = tkinter.Frame(allframe, width=1300, height=250, bd=10, relief="groove")
+    mainpage = tkinter.Frame(allframe, width=1300, height=450)
 
 
-    # 以下、entry_screenを流用
+    # snspageと同じように
+    title = tkinter.Label(titlepage, text=u'')
+    title.pack(fill='both', ipadx=550, ipady=30, side='left')
+    """
     head = tkinter.Label(titlepage, text=u'API KEYS', foreground='white', background='gray', font=("", 40))
     head.place(relx=0.01, rely=0.01)
     content = tkinter.Label(titlepage, text=u'各取引所からAPIキーを取得してください。', foreground='white', background='gray',
                             font=("", 25))
     content.place(relx=0.15, rely=0.3)
+    """
 
-    exchange = tkinter.Label(mainpage, text=u'取引所', foreground='white', background='gray', font=side)
-    exchange.place(relx=0.015, rely=0.01)
+    exchange = tkinter.Label(mainpage, text=u'取引所', font=side, relief="groove")
+    exchange.place(relx=0.1, rely=0.0, relheight=0.09, relwidth=0.2)
 
-    apik = tkinter.Label(mainpage, text=u'APIキー', foreground='white', background='gray', font=side)
-    apik.place(relx=0.3, rely=0.01)
+    apik = tkinter.Label(mainpage, text=u'APIキー', font=side, relief="groove")
+    apik.place(relx=0.4, rely=0.0)
 
-    token = tkinter.Label(mainpage, text=u'トークンキー', foreground='white', background='gray', font=side)
-    token.place(relx=0.6, rely=0.01)
+    token = tkinter.Label(mainpage, text=u'トークンキー', font=side, relief="groove")
+    token.place(relx=0.7, rely=0.0)
 
-    bank = tkinter.Label(mainpage, text=u'  bitbank   ', foreground='white', background='gray', font=side, bd=25,
-                         relief="ridge")
-    bank.place(relx=0.01, rely=0.2)
-    bina = tkinter.Label(mainpage, text=u'  binance  ', foreground='white', background='gray', font=side, bd=25,
-                         relief="ridge")
-    bina.place(relx=0.01, rely=0.4)
+    bank = tkinter.Label(mainpage, text=u'  bitbank   ', font=side, relief="groove")
+    bank.place(relx=0.1, rely=0.16)
+    bina = tkinter.Label(mainpage, text=u'  binance   ', font=side, relief="groove")
+    bina.place(relx=0.1, rely=0.4)
+    etha = tkinter.Label(mainpage, text=u'  ethereum  ', font=side, relief="groove")
+    etha.place(relx=0.1, rely=0.64)
+    ltca = tkinter.Label(mainpage, text=u'  litecoin  ', font=side, relief="groove")
+    ltca.place(relx=0.1, rely=0.88)
+
 
     # エントリー　（APIキーの値を入れる)
-    bitbank_api = tkinter.Entry(mainpage, width=29, bd=25, font=("", 20), relief="flat")
-    bitbank_api.place(relx=0.2, rely=0.2)
+    bitbank_api = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    bitbank_api.place(relx=0.4, rely=0.16)
 
-    binance_api = tkinter.Entry(mainpage, width=29, bd=25, font=("", 20), relief="flat")
-    binance_api.place(relx=0.2, rely=0.4)
+    binance_api = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    binance_api.place(relx=0.4, rely=0.4)
+
+    #kali
+    eth_api = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    eth_api.place(relx=0.4, rely=0.64)
+
+    ltc_api = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    ltc_api.place(relx=0.4, rely=0.88)
 
     # エントリー２ (トークンの値を入れる)
-    bitbank_token = tkinter.Entry(mainpage, width=29, bd=25, font=("", 20), relief="flat")
-    bitbank_token.place(relx=0.55, rely=0.2)
+    bitbank_token = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    bitbank_token.place(relx=0.7, rely=0.16)
 
-    binance_token = tkinter.Entry(mainpage, width=29, bd=25, font=("", 20), relief="flat")
-    binance_token.place(relx=0.55, rely=0.4)
+    binance_token = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    binance_token.place(relx=0.7, rely=0.4)
+
+    # kali
+    eth_token = tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    eth_token.place(relx=0.7, rely=0.64)
+
+    ltc_token =  tkinter.Entry(mainpage, width=20, bd=20, font=("", 18), relief="flat")
+    ltc_token.place(relx=0.7, rely=0.88)
 
     def bitbank_entry(self):
         api_value = bitbank_api.get()
         token_value = bitbank_token.get()
         # bitbank.BITBANK.registration("BITBANK", api_value, token_value)
 
-    button_bitbank = tkinter.Button(mainpage, text=u'登録', foreground='white', background='gray', font=side)
-    button_bitbank.place(relx=0.9, rely=0.2)
+    button_bitbank = tkinter.Button(mainpage, text=u'登録', font=side)
+    button_bitbank.place(relx=0.9, rely=0.16)
     button_bitbank.bind("<Button-1>", bitbank_entry)
 
     def binance_entry(self):
@@ -501,13 +524,13 @@ def main() -> None:
         token_value = binance_token.get()
         # binance.BINANCE.registration("BINANCE", api_value, token_value)
 
-    button_binance = tkinter.Button(mainpage, text=u'登録', foreground='white', background='gray', font=side)
+    button_binance = tkinter.Button(mainpage, text=u'登録', font=side)
     button_binance.place(relx=0.9, rely=0.4)
     button_binance.bind("<Button-1>", binance_entry)
 
     main_menu = tkinter.Button(mainpage, width=30, height=1, text="  戻る  ", command=lambda: changePage(startpage),
                                font=("", 24))
-    main_menu.place(relx=0.3, rely=0.7)
+    main_menu.place(relx=0.3, rely=0.95)
 
     # MainPageを配置
     mainPage.grid(row=0, column=0, sticky="nsew")
