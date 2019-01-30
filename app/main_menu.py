@@ -52,7 +52,6 @@ def main() -> None:
     starttest = tkinter.Frame(startpage, bg='black', width=300, height=200, bd=30, relief="groove")
     backpage = tkinter.Frame(startpage, bg='black', height=400, width=330, bd=10, relief="ridge")
     badpage = tkinter.Frame(backpage, height=320, width=330, bg='white')
-    #canvass = tkinter.Canvas(backpage, height=100, width=50)
     canvass = tkinter.Canvas(backpage, height=350, width=290, bg='gray')
 
     #スクロールバー生成
@@ -74,7 +73,7 @@ def main() -> None:
         button.append(bt)
         bt.pack(fill=tkinter.X)
 
-    bidpage = tkinter.Frame(startpage,  height=50, width=330, bd=10, relief="ridge")
+    bidpage = tkinter.Frame(startpage,  height=50, width=330, bd=10, relief="ridge", bg='black')
     orderpage = tkinter.Frame(startpage, bg='black', height=305, width=330, relief="ridge", bd=10)
     #askpage = tkinter.Frame(startpage, bg='black', height=175, width=330, bd=10, relief="ridge")
     tablepage = tkinter.Frame(startpage, bg='black', width=1010, height=400, bd=15, relief="sunken")
@@ -91,6 +90,14 @@ def main() -> None:
     orderframe = tkinter.Frame(ordercanvas, bg='gray')
 
     ordercanvas.create_window((0,0), window=orderframe, anchor=tkinter.NW, width=ordercanvas.cget('width'))
+
+    #button 300 furagu1010 =1310  zenntai 1500 heig 1000-furagu400button200
+    undrpage = tkinter.Frame(startpage, width=1010, height=150, bd=15, relief="ridge", bg='black')
+
+    #underpageを白く
+    undrtext = ttk.Label(undrpage, text=u'                             ', font=('',85))
+    undrtext.place(rely=0.0, relx=0.0)
+
 
     test=[]
     for n in range(30):
@@ -109,82 +116,6 @@ def main() -> None:
 
     ordertest =ttk.Label(orderframe, text=u'bitbank', font=PointFont)
     ordertest.place(relx=0.1, rely=0.02)
-
-    """
-    class Helmholtz_App(tkinter.Tk):
-        def __init__(self):
-
-            container = tkinter.Frame(tablepage)
-            container.pack(side="top", fill="both", expand=True)
-            container.grid_rowconfigure(0, weight=1)
-            container.grid_columnconfigure(0, weight=1)
-
-            self.frames = {}
-
-            for F in (PageOne, PageTwo):
-                frame = F(container, self)
-
-                self.frames[F] = frame
-
-                frame.grid(row=0, column=0, sticky="nsew")
-
-            self.show_frame(PageOne)
-
-        def show_frame(self, cont):
-            frame = self.frames[cont]
-            frame.tkraise()
-
-    class PageOne(tkinter.Frame):
-        def __init__(self, parent, controller):
-            tkinter.Frame.__init__(self, parent)
-
-            fig1 = Figure(figsize=(4, 4), dpi=170)
-            a = fig1.add_subplot(111)
-
-            # 表を作る
-            def callback():
-                xrpchart.candlechart()
-
-                canvas = FigureCanvasTkAgg(fig1, self)
-                canvas.draw()
-                canvas.get_tk_widget().pack(side=tkinter.BOTTOM, fill=tkinter.BOTH, expand=True)
-
-                toolbar = NavigationToolbar2TkAgg(canvas, self)
-                toolbar.update()
-                canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True)
-
-                # 作った表を消す
-                def ClearCallback():
-                    # ~~~~~~~~~~~
-                    fig1.clf()
-                    # ~~~~~~~~~~~
-                    clearbutton.destroy()
-
-                clearbutton = ttk.Button(tablepage, text="Clear", command=ClearCallback)
-                clearbutton.pack()
-
-            b = ttk.Button(tablepage, text="Plot Data", command=callback)
-            b.pack()
-
-            def uge():
-                callback()
-                window.after(1000, uge())
-
-    class PageTwo(tkinter.Frame):
-        def __init__(self, parent, controller):
-            tkinter.Frame.__init__(self, parent)
-
-    app = Helmholtz_App()
-    #xrpchart.candlechart()
-
-    def Chart() :
-        subprocess.check_call({"python","app.xrpchart.py"})
-        #os.system("start python app\\xrpchart.py")
-        #os.system("start notepad.exe")
-
-    cart = tkinter.Button(tablepage, text="CHART", command=Chart)
-    cart.pack()
-    """
 
     ### ボタン表示
     # APIキー登録ボタン生成
@@ -385,6 +316,8 @@ def main() -> None:
     ask = ttk.Label(backpage, text=u'売値', font=PointFont)
     ask.place(relx=0.7, rely=0.12)
 
+    orderpaint = ttk.Label(bidpage, text="        ", font=('', 100))
+    orderpaint.place(relx=0.0, rely=0.0)
     orderexchange = ttk.Label(bidpage, text=u'取引所', font=PointFont)
     orderexchange.place(relx=0.1, rely=0.1)
     orderstatus = ttk.Label(bidpage, text=u'注文状態', font=PointFont)
@@ -420,6 +353,8 @@ def main() -> None:
     #window.master.columnconfigure(0, weight=1)
     #window.master.rowconfigure(0, weight=1)
 
+    undrpage.place(relx=0.01, rely=0.725)
+
     # -----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
     mainPage = tkinter.Frame(window)
@@ -435,7 +370,7 @@ def main() -> None:
     abar.config(command=allbar.yview)
 
     allbar.config(yscrollcommand=abar.set)
-    allbar.config(scrollregion=("0c","0c","40c","40c"))
+    allbar.config(scrollregion=("0c","0c","50c","50c"))
     allbar.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 
     allframe = tkinter.Frame(allbar)
@@ -530,7 +465,7 @@ def main() -> None:
 
     main_menu = tkinter.Button(mainpage, width=30, height=1, text="  戻る  ", command=lambda: changePage(startpage),
                                font=("", 24))
-    main_menu.place(relx=0.3, rely=0.95)
+    main_menu.place(relx=0.3, rely=0.92)
 
     # MainPageを配置
     mainPage.grid(row=0, column=0, sticky="nsew")
@@ -587,23 +522,23 @@ def main() -> None:
     service.place(relx=0.1, rely=0.2, relheight=0.07, relwidth=0.3)
     apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="groove")
     apikey.place(relx=0.4, rely=0.2, relheight=0.07, relwidth=0.3)
-    line = tkinter.Label(snspage, text=u"Slack", font=side, relief="groove")
-    line.place(relx=0.1, rely=0.27, relheight=0.1, relwidth=0.3)
+    slack = tkinter.Label(snspage, text=u"Slack", font=side, relief="groove")
+    slack.place(relx=0.1, rely=0.27, relheight=0.1, relwidth=0.3)
 
     service = tkinter.Label(snspage, text=u"通知サービス", font=side, relief="ridge")
     service.place(relx=0.1, rely=0.4, relheight=0.07, relwidth=0.3)
     apikey = tkinter.Label(snspage, text=u"APIキー", font=side, relief="ridge")
     apikey.place(relx=0.4, rely=0.4, relheight=0.07, relwidth=0.3)
-    line = tkinter.Label(snspage, text=u"Sample", font=side, relief="ridge")
-    line.place(relx=0.1, rely=0.47, relheight=0.1, relwidth=0.3)
+    sample = tkinter.Label(snspage, text=u"Sample", font=side, relief="ridge")
+    sample.place(relx=0.1, rely=0.47, relheight=0.1, relwidth=0.3)
 
 
     # エントリー (APIキーの入力)
     line_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
     line_token.place(relx=0.4, rely=0.075, relheight=0.1, relwidth=0.3)
 
-    plans = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
-    plans.place(relx=0.4, rely=0.27, relheight=0.1, relwidth=0.3)
+    slack_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
+    slack_token.place(relx=0.4, rely=0.27, relheight=0.1, relwidth=0.3)
 
     slack_token = tkinter.Entry(snspage, width=20, bd=20, font=("", 18), relief="flat")
     slack_token.place(relx=0.4, rely=0.47, relheight=0.1, relwidth=0.3)
