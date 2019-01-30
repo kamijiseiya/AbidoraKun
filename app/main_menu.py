@@ -107,12 +107,15 @@ def main() -> None:
 
     undercanvas.create_window((0,0), window=underframe, anchor=tkinter.NW, width=undercanvas.cget('width'))
 
+    #underpageを白く(underframe)の上書きになるため＃化
+    #undrtext = ttk.Label(undrpage, text=u'                             ', font=('',80))
+    #undrtext.place(rely=0.0, relx=0.0)
 
-
-    #underpageを白く
-    undrtext = ttk.Label(undrpage, text=u'                             ', font=('',80))
-    undrtext.place(rely=0.0, relx=0.0)
-
+    htest = []
+    for n in range(40):
+        tes = tkinter.Label(underframe, text="")
+        htest.append(tes)
+        tes.pack(fill=tkinter.X)
 
     test=[]
     for n in range(30):
@@ -128,6 +131,10 @@ def main() -> None:
     exchangeC.place(relx=0.1, rely=0.2)
     exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
     exchangeD.place(relx=0.1, rely=0.25)
+
+    # underframe test
+    history = ttk.Label(underframe, text=u"history", font=PointFont)
+    history.place(relx=0.1, rely=0.02)
 
     ordertest =ttk.Label(orderframe, text=u'bitbank', font=PointFont)
     ordertest.place(relx=0.1, rely=0.02)
@@ -369,6 +376,7 @@ def main() -> None:
     #window.master.rowconfigure(0, weight=1)
 
     undrpage.place(relx=0.01, rely=0.725)
+    undercanvas.pack()
 
     # -----------------------------------MainPage---------------------------------
     ### MainPage用のFrameを生成
