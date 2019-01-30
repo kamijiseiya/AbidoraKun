@@ -20,11 +20,11 @@ class BITBANK:
         """privateキーの処理"""
         try:
             api, secret = BITBANK.get_api(2)
-            binances = ccxt.binance({
+            bitbanks = ccxt.binance({
                 'apiKey': api,
                 'secret': secret
             })
-            return binances
+            return bitbanks
         except ccxt.BaseError:
             print("取引所から取引データを取得できません。")
             print("10秒待機してやり直します")
@@ -85,6 +85,12 @@ class BITBANK:
         result = BITBANK.public_bitbank()\
             .create_limit_sell_order(currency, amount, price)  # xrpを売却　
         print(result)
+
+    @staticmethod
+    def cancelorder(id, symbol):
+        """symbolで指定して通貨ペアのidと一致する注文をキャンセルする"""
+        BITBANK.public_bitbank().cancel_order(id, symbol)#キャンセルが成功しても戻り値はNone。
+
 
     def add_api(name, api, secret):
         """APIkキーを登録するメソッド"""
