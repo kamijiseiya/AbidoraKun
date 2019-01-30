@@ -91,11 +91,26 @@ def main() -> None:
 
     ordercanvas.create_window((0,0), window=orderframe, anchor=tkinter.NW, width=ordercanvas.cget('width'))
 
-    #button 300 furagu1010 =1310  zenntai 1500 heig 1000-furagu400button200
-    undrpage = tkinter.Frame(startpage, width=1010, height=150, bd=15, relief="ridge", bg='black')
+    #button 300 furagu1010 =1310  zenntai 1500 heig 1000-furagu400button200 zenn 600
+    undrpage = tkinter.Frame(startpage, width=1010, height=180, bd=15, relief="ridge", bg='black')
+    undercanvas = tkinter.Canvas(undrpage, bg='black', width=960, height=125, relief="ridge")
+
+    under = tkinter.Scrollbar(undrpage, orient=tkinter.VERTICAL)
+    under.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+    under.config(command=undercanvas.yview)
+
+    undercanvas.config(yscrollcommand=under.set)
+    undercanvas.config(scrollregion=(0,0,400,500))
+    undercanvas.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
+
+    underframe = tkinter.Frame(undercanvas, bg='gray')
+
+    undercanvas.create_window((0,0), window=underframe, anchor=tkinter.NW, width=undercanvas.cget('width'))
+
+
 
     #underpageを白く
-    undrtext = ttk.Label(undrpage, text=u'                             ', font=('',85))
+    undrtext = ttk.Label(undrpage, text=u'                             ', font=('',80))
     undrtext.place(rely=0.0, relx=0.0)
 
 
