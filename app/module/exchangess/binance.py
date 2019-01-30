@@ -90,6 +90,11 @@ class BINANCE:
             (currency, amount, price)  # xrpを売却　
         print(result)
 
+    @staticmethod
+    def cancelorder(id, symbol):
+        """symbolで指定して通貨ペアのidと一致する注文をキャンセルする"""
+        BINANCE.private_binance().cancel_order(id, symbol)  # キャンセルが成功しても戻り値はNone。
+
     def get_address(self):
         """binanceの取引通貨ごとのアドレスを返す"""
         try:
