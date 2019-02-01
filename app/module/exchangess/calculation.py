@@ -37,27 +37,20 @@ class CALCULATION:
             profit_binance_coinex = binance_xrp_btc.get("ask") - coinex_xrp_btc.get("bid")
             profit_coinex_binance = coinex_xrp_btc.get("ask") - binance_xrp_btc.get("bid")
 
-            print('XRPをbitbankで買いbinancesに売った場合の利益(btc):')
-            print(profit_bitbank_binance)
-            print('XRPをbinancesで買いbitbankに売った場合の利益(btc):')
-            print(profit_binance_bitbank)
-            print('XRPをbitbankで買いcoinexに売った場合の利益(btc)')
-            print(profit_bitbank_coinex)
-            print('XRPをcoinexで買いbitbankに売った場合の利益(btc)')
-            print(profit_coinex_bitbank)
-            print('XRPをbinanceで買いcoinexに売った場合の利益(btc)')
-            print(profit_binance_coinex)
-            print('XRPをcoinexで買いbinanceに売った場合の利益(btc)')
-            print(profit_coinex_binance)
             print('XRPを取引した場合の最大利益(btc):')
-            print(max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
-                       profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance]))
+            maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
+                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
+            print(maxvalue)
             print('XRPを取引した場合の最低利益(btc):')
-            print(min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
-                       profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance]))
+            minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
+                       profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
+            print(minvalue)
 
-            return profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex, \
-                   profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance
+            resultarray = {'bitbank_binance': profit_bitbank_binance, 'binance_bitbank': profit_binance_bitbank,
+                           'bitbank_coinex': profit_bitbank_coinex, 'coinex_bitbank': profit_coinex_bitbank,
+                           'binance_coinex': profit_binance_coinex, 'coinex_binance' : profit_coinex_binance,
+                           'max':maxvalue, 'min': minvalue}
+            return resultarray
         except ccxt.BaseError:
             print("取引所から取引データを取得できません。")
             print("10秒待機してやり直します")
@@ -67,3 +60,4 @@ class CALCULATION:
 
 if __name__ == "__main__":
     print(CALCULATION.difference_xrp(""))
+    print(CALCULATION.difference_xrp("")['max'])
