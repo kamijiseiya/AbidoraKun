@@ -1,10 +1,11 @@
 import time
 import ccxt
+import json
 
 class CALCULATION:
     """取引所間の通貨差額を求めるクラス"""
 
-    def difference_xrp(self):
+    def difference_xrp_btc(self):
         """取引所間でのxrp差額を求めるメソッド
                     (bitbank,binance,coinex)"""
         while True:
@@ -56,10 +57,14 @@ class CALCULATION:
                 time.sleep(10)
 
 
-    
+    def difference_btc_xrp(self):
+        """取引所間でのBTC差額を求めるメソッド
+                    (bitbank,binance,coinex)"""
+       
 
 
 
 if __name__ == "__main__":
-    print(CALCULATION.difference_xrp(""))
-    print(CALCULATION.difference_xrp("")['max'])
+    #print(CALCULATION.difference_xrp(""))
+    #print("%.13f" % CALCULATION.difference_xrp("")['max'])
+    print(CALCULATION.difference_btc_xrp(""))
