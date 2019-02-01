@@ -7,7 +7,6 @@ class CALCULATION:
     def difference_xrp(self):
         """取引所間でのxrp差額を求めるメソッド
                     (bitbank,binance,coinex)"""
-        # bitbankのXRP/BTCのaskとbidを算出
         try:
             bitbanks = ccxt.bitbank()
             bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
@@ -22,8 +21,6 @@ class CALCULATION:
             # coinexからXRP/BTC通貨情報取得
             coinex = ccxt.coinex()
             coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
-            print(coinex_xrp_btc.get("bid"))
-            print(coinex_xrp_btc.get("ask"))
 
             # bitbankとbinance間の差額
             profit_bitbank_binance = bitbank_xrp_btc_ask - binance_xrp_btc.get("bid")
@@ -40,15 +37,16 @@ class CALCULATION:
             print('XRPを取引した場合の最大利益(btc):')
             maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                  profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
-            print(maxvalue)
             print('XRPを取引した場合の最低利益(btc):')
             minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                        profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
-            print(minvalue)
 
-            resultarray = {'bitbank_binance': profit_bitbank_binance, 'binance_bitbank': profit_binance_bitbank,
-                           'bitbank_coinex': profit_bitbank_coinex, 'coinex_bitbank': profit_coinex_bitbank,
-                           'binance_coinex': profit_binance_coinex, 'coinex_binance' : profit_coinex_binance,
+            resultarray = {'bitbank_binance': profit_bitbank_binance,
+                           'binance_bitbank': profit_binance_bitbank,
+                           'bitbank_coinex': profit_bitbank_coinex,
+                           'coinex_bitbank': profit_coinex_bitbank,
+                           'binance_coinex': profit_binance_coinex,
+                           'coinex_binance' : profit_coinex_binance,
                            'max':maxvalue, 'min': minvalue}
             return resultarray
         except ccxt.BaseError:
