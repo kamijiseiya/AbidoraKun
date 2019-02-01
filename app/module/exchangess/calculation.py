@@ -35,6 +35,8 @@ class CALCULATION:
         # binanceとcoinex間の差額
         profit_binance_coinex = binance_xrp_btc.get("ask") - coinex_xrp_btc.get("bid")
         profit_coinex_binance = coinex_xrp_btc.get("ask") - binance_xrp_btc.get("bid")
+        
+
 
         print('XRPをbitbankで買いbinancesに売った場合の利益(btc):')
         print(profit_bitbank_binance)
@@ -48,6 +50,12 @@ class CALCULATION:
         print(profit_binance_coinex)
         print('XRPをcoinexで買いbinanceに売った場合の利益(btc)')
         print(profit_coinex_binance)
+        print('XRPを取引した場合の最大利益(btc):')
+        print(max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
+                   profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance]))
+        print('XRPを取引した場合の最低利益(btc):')
+        print(min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
+                   profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance]))
 
         return profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex, \
                profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance
