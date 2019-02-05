@@ -13,8 +13,8 @@ class CALCULATION:
                 bitbanks = ccxt.bitbank()
                 bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
                 bitbank_xrp_jpy = bitbanks.fetch_ticker('XRP/JPY')
-                bitbank_xrp_btc_ask = bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")
-                bitbank_xrp_btc_bid = bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")
+                bitbank_xrp_btc_bid = bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")
+                bitbank_xrp_btc_ask = bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")
 
                 # binanceからXRP/BTC通貨情報取得
                 binances = ccxt.binance()
@@ -65,33 +65,47 @@ class CALCULATION:
                 bitbanks = ccxt.bitbank()
                 bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
                 bitbank_xrp_jpy = bitbanks.fetch_ticker('XRP/JPY')
-                bitbank_btc_xrp_ask = (1/bitbank_xrp_jpy.get("bid")) / (1/bitbank_btc_jpy.get("ask"))
-                bitbank_btc_xrp_bid = (1/bitbank_xrp_jpy.get("ask")) / (1/bitbank_btc_jpy.get("bid"))
-
+                bitbank_btc_xrp_bid = (1 / bitbank_xrp_jpy.get("bid")) / (1 / bitbank_btc_jpy.get("ask"))
+                bitbank_btc_xrp_ask = (1 / bitbank_xrp_jpy.get("ask")) / (1 / bitbank_btc_jpy.get("bid"))
+                print(bitbank_btc_xrp_ask)
+                print(bitbank_btc_xrp_bid)
                 # binanceからXRP/BTC通貨情報取得
                 binances = ccxt.binance()
                 binance_xrp_btc = binances.fetch_ticker('XRP/BTC')
-
+                print(binance_xrp_btc.get("ask"))
+                print(binance_xrp_btc.get("bid"))
                 # coinexからXRP/BTC通貨情報取得
                 coinex = ccxt.coinex()
                 coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
-
+                print(coinex_xrp_btc.get("ask"))
+                print(coinex_xrp_btc.get("bid"))
 
                 # bitbankとbinance間の差額
-                profit_bitbank_binance = (1/binance_xrp_btc.get("bid")) - bitbank_btc_xrp_ask
-                profit_binance_bitbank = bitbank_btc_xrp_bid - (1/binance_xrp_btc.get("ask"))
+                profit_bitbank_binance = ((1 / binance_xrp_btc.get("bid")) - bitbank_btc_xrp_ask) * bitbank_xrp_jpy.get(
+                    "bid")
+                profit_binance_bitbank = (bitbank_btc_xrp_bid - (1 / binance_xrp_btc.get("ask"))) * bitbank_xrp_jpy.get(
+                    "bid")
+                print('bitbankとbinances')
+                print(1 / binance_xrp_btc.get("ask"))
+                print(1 / binance_xrp_btc.get("bid"))
 
                 # bitbankとcoinex間の差額
-                profit_bitbank_coinex = (1/coinex_xrp_btc.get("bid")) - bitbank_btc_xrp_ask
-                profit_coinex_bitbank = bitbank_btc_xrp_bid - (1/coinex_xrp_btc.get("ask"))
-
+                profit_bitbank_coinex = ((1 / coinex_xrp_btc.get("bid")) - bitbank_btc_xrp_ask) * bitbank_xrp_jpy.get(
+                    "bid")
+                profit_coinex_bitbank = (bitbank_btc_xrp_bid - (1 / coinex_xrp_btc.get("ask"))) * bitbank_xrp_jpy.get(
+                    "bid")
+                print('bitbankとcoinex')
+                print(1 / coinex_xrp_btc.get("ask"))
+                print(1 / coinex_xrp_btc.get("bid"))
                 # binanceとcoinex間の差額
-                profit_binance_coinex = (1/coinex_xrp_btc.get("bid")) - (1/binance_xrp_btc.get("ask"))
-                profit_coinex_binance = (1/binance_xrp_btc.get("bid")) - (1/coinex_xrp_btc.get("ask"))
-                # 'XRPを取引した場合の最大利益(xrp):'
+                profit_binance_coinex = ((1 / coinex_xrp_btc.get("bid")) - (
+                            1 / binance_xrp_btc.get("ask"))) * bitbank_xrp_jpy.get("bid")
+                profit_coinex_binance = ((1 / binance_xrp_btc.get("bid")) - (
+                            1 / coinex_xrp_btc.get("ask"))) * bitbank_xrp_jpy.get("bid")
+                # 'XRPを取引した場合の最大利益(jpy):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
-                # 'XRPを取引した場合の最低利益(xrp):'
+                # 'XRPを取引した場合の最低利益(jpy):'
                 minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
 
