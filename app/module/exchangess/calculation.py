@@ -25,16 +25,16 @@ class CALCULATION:
                 coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
 
                 # bitbankとbinance間の差額
-                profit_bitbank_binance = bitbank_xrp_btc_ask - binance_xrp_btc.get("bid")
-                profit_binance_bitbank = binance_xrp_btc.get("ask") - bitbank_xrp_btc_bid
+                profit_bitbank_binance = binance_xrp_btc.get("bid") - bitbank_xrp_btc_ask
+                profit_binance_bitbank = bitbank_xrp_btc_bid - binance_xrp_btc.get("ask")
 
                 # bitbankとcoinex間の差額
-                profit_bitbank_coinex = bitbank_xrp_btc_ask - coinex_xrp_btc.get("bid")
-                profit_coinex_bitbank = coinex_xrp_btc.get("ask") - bitbank_xrp_btc_bid
+                profit_bitbank_coinex = coinex_xrp_btc.get("bid") - bitbank_xrp_btc_ask
+                profit_coinex_bitbank = bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")
 
                 # binanceとcoinex間の差額
-                profit_binance_coinex = binance_xrp_btc.get("ask") - coinex_xrp_btc.get("bid")
-                profit_coinex_binance = coinex_xrp_btc.get("ask") - binance_xrp_btc.get("bid")
+                profit_binance_coinex = coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")
+                profit_coinex_binance = binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")
 
                 #'XRPを取引した場合の最大利益(btc):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
@@ -78,16 +78,16 @@ class CALCULATION:
 
 
                 # bitbankとbinance間の差額
-                profit_bitbank_binance = bitbank_btc_xrp_ask - (1/binance_xrp_btc.get("bid"))
-                profit_binance_bitbank = (1/binance_xrp_btc.get("ask")) - bitbank_btc_xrp_bid
+                profit_bitbank_binance = (1/binance_xrp_btc.get("bid")) - bitbank_btc_xrp_ask
+                profit_binance_bitbank = bitbank_btc_xrp_bid - (1/binance_xrp_btc.get("ask"))
 
                 # bitbankとcoinex間の差額
-                profit_bitbank_coinex = bitbank_btc_xrp_ask - (1/coinex_xrp_btc.get("bid"))
-                profit_coinex_bitbank = (1/coinex_xrp_btc.get("ask")) - bitbank_btc_xrp_bid
+                profit_bitbank_coinex = (1/coinex_xrp_btc.get("bid")) - bitbank_btc_xrp_ask
+                profit_coinex_bitbank = bitbank_btc_xrp_bid - (1/coinex_xrp_btc.get("ask"))
 
                 # binanceとcoinex間の差額
-                profit_binance_coinex = (1/binance_xrp_btc.get("ask")) - (1/coinex_xrp_btc.get("bid"))
-                profit_coinex_binance = (1/coinex_xrp_btc.get("ask")) - (1/binance_xrp_btc.get("bid"))
+                profit_binance_coinex = (1/coinex_xrp_btc.get("bid")) - (1/binance_xrp_btc.get("ask"))
+                profit_coinex_binance = (1/binance_xrp_btc.get("bid")) - (1/coinex_xrp_btc.get("ask"))
                 # 'XRPを取引した場合の最大利益(xrp):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
