@@ -2,6 +2,7 @@
 import os  # パスを操作するモジュール
 import sys  # パスを読み込むモジュール
 import subprocess
+import threading
 
 sys.path.append(os.path.abspath(os.path.join('..')))  # 自作モジュールのパス指定
 # ライブラリ
@@ -16,6 +17,7 @@ import sqlite3  # DBへの追加時のエラーを取得する為
 #from app.module.sns import line
 #from app import xrpchart
 from app import graphcreation
+from app.module.exchangess import calculation
 
 import matplotlib
 
@@ -132,6 +134,43 @@ def main() -> None:
     exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
     exchangeD.place(relx=0.1, rely=0.25)
 
+    #現在の売買最大値取得(XRP)
+    transaction = calculation.CALCULATION.difference_xrp_btc("")['max']
+    tara = ttk.Label(underframe, text="binanceで○○で購入しbitbankで□□で売り"+str(transaction)+"の利益です。", font=PointFont)
+    tara.place(relx=0.1, rely=0.05)
+
+    #現在の売買最大値取得(BTC)
+    ask_btc = ""
+    bid_btc = ""
+    btc_max = calculation.CALCULATION.difference_btc_xrp("")['max']
+    btc_value = calculation.CALCULATION.difference_btc_xrp("")['maxvalue']
+    #売買取引所の抽出
+    if(str(btc_max).startswith('bitbank')):
+        ask_btc = "bitbank"
+    elif(str(btc_max).startswith('binance')):
+        ask_btc = "binance"
+    elif(str(btc_max).startswith('coinex')):
+        ask_btc = "coinex"
+
+    if(str(btc_max).endswith('bitbank')):
+        bid_btc = "bitbank"
+    elif(str(btc_max)).endswith(('binance')):
+        bid_btc = "binance"
+    elif(str(btc_max)).endswith(('coinex')):
+        bid_btc = "coinex"
+
+    bmax = ttk.Label(underframe, text=ask_btc+str(btc_value)+bid_btc, font=PointFont)
+    bmax.place(relx=0.1, rely=0.1)
+
+    # 現在の売買最大値取得(BTC)
+    def func():
+        while True:
+            btc_value = calculation.CALCULATION.difference_btc_xrp("")['maxvalue']
+            thread = ttk.Label(underframe, text=btc_value, font=PointFont)
+            thread.place(relx=0.1, rely=0.12)
+            thread.update()
+            time.sleep(10)
+
     # underframe test
     history = ttk.Label(underframe, text=u"history", font=PointFont)
     history.place(relx=0.1, rely=0.02)
@@ -160,6 +199,10 @@ def main() -> None:
 
     linebutton.pack(side="left", expand=1, fill="both")
 
+    def create(self) :
+        grobal = graphcreation.GRAPHCREATION.create_graph_png(self)
+        return grobal
+
 
     def Getxrp() :
         graphcreation.GRAPHCREATION.create_graph_png("xrpjpy")
@@ -179,7 +222,7 @@ def main() -> None:
         exchangeD = ttk.Label(scrollframe, text=u"quoinex", font=PointFont)
         exchangeD.place(relx=0.1, rely=0.25)
         exchangeD.update()
-        # bitbankから現在価格取得
+        # bitbankからxrp価格取得
         exhanges, ask, bid = bitbank.BITBANK.currencyinformation('XRP')
         bitbank_ask = ttk.Label(scrollframe, text=ask, font=PointFont)
         bitbank_ask.place(relx=0.4, rely=0.15)
@@ -187,7 +230,7 @@ def main() -> None:
         bitbank_bid = ttk.Label(scrollframe, text=bid, font=PointFont)
         bitbank_bid.place(relx=0.7, rely=0.15)
         bitbank_bid.update()
-        # binanseから現在価格取得
+        # binanseから価格取得
         exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('XRP')
         binance_ask = ttk.Label(scrollframe, text=ask2, font=PointFont)
         binance_ask.place(relx=0.4, rely=0.2)
@@ -235,7 +278,7 @@ def main() -> None:
         bitbank_bid.place(relx=0.7, rely=0.15)
         bitbank_bid.update()
         """
-        # binanseから現在価格取得
+        # binanseから現在価格取得 
         exchange2, ask2, bid2 = binance.BINANCE.currencyinformation('BTC')
         binance_ask = ttk.Label(scrollframe, text=ask2, font=PointFont)
         binance_ask.place(relx=0.4, rely=0.2)
@@ -658,6 +701,8 @@ def main() -> None:
 
     startpage.tkraise()
 
+    thread_1 = threading.Thread(target=func)
+    thread_1.start()
 
     # プログラムを始める
     window.mainloop()
@@ -665,3 +710,5 @@ def main() -> None:
 # メイン
 if __name__ == '__main__':
     main()
+    #thread_1 = threading.Thread(target=func)
+    #thread_1.start()
