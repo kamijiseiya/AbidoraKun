@@ -43,13 +43,26 @@ class CALCULATION:
                 minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
 
+                resultsample = {'bitbank_binance': profit_bitbank_binance,
+                                'binance_bitbank': profit_binance_bitbank,
+                                'bitbank_coinex': profit_bitbank_coinex,
+                                'coinex_bitbank': profit_coinex_bitbank,
+                                'binance_coinex': profit_binance_coinex,
+                                'coinex_binance': profit_coinex_binance}
+                max_k = max(resultsample, key=resultsample.get)
+                print(max_k)
+                min_k = min(resultsample, key=resultsample.get)
+                print(min_k)
+
+
                 resultarray = {'bitbank_binance': profit_bitbank_binance,
                                'binance_bitbank': profit_binance_bitbank,
                                'bitbank_coinex': profit_bitbank_coinex,
                                'coinex_bitbank': profit_coinex_bitbank,
                                'binance_coinex': profit_binance_coinex,
                                'coinex_binance' : profit_coinex_binance,
-                               'max':maxvalue, 'min': minvalue}
+                               'max': max_k, 'min': min_k,
+                               'maxvalue':maxvalue, 'minvalue': minvalue}
                 return resultarray
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
@@ -158,7 +171,7 @@ class CALCULATION:
 
 
 if __name__ == "__main__":
-    #print(CALCULATION.difference_xrp(""))
-    #print("%.13f" % CALCULATION.difference_xrp("")['max'])
+    #print(CALCULATION.difference_xrp(1))
+    #print("%.13f" % CALCULATION.difference_xrp(2)['max'])
     print(CALCULATION.difference_btc_xrp(1))
     print(CALCULATION.difference_btc_xrp(3))
