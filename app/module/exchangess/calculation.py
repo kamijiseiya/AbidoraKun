@@ -64,25 +64,25 @@ class CALCULATION:
                 bitbanks = ccxt.bitbank()
                 bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
                 bitbank_xrp_jpy = bitbanks.fetch_ticker('XRP/JPY')
-                bitbank_btc_xrp_bid = (1 / bitbank_xrp_jpy.get("bid")) / (1 / bitbank_btc_jpy.get("ask"))
-                bitbank_btc_xrp_ask = (1 / bitbank_xrp_jpy.get("ask")) / (1 / bitbank_btc_jpy.get("bid"))
+                bitbank_btc_xrp_bid = (1 / bitbank_xrp_jpy.get("bid")) / (1 / bitbank_btc_jpy.get("ask")) * self
+                bitbank_btc_xrp_ask = (1 / bitbank_xrp_jpy.get("ask")) / (1 / bitbank_btc_jpy.get("bid")) * self
                 print(bitbank_btc_xrp_ask)
                 print(bitbank_btc_xrp_bid)
                 # binanceからXRP/BTC通貨情報取得
                 binances = ccxt.binance()
                 binance_xrp_btc = binances.fetch_ticker('XRP/BTC')
                 print(binance_xrp_btc.get("ask"))
-                binance_xrp_btc_ask = (1 / binance_xrp_btc.get("ask"))
+                binance_xrp_btc_ask = (1 / binance_xrp_btc.get("ask")) * self
                 print(binance_xrp_btc.get("bid"))
-                binance_xrp_btc_bid = (1 / binance_xrp_btc.get("bid"))
+                binance_xrp_btc_bid = (1 / binance_xrp_btc.get("bid")) * self
 
                 # coinexからXRP/BTC通貨情報取得
                 coinex = ccxt.coinex()
                 coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
                 print(coinex_xrp_btc.get("ask"))
-                coinex_xrp_btc_ask = (1 / coinex_xrp_btc.get("ask"))
+                coinex_xrp_btc_ask = (1 / coinex_xrp_btc.get("ask")) * self
                 print(coinex_xrp_btc.get("bid"))
-                coinex_xrp_btc_bid = (1 / coinex_xrp_btc.get("bid"))
+                coinex_xrp_btc_bid = (1 / coinex_xrp_btc.get("bid")) * self
 
                 # bitbankとbinance間の差額
                 profit_bitbank_binance = (binance_xrp_btc_bid - bitbank_btc_xrp_ask) * bitbank_xrp_jpy.get(
@@ -126,7 +126,7 @@ class CALCULATION:
                     price_sale = bitbank_btc_xrp_bid
                 elif max_k.endswith('binans'):
                     price_sale = binance_xrp_btc_bid
-                elif max_k.endswith('coinex'):
+                elif max_k.endswith('coinex'): \
                         price_sale = coinex_xrp_btc_bid
                 else:
                     price_sale = 0
@@ -138,15 +138,15 @@ class CALCULATION:
                 minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
 
-                resultarray = {'bitbank_binance': profit_bitbank_binance,
-                               'binance_bitbank': profit_binance_bitbank,
-                               'bitbank_coinex': profit_bitbank_coinex,
-                               'coinex_bitbank': profit_coinex_bitbank,
-                               'binance_coinex': profit_binance_coinex,
-                               'coinex_binance': profit_coinex_binance,
+                resultarray = {'bitbank_binance': round(profit_bitbank_binance, 3),
+                               'binance_bitbank': round(profit_binance_bitbank, 3),
+                               'bitbank_coinex': round(profit_bitbank_coinex, 3),
+                               'coinex_bitbank': round(profit_coinex_bitbank, 3),
+                               'binance_coinex': round(profit_binance_coinex, 3),
+                               'coinex_binance': round(profit_coinex_binance, 3),
                                'max': max_k, 'min': min_k,
-                               'maxvalue': maxvalue, 'minvalue': minvalue,
-                               'max_buy': price_buy, 'min_sale': price_sale
+                               'maxvalue': round(maxvalue, 3), 'minvalue': round(minvalue, 3),
+                               'max_buy': round(price_buy, 3), 'min_sale': round(price_sale, 3)
 
                                }
                 return resultarray
