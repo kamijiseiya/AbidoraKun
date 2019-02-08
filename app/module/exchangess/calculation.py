@@ -181,7 +181,8 @@ class CALCULATION:
                                'coinex_binance': round(profit_coinex_binance, 3),
                                'max': max_k, 'min': min_k,
                                'maxvalue': round(maxvalue, 3), 'minvalue': round(minvalue, 3),
-                               'max_buy': round(price_buy, 3), 'min_sale': round(price_sale, 3)
+                               'max_buy': round(price_buy * bitbank_xrp_jpy.get("bid"), 3),
+                               'min_sale': round(price_sale * bitbank_xrp_jpy.get("bid"), 3)
 
                                }
                 return resultarray
