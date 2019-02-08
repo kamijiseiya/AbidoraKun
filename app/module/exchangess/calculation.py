@@ -36,10 +36,10 @@ class CALCULATION:
                 profit_binance_coinex = ((coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
                 profit_coinex_binance = ((binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
 
-                #'XRPを取引した場合の最大利益(btc):'
+                #'XRPを取引した場合の最大利益(jpy):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
-                #'XRPを取引した場合の最低利益(btc):'
+                #'XRPを取引した場合の最低利益(jpy):'
                 minvalue = min([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
                                 profit_coinex_bitbank, profit_binance_coinex, profit_coinex_binance])
 
@@ -54,6 +54,26 @@ class CALCULATION:
                 min_k = min(resultsample, key = resultsample.get)
                 print(min_k)
 
+                # 最大利益が出る取引所からいくら購入したのか
+                if max_k.startswith('bitbank'):
+                    price_buy = bitbank_xrp_btc_ask
+                elif max_k.startswith('binans'):
+                    price_buy = binance_xrp_btc.get("ask") * self
+                elif max_k.startswith('coinex'):
+                    price_buy = coinex_xrp_btc.get("ask") * self
+                else:
+                    price_buy = 0
+
+                # 最大利益が出る取引所からいくら売ったのか
+                if max_k.endswith('bitbank'):
+                    price_sale = bitbank_xrp_btc_bid
+                elif max_k.endswith('binans'):
+                    price_sale = binance_xrp_btc.get("bid") * self
+                elif max_k.endswith('coinex'): \
+                        price_sale = coinex_xrp_btc.get("bid") * self
+                else:
+                    price_sale = 0
+
 
                 resultarray = {'bitbank_binance': round(profit_bitbank_binance, 3),
                                'binance_bitbank': round(profit_binance_bitbank, 3),
@@ -62,7 +82,9 @@ class CALCULATION:
                                'binance_coinex': round(profit_binance_coinex, 3),
                                'coinex_binance' : round(profit_coinex_binance, 3),
                                'max': max_k, 'min': min_k,
-                               'maxvalue':round(maxvalue, 3), 'minvalue': round(minvalue, 3)}
+                               'maxvalue':round(maxvalue, 3), 'minvalue': round(minvalue, 3),
+                               'max_buy': price_buy, 'min_sale': price_sale
+                               }
                 return resultarray
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
