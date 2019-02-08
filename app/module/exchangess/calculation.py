@@ -55,14 +55,14 @@ class CALCULATION:
                 print(min_k)
 
 
-                resultarray = {'bitbank_binance': profit_bitbank_binance,
-                               'binance_bitbank': profit_binance_bitbank,
-                               'bitbank_coinex': profit_bitbank_coinex,
-                               'coinex_bitbank': profit_coinex_bitbank,
-                               'binance_coinex': profit_binance_coinex,
-                               'coinex_binance' : profit_coinex_binance,
+                resultarray = {'bitbank_binance': round(profit_bitbank_binance, 3),
+                               'binance_bitbank': round(profit_binance_bitbank, 3),
+                               'bitbank_coinex': round(profit_bitbank_coinex, 3),
+                               'coinex_bitbank': round(profit_coinex_bitbank, 3),
+                               'binance_coinex': round(profit_binance_coinex, 3),
+                               'coinex_binance' : round(profit_coinex_binance, 3),
                                'max': max_k, 'min': min_k,
-                               'maxvalue':maxvalue, 'minvalue': minvalue}
+                               'maxvalue':round(maxvalue, 3), 'minvalue': round(minvalue, 3)}
                 return resultarray
             except ccxt.BaseError:
                 print("取引所から取引データを取得できません。")
