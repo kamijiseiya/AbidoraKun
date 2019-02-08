@@ -13,8 +13,8 @@ class CALCULATION:
                 bitbanks = ccxt.bitbank()
                 bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
                 bitbank_xrp_jpy = bitbanks.fetch_ticker('XRP/JPY')
-                bitbank_xrp_btc_bid = bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")
-                bitbank_xrp_btc_ask = bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")
+                bitbank_xrp_btc_bid = (bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")) * self
+                bitbank_xrp_btc_ask = (bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")) * self
 
                 # binanceからXRP/BTC通貨情報取得
                 binances = ccxt.binance()
@@ -25,12 +25,12 @@ class CALCULATION:
                 coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
 
                 # bitbankとbinance間の差額
-                profit_bitbank_binance = binance_xrp_btc.get("bid") - bitbank_xrp_btc_ask
-                profit_binance_bitbank = bitbank_xrp_btc_bid - binance_xrp_btc.get("ask")
+                profit_bitbank_binance = (binance_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self
+                profit_binance_bitbank = (bitbank_xrp_btc_bid - binance_xrp_btc.get("ask")) * self
 
                 # bitbankとcoinex間の差額
-                profit_bitbank_coinex = coinex_xrp_btc.get("bid") - bitbank_xrp_btc_ask
-                profit_coinex_bitbank = bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")
+                profit_bitbank_coinex = (coinex_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self
+                profit_coinex_bitbank = (bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")) * self
 
                 # binanceとcoinex間の差額
                 profit_binance_coinex = coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")
