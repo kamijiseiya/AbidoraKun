@@ -57,7 +57,7 @@ class CALCULATION:
                 # 最大利益が出る取引所からいくら購入したのか
                 if max_k.startswith('bitbank'):
                     price_buy = bitbank_xrp_btc_ask
-                elif max_k.startswith('binans'):
+                elif max_k.startswith('binance'):
                     price_buy = binance_xrp_btc.get("ask") * self
                 elif max_k.startswith('coinex'):
                     price_buy = coinex_xrp_btc.get("ask") * self
@@ -149,7 +149,7 @@ class CALCULATION:
                 # 最大利益が出る取引所からいくら購入したのか
                 if max_k.startswith('bitbank'):
                     price_buy = bitbank_btc_xrp_ask
-                elif max_k.startswith('binans'):
+                elif max_k.startswith('binance'):
                     price_buy = binance_xrp_btc_ask
                 elif max_k.startswith('coinex'):
                     price_buy = coinex_xrp_btc_ask
@@ -159,7 +159,7 @@ class CALCULATION:
                 # 最大利益が出る取引所からいくら売ったのか
                 if max_k.endswith('bitbank'):
                     price_sale = bitbank_btc_xrp_bid
-                elif max_k.endswith('binans'):
+                elif max_k.endswith('binance'):
                     price_sale = binance_xrp_btc_bid
                 elif max_k.endswith('coinex'): \
                         price_sale = coinex_xrp_btc_bid
@@ -195,5 +195,5 @@ class CALCULATION:
 if __name__ == "__main__":
     print(CALCULATION.difference_xrp_btc(1))
     #print("%.13f" % CALCULATION.difference_xrp_btc(2)['max'])
-    #print(CALCULATION.difference_btc_xrp(1))
+    print(CALCULATION.difference_btc_xrp(1))
     #print(CALCULATION.difference_btc_xrp(3))
