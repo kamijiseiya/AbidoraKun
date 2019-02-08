@@ -174,8 +174,27 @@ def main() -> None:
         for num in range(1, 10):
             lists = calculation.CALCULATION.difference_btc_xrp(1)
             max_exchange = lists["max"]
-            btc_value = calculation.CALCULATION.difference_btc_xrp(1)['maxvalue']
-            thread = ttk.Label(underframe, text=str(max_exchange)+"で購入し"+"で売却し"+str(btc_value)+"の利益です。", font=PointFont)
+            #利益売買取引所の抽出
+            ask_btc = ""
+            bid_btc = ""
+            if (str(max_exchange).startswith('bitbank')):
+                ask_btc = "bitbank"
+            elif (str(max_exchange).startswith('binance')):
+                ask_btc = "binance"
+            elif (str(max_exchange).startswith('coinex')):
+                ask_btc = "coinex"
+
+            if (str(max_exchange).endswith('bitbank')):
+                bid_btc = "bitbank"
+            elif (str(max_exchange)).endswith(('binance')):
+                bid_btc = "binance"
+            elif (str(max_exchange)).endswith(('coinex')):
+                bid_btc = "coinex"
+            #現在の最大利益取得
+            btc_value = lists['maxvalue']
+            max_btc = lists['max_buy']
+            min_btc = lists['min_sale']
+            thread = ttk.Label(underframe, text=str(ask_btc)+"で"+str(max_btc)+"円購入し"+str(bid_btc)+"で"+str(min_btc)+"円売却し"+str(btc_value)+"の利益です。", font=PointFont)
             thread.place(relx=0.1, rely=0.01 + float(count))
             thread.update()
             count =+ 0.03 * num
