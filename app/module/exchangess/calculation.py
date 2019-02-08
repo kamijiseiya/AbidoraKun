@@ -13,8 +13,8 @@ class CALCULATION:
                 bitbanks = ccxt.bitbank()
                 bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
                 bitbank_xrp_jpy = bitbanks.fetch_ticker('XRP/JPY')
-                bitbank_xrp_btc_bid = (bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")) * self
-                bitbank_xrp_btc_ask = (bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")) * self
+                bitbank_xrp_btc_bid = bitbank_xrp_jpy.get("bid") / bitbank_btc_jpy.get("ask")
+                bitbank_xrp_btc_ask = bitbank_xrp_jpy.get("ask") / bitbank_btc_jpy.get("bid")
 
                 # binanceからXRP/BTC通貨情報取得
                 binances = ccxt.binance()
@@ -33,8 +33,8 @@ class CALCULATION:
                 profit_coinex_bitbank = (bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")) * self
 
                 # binanceとcoinex間の差額
-                profit_binance_coinex = coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")
-                profit_coinex_binance = binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")
+                profit_binance_coinex = (coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")) * self
+                profit_coinex_binance = (binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")) * self
 
                 #'XRPを取引した場合の最大利益(btc):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
