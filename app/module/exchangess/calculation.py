@@ -25,16 +25,16 @@ class CALCULATION:
                 coinex_xrp_btc = coinex.fetch_ticker('XRP/BTC')
 
                 # bitbankとbinance間の差額
-                profit_bitbank_binance = (binance_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self
-                profit_binance_bitbank = (bitbank_xrp_btc_bid - binance_xrp_btc.get("ask")) * self
+                profit_bitbank_binance = ((binance_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self) * bitbank_btc_jpy.get("bid")
+                profit_binance_bitbank = ((bitbank_xrp_btc_bid - binance_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
 
                 # bitbankとcoinex間の差額
-                profit_bitbank_coinex = (coinex_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self
-                profit_coinex_bitbank = (bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")) * self
+                profit_bitbank_coinex = ((coinex_xrp_btc.get("bid") - bitbank_xrp_btc_ask) * self) * bitbank_btc_jpy.get("bid")
+                profit_coinex_bitbank = ((bitbank_xrp_btc_bid - coinex_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
 
                 # binanceとcoinex間の差額
-                profit_binance_coinex = (coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")) * self
-                profit_coinex_binance = (binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")) * self
+                profit_binance_coinex = ((coinex_xrp_btc.get("bid") - binance_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
+                profit_coinex_binance = ((binance_xrp_btc.get("bid") - coinex_xrp_btc.get("ask")) * self) * bitbank_btc_jpy.get("bid")
 
                 #'XRPを取引した場合の最大利益(btc):'
                 maxvalue = max([profit_bitbank_binance, profit_binance_bitbank, profit_bitbank_coinex,
@@ -49,9 +49,9 @@ class CALCULATION:
                                 'coinex_bitbank': profit_coinex_bitbank,
                                 'binance_coinex': profit_binance_coinex,
                                 'coinex_binance': profit_coinex_binance}
-                max_k = max(resultsample, key=resultsample.get)
+                max_k = max(resultsample, key = resultsample.get)
                 print(max_k)
-                min_k = min(resultsample, key=resultsample.get)
+                min_k = min(resultsample, key = resultsample.get)
                 print(min_k)
 
 
@@ -119,9 +119,9 @@ class CALCULATION:
                                 'coinex_bitbank': profit_coinex_bitbank,
                                 'binance_coinex': profit_binance_coinex,
                                 'coinex_binance': profit_coinex_binance}
-                max_k = max(resultsample, key=resultsample.get)
+                max_k = max(resultsample, key = resultsample.get)
                 print(max_k)
-                min_k = min(resultsample, key=resultsample.get)
+                min_k = min(resultsample, key = resultsample.get)
                 print(min_k)
 
                 # 最大利益が出る取引所からいくら購入したのか
@@ -171,7 +171,7 @@ class CALCULATION:
 
 
 if __name__ == "__main__":
-    #print(CALCULATION.difference_xrp(1))
-    #print("%.13f" % CALCULATION.difference_xrp(2)['max'])
-    print(CALCULATION.difference_btc_xrp(1))
-    print(CALCULATION.difference_btc_xrp(3))
+    print(CALCULATION.difference_xrp_btc(1))
+    #print("%.13f" % CALCULATION.difference_xrp_btc(2)['max'])
+    #print(CALCULATION.difference_btc_xrp(1))
+    #print(CALCULATION.difference_btc_xrp(3))
