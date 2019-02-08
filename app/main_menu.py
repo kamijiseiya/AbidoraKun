@@ -135,15 +135,19 @@ def main() -> None:
     exchangeD.place(relx=0.1, rely=0.25)
 
     #現在の売買最大値取得(XRP)
-    transaction = calculation.CALCULATION.difference_xrp_btc("")['max']
-    tara = ttk.Label(underframe, text="binanceで○○で購入しbitbankで□□で売り"+str(transaction)+"の利益です。", font=PointFont)
+    #transaction = calculation.CALCULATION.difference_xrp_btc("")['max']
+    tara = ttk.Label(underframe, text="binanceで○○で購入しbitbankで□□で売り"+"の利益です。", font=PointFont)
     tara.place(relx=0.1, rely=0.05)
 
     #現在の売買最大値取得(BTC)
+    """
     ask_btc = ""
     bid_btc = ""
-    btc_max = calculation.CALCULATION.difference_btc_xrp("")['max']
-    btc_value = calculation.CALCULATION.difference_btc_xrp("")['maxvalue']
+    btc_max = calculation.CALCULATION.difference_btc_xrp(1)['max']
+    btc_value = calculation.CALCULATION.difference_btc_xrp(1)['maxvalue']
+    #buy = calculation.CALCULATION.difference_btc_xrp(1)['max_buy']
+    #sale = calculation.CALCULATION.difference_btc_xrp(1)['min_sale']
+
     #売買取引所の抽出
     if(str(btc_max).startswith('bitbank')):
         ask_btc = "bitbank"
@@ -160,21 +164,35 @@ def main() -> None:
         bid_btc = "coinex"
 
     bmax = ttk.Label(underframe, text=ask_btc+str(btc_value)+bid_btc, font=PointFont)
-    bmax.place(relx=0.1, rely=0.1)
+    #bmax = ttk.Label(underframe, text=ask_btc+str(btc_value)+bid_btc+str(buy)+str(sale), font=PointFont)
 
+    bmax.place(relx=0.1, rely=0.1)
+    """
     # 現在の売買最大値取得(BTC)
     def func():
-        while True:
-            btc_value = calculation.CALCULATION.difference_btc_xrp("")['maxvalue']
-            thread = ttk.Label(underframe, text=btc_value, font=PointFont)
-            thread.place(relx=0.1, rely=0.12)
+        count = 0.0
+        for num in range(1, 10):
+            lists = calculation.CALCULATION.difference_btc_xrp(1)
+            max_exchange = lists["max"]
+            btc_value = calculation.CALCULATION.difference_btc_xrp(1)['maxvalue']
+            thread = ttk.Label(underframe, text=str(max_exchange)+"で購入し"+"で売却し"+str(btc_value)+"の利益です。", font=PointFont)
+            thread.place(relx=0.1, rely=0.01 + float(count))
             thread.update()
+            count =+ 0.03 * num
+            time.sleep(30)
+    """
+    def func():
+        count = 0.0
+        while True:
+            btc_value = calculation.CALCULATION.difference_btc_xrp(1)['maxvalue']
+            thread = ttk.Label(underframe, text=btc_value, font=PointFont)
+            thread.place(relx=0.1, rely=0.01 + float(count))
+            thread.update()
+            count =+ 0.03
             time.sleep(10)
+    """
 
-    # underframe test
-    history = ttk.Label(underframe, text=u"history", font=PointFont)
-    history.place(relx=0.1, rely=0.02)
-
+    # orderframe test
     ordertest =ttk.Label(orderframe, text=u'bitbank', font=PointFont)
     ordertest.place(relx=0.1, rely=0.02)
 
@@ -701,8 +719,11 @@ def main() -> None:
 
     startpage.tkraise()
 
-    thread_1 = threading.Thread(target=func)
+    #スレッド要素
+    thread_1 = threading.Thread(target=func())
     thread_1.start()
+
+    #threadd = threading.Thread(target=)
 
     # プログラムを始める
     window.mainloop()
