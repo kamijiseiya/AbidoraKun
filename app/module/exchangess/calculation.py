@@ -193,8 +193,87 @@ class CALCULATION:
 
 
 
+    def difference_ltc_btc(self):
+        """取引所間でのLTC差額を求めるメソッド
+                    (bitbank,binance,coinex)"""
+        while True:
+            try:
+                bitbanks = ccxt.bitbank()
+                bitbank_btc_jpy = bitbanks.fetch_ticker('BTC/JPY')
+                bitbank_ltc_btc = bitbanks.fetch_ticker('LTC/BTC')
+                bitbank_ltc_btc_bid = bitbank_ltc_btc.get("bid") * self
+                bitbank_ltc_btc_ask = bitbank_ltc_btc.get("ask") * self
+                print(bitbank_ltc_btc_ask)
+                print(bitbank_ltc_btc_bid)
+                # binanceからXRP/BTC通貨情報取得
+                binances = ccxt.binance()
+                binance_xrp_btc = binances.fetch_ticker('LTC/BTC')
+                print(binance_xrp_btc.get("ask"))
+                binance_ltc_btc_ask = (binance_xrp_btc.get("ask")) * self
+                print(binance_xrp_btc.get("bid"))
+                binance_ltc_btc_bid = (binance_xrp_btc.get("bid")) * self
+
+
+
+                # bitbankとbinance間の差額
+                profit_bitbank_binance = (binance_ltc_btc_bid - bitbank_ltc_btc_ask) * bitbank_btc_jpy.get(
+                    "bid")
+                profit_binance_bitbank = (bitbank_ltc_btc_bid - binance_ltc_btc_ask) * bitbank_btc_jpy.get(
+                    "bid")
+
+
+
+                resultsample = {'bitbank_binance': profit_bitbank_binance,
+                                'binance_bitbank': profit_binance_bitbank,}
+                max_k = max(resultsample, key = resultsample.get)
+                print(max_k)
+                min_k = min(resultsample, key = resultsample.get)
+                print(min_k)
+
+                # 最大利益が出る取引所からいくら購入したのか
+                if max_k.startswith('bitbank'):
+                    price_buy = bitbank_ltc_btc_ask * bitbank_btc_jpy.get(
+                    "bid")
+                    print(bitbank_ltc_btc_ask)
+                elif max_k.startswith('binance'):
+                    price_buy = binance_ltc_btc_ask * bitbank_btc_jpy.get(
+                    "bid")
+                else:
+                    price_buy = 0
+
+                # 最大利益が出る取引所からいくら売ったのか
+                if max_k.endswith('bitbank'):
+                    price_sale = bitbank_ltc_btc_bid * bitbank_btc_jpy.get(
+                    "bid")
+                elif max_k.endswith('binance'):
+                    price_sale = binance_ltc_btc_bid * bitbank_btc_jpy.get(
+                    "bid")
+                else:
+                    price_sale = 0
+
+                # 'BTCを取引した場合の最大利益(jpy):'
+                maxvalue = max([profit_bitbank_binance, profit_binance_bitbank])
+                # 'BTCを取引した場合の最低利益(jpy):'
+                minvalue = min([profit_bitbank_binance, profit_binance_bitbank])
+
+                resultarray = {'bitbank_binance': round(profit_bitbank_binance, 3),
+                               'binance_bitbank': round(profit_binance_bitbank, 3),
+                               'max': max_k, 'min': min_k,
+                               'maxvalue': round(maxvalue, 3), 'minvalue': round(minvalue, 3),
+                               'max_buy': round(price_buy, 3), 'min_sale': round(price_sale, 3)
+
+                               }
+                return resultarray
+            except ccxt.BaseError:
+                print("取引所から取引データを取得できません。")
+                print("10秒待機してやり直します")
+                time.sleep(10)
+
+
+
 if __name__ == "__main__":
     print(CALCULATION.difference_xrp_btc(1))
     #print("%.13f" % CALCULATION.difference_xrp_btc(2)['max'])
     print(CALCULATION.difference_btc_xrp(1))
     #print(CALCULATION.difference_btc_xrp(3))
+    print(CALCULATION.difference_ltc_btc(1))
