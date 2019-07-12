@@ -14,17 +14,6 @@ It is a tool to calculate the price difference of each exchange and to trade aut
 The transaction is started by entering the API key.  
 Cooperation with each SNS is also possible.
 To increase the currency in the future.
-## Demo
-
-## VS.
-
-## Requirement
-
-## Usage
-
-## Install
-
-## Contribution
 
 ## Licence
 
